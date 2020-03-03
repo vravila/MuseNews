@@ -10,7 +10,7 @@ function ArtistsPage() {
 
   const fetchItems = async () => {
     const data = await fetch(
-      `http://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=${process.env.REACT_APP_LASTFM_API_KEY}`
+      `http://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&limit=5`
     );
     // console.log(process.env.REACT_APP_LASTFM_API_KEY);
     const items = await data.json();
@@ -22,7 +22,7 @@ function ArtistsPage() {
     <div>
       {items.map(item => (
         <h4 key={item.name}>
-          <Link to={`/artists/${item.mbid}`}>{item.name}</Link>
+          <Link to={`/artists/${item.name}`}>{item.name}</Link>
         </h4>
       ))}
     </div>

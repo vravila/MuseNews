@@ -23,7 +23,7 @@ function App() {
         </Switch>
 
         <header className="App-header">
-          <p>Muse News Home Page</p>
+          {/* <p>Muse News Home Page</p> */}
         </header>
       </div>
     </Router>
