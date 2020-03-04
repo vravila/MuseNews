@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './../App.css'
 import logo from '../logo.svg'
+import { Link } from 'react-router-dom';
 
 function Navbar() {
 
@@ -21,28 +22,25 @@ function Navbar() {
             </li>
 
             <li className="nav-item active m-auto">
-              <a className="nav-link text-white text-uppercase ml-5" href="#"><h3>Home</h3> <span class="sr-only">(current)</span></a>
+              <Link className="nav-link text-white text-uppercase ml-5" to="/"><h3>Home</h3> <span class="sr-only">(current)</span></Link>
             </li>
             <li className="nav-item m-auto">
-              <a className="nav-link text-white text-uppercase ml-5" href="#"><h3>About</h3> </a>
-            </li>
-
-            <li className="nav-item m-auto">
-              <a className="nav-link text-white text-uppercase ml-5" href="#"><h3>Songs</h3> </a>
+              <Link className="nav-link text-white text-uppercase ml-5" to="/about"><h3>About</h3> </Link>
             </li>
 
             <li className="nav-item m-auto">
-              <a className="nav-link text-white text-uppercase ml-5" href="#"><h3>News</h3> </a>
+              <Link className="nav-link text-white text-uppercase ml-5" to="/songs"><h3>Songs</h3> </Link>
             </li>
 
             <li className="nav-item m-auto">
-              <a className="nav-link text-white text-uppercase ml-5" href="#"><h3>Artists</h3> </a>
+              <Link className="nav-link text-white text-uppercase ml-5" to="/news"><h3>News</h3> </Link>
+            </li>
+
+            <li className="nav-item m-auto">
+              <Link className="nav-link text-white text-uppercase ml-5" to="/artists"><h3>Artists</h3> </Link>
             </li>
           </ul>
-        <form className="form-inline my-2 my-lg-0">
-          <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-          <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        
       </div>
     </nav>
 
