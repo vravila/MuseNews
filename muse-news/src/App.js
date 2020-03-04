@@ -1,27 +1,32 @@
 import React, {Component} from 'react';
+import Navbar from './components/Navbar';
+import About from './components/pages/About';
+import Artists from './components/pages/Artists';
+import Home from './components/pages/Home';
+import News from './components/pages/News';
+import Songs from './components/pages/Songs';
+import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigation from './components/Navigation';
 
-function App() {
+import {Switch, Route} from 'react-router-dom';
 
-  return (
-      <div className="App">
-          <link
-            rel="stylesheet"
-            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-            crossorigin="anonymous"
-          />
+class App extends Component {
+  render(){
+    return (
+        <div>
+          <Navbar />
+          <Switch>
+            <Route path="/home" component={Home}/>
+            <Route path="/about" component={About}/>
+            <Route path="/artists" component={Artists}/>
+            <Route path="/news" component={News}/>
+            <Route path="/songs" component={Songs}/>
+          </Switch>
 
-          <Navigation />
 
-      <header className="App-header">
-        <p>
-          Muse News
-        </p>
-      </header>
-    </div>
-  );
+        </div>
+    );
+  }
 }
 
 export default App;
