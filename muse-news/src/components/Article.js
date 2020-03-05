@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class Article extends Component {
     state = {
-        title: "Sample Title",
+        title: this.props.title,
         text: "Sample Text",
         url: "www.google.com",
         image: require("./../newsImage.jpg")
@@ -15,8 +15,8 @@ class Article extends Component {
                         <img src={this.state.image} />
                         <h1>{this.state.title}</h1>
                         <p>{this.state.text}</p>
+                        <a href={this.state.url} />
                     </div>
-                    <a url={this.state.url} />
                 </body>
             </div>
         );

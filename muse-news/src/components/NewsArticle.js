@@ -12,13 +12,8 @@ class NewsArticle extends Component{
             image: require("./../newsImage.jpg"),
             previewText: this.props.preview
         };
-        this.viewArticle = this.viewArticle.bind(this);
     }
-    viewArticle(){
-        this.setState(state => ({
-            previewText: 'Boom'
-        }))
-    }
+
     render(){
         return(
             <div>
@@ -30,7 +25,7 @@ class NewsArticle extends Component{
                             <Card.Text> 
                                 {this.state.previewText}
                             </Card.Text>
-                            <Link to={'/NewsPage'}>
+                            <Link to={`/Newsp/${this.state.title}`}>
                                 <Button variant="primary" style={{fontSize: 14}}>More</Button>
                             </Link>
                         </Card.Body>
