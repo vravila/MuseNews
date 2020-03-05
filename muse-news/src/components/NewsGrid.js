@@ -4,6 +4,7 @@ import NewsArticle from './NewsArticle.js';
 import './../App.css';
 
 class NewsGrid extends Component{
+
     state = {
         articles: [
             {id: 1, title: 'Title One', preview: "This is a preview one"},
