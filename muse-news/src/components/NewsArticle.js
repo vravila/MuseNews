@@ -30,7 +30,7 @@ class NewsArticle extends Component{
                             <Card.Text> 
                                 {this.state.previewText}
                             </Card.Text>
-                            <Link to={`/News/${this.state.title}`}>
+                            <Link to={'/NewsPage'}>
                                 <Button variant="primary" style={{fontSize: 14}}>More</Button>
                             </Link>
                         </Card.Body>
