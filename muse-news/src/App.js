@@ -5,6 +5,7 @@ import Artists from "./components/pages/Artists";
 import Home from "./components/pages/Home";
 import News from "./components/pages/News";
 import Songs from "./components/pages/Songs";
+import NewsPage from "./components/pages/NewsPage"
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,6 +23,7 @@ class App extends Component {
           <Route path="/artists" exact component={Artists} />
           <Route path="/artists/:id" component={ArtistsPage} />
           <Route path="/news" component={News} />
+          <Route path="/newspage" component={NewsPage} />
           <Route path="/songs" component={Songs} />
         </Switch>
       </div>
