@@ -8,7 +8,7 @@ export const placeInfo = [
       title: '',
       description:
         '',
-      img: 'src/imgs/about.jpg'
+      img: require('./imgs/about.jpg')
     },
     {
       id: 2,
@@ -18,7 +18,7 @@ export const placeInfo = [
         'What is muse-news?',
       title: '',
       description: '',
-      img: '/imgs/songs.jpg'
+      img: require('./imgs/songs.jpg')
     },
     {
       id: 3,
@@ -27,7 +27,7 @@ export const placeInfo = [
       headerText:
         'What is muse-news?',
       title: '',
-      description: '/src/imgs/news.jpg'
+      img: require('./imgs/about.jpg')
     },
     {
       id: 4,
@@ -37,7 +37,7 @@ export const placeInfo = [
         'What is muse-news?',
       title: '',
       description:'',
-      img: '/src/imgs/artists.jpg'
+      img: require('./imgs/artists.jpg')
     }
   ];
   
