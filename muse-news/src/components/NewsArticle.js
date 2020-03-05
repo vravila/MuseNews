@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import './../App.css';
+import { Link } from "react-router-dom";
 
 class NewsArticle extends Component{
     constructor(props) {
@@ -22,14 +23,16 @@ class NewsArticle extends Component{
         return(
             <div>
                 <body>
-                    <Card style={{width: '18rem'}}>
+                    <Card style={{width: '32rem', fontSize: 14}}>
                         <Card.Img variant="top" src={this.state.image} />
                         <Card.Body>
-                            <Card.Title>{this.state.title}</Card.Title>
+                            <Card.Title ><h3>{this.state.title}</h3></Card.Title>
                             <Card.Text> 
                                 {this.state.previewText}
                             </Card.Text>
-                            <Button variant="primary" onClick={this.viewArticle}>More</Button>
+                            <Link to={`/News/${this.state.title}`}>
+                                <Button variant="primary" style={{fontSize: 14}}>More</Button>
+                            </Link>
                         </Card.Body>
                     </Card>
                 </body>
