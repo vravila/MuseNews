@@ -28,6 +28,7 @@ function ArtistsPage({ match }) {
   return (
     <div>
       <h4>{item.name}</h4>
+      {/* <img src={temporaryImages(item.name)} alt="" /> */}
       <p>{escapeHREF(item.bio.content)}</p>
       <br></br>
       <p>Listeners: {item.stats.listeners} </p>
@@ -39,6 +40,26 @@ function ArtistsPage({ match }) {
     //   <h4>Coldplay</h4>
     // </div>
   );
+}
+
+function temporaryImages(name) {
+  if (name) {
+    console.log(name);
+    if (name === "Billie Eilish") {
+      console.log("Acsdfadsf");
+      return "./src/components/images/billie_eilish.jpg";
+    } else if (name === "The Weeknd") {
+      return "./images/the_weeknd.jpg";
+    } else if (name === "Tame Impala") {
+      return "./images/tame_impala.jpg";
+    } else if (name === "Kanye West") {
+      return "./images/kanye.jpg";
+    } else if (name === "Dua Lipa") {
+      return "./images/dua_lipa.jpg";
+    } else {
+      return "";
+    }
+  }
 }
 
 function escapeHREF(content) {
