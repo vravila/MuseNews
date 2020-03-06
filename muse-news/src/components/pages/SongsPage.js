@@ -19,7 +19,7 @@ function SongsPage() {
             <div class="container-fluid">
                 <h1>{song}</h1>
                 <h2>By {name}</h2>
-                <img src={img} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img>
+                <img src={img} class="img-thumbnail" alt="albumArt 1" style={{width:400, height:400}}></img>
             </div>
 
         </div>
@@ -28,8 +28,6 @@ function SongsPage() {
 }
 
 function getImage(name){
-    var img = document.createElement("img");
-
     if(name == "Billie Eilish"){
         return(Billie);
     }
