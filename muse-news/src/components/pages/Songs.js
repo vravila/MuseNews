@@ -51,6 +51,9 @@ function Songs() {
         <div class="col-sm-2" align="center">
           Artist
         </div>
+        <div class="col-sm-2" align="center">
+          News Links
+        </div>
       </div>
       <div class="row pt-3">
         <div class="col-sm-2 my-auto" align="center">
@@ -73,7 +76,9 @@ function Songs() {
           <a href="/artists/Billie%20Eilish">{name1}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner">See News on {name1}</a>
+          <a href="/Newsp/Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner">
+            See News on {name1}
+          </a>
         </div>
       </div>
       <div class="row pt-3">
@@ -97,7 +102,9 @@ function Songs() {
           <a href="/artists/Tame%20Impala">{name2}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson">See News on {name2}</a>
+          <a href="/Newsp/Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson">
+            See News on {name2}
+          </a>
         </div>
       </div>
       <div class="row pt-3">
@@ -121,7 +128,9 @@ function Songs() {
           <a href="/artists/The%20Weeknd">{name3}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)">See News on {name3}</a>
+          <a href="/Newsp/Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)">
+            See News on {name3}
+          </a>
         </div>
       </div>
     </div>
