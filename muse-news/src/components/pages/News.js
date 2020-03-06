@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NewsGrid from './../NewsGrid';
-import Article from './../Article';
 
 
 function News() {

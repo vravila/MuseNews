@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SongArticle from "./../SongArticle";
 import "./../../App.js";
 import Billie from "../../imgs/Billie.jpg";
 import Tame from "../../imgs/Tame.jpg";
@@ -9,9 +8,9 @@ import weeknd from "../../imgs/weeknd.jpg";
 import { Link } from "react-router-dom";
 
 function SongsPage() {
-  let { name, song, img } = useParams();
+  let { name, song } = useParams();
 
-  img = getImage(name);
+  const img = getImage(name);
 
   useEffect(() => {
     fetchItem();
@@ -70,11 +69,11 @@ function SongsPage() {
 function getImage(name) {
   var img = document.createElement("img");
 
-  if (name == "Billie Eilish") {
+  if (name === "Billie Eilish") {
     return Billie;
-  } else if (name == "Tame Impala") {
+  } else if (name === "Tame Impala") {
     return Tame;
-  } else if (name == "The Weeknd") {
+  } else if (name === "The Weeknd") {
     return weeknd;
   }
   return "fail";
@@ -96,7 +95,7 @@ function getTags(tags) {
     var str = "";
     for (var i = 0; i < tags.length; i++) {
       str += tags[i].name;
-      if (i != tags.length - 1) {
+      if (i !== tags.length - 1) {
         str += ", ";
       }
     }
