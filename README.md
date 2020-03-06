@@ -7,9 +7,9 @@ Venkata Ravila UTEID:vkr339 vravila
   Estimated completion time (4 hours)
   Actual completion time (3 hours)
   
-Daniel Walsh  UTEID:
-  Estimated completion time (4 hours)
-  Actual completion time (3 hours)
+Daniel Walsh  UTEID: DSW956
+  Estimated completion time (4-5 hours)
+  Actual completion time (7 hours)
   
 Alexander Tekle UTEID:
   Estimated completion time (4 hours)
