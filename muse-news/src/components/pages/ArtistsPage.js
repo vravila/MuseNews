@@ -26,7 +26,7 @@ function ArtistsPage({ match }) {
     );
     const item = await fetchItem.json();
     setItem(item.artist);
-    console.log(item.artist);
+    // console.log(item.artist);
   };
 
   return (

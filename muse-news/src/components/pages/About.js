@@ -22,7 +22,7 @@ function About() {
     const items = await data.json();
     const issuesItems = await issueData.json();
 
-    console.log(issuesItems);
+    console.log(items);
     setItems(items);
     setIssuesItems(issuesItems);
   };
