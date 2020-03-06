@@ -61,24 +61,21 @@ function About() {
                     <img src={ravilaImg} style={{width: 100}}/>
                     <div class="card-body">
                         <h3 class="card-title">Venkata Ravila</h3>
-                        <p class="card-text" >Number of Commits: x</p>
-                        <p class="card-text" >Number of Issues: 0</p>
+                        
                     </div>
                 </div>
                 <div class="card" >
                   <img src={ramanImg} style={{width: 100}}/>
                     <div class="card-body">
                         <h3 class="card-title">Kedar Raman</h3>
-                        <p class="card-text" >Number of Commits: x</p>
-                        <p class="card-text" >Number of Issues: 0</p>
+                        
                     </div>
                 </div>
                 <div class="card" >
                     <img src={tekleImg} style={{width: 100}}/>
                     <div class="card-body">
                         <h3 class="card-title">Alexander Tekle</h3>
-                        <p class="card-text" >Number of Commits: x</p>
-                        <p class="card-text" >Number of Issues: 0</p>
+                        
                     </div>
                 </div>
             </div>
@@ -87,16 +84,14 @@ function About() {
                     <img src={danielImg} style={{width: 100}}/>
                     <div class="card-body">
                         <h3 class="card-title">Daniel Walsh</h3>
-                        <p class="card-text" >Number of Commits: x</p>
-                        <p class="card-text" >Number of Issues: 0</p>
+                       
                     </div>
                 </div>
                 <div class="card" >
                     <img src={samImg} style={{width: 100}}/>
                     <div class="card-body">
                         <h3 class="card-title">Sam Dauenbaugh</h3>
-                        <p class="card-text" >Number of Commits: x</p>
-                        <p class="card-text" >Number of Issues: 0</p>
+                        
                     </div>
                 </div>
             </div>
