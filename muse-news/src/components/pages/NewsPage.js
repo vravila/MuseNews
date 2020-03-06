@@ -50,6 +50,7 @@ function NewsPage(){
                     <p style={{fontSize:16}}>See more about the song <Link to={`/songspage/${artist}/${song}`}>here</Link>.</p>
                 </div>
             </body>
+
         </div>
     );
 }
