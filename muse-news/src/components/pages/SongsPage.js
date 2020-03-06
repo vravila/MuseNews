@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import SongArticle from "./../SongArticle";
 import "./../../App.js";
 import Billie from "../../imgs/Billie.jpg";
 import Tame from "../../imgs/Tame.jpg";
@@ -9,9 +8,9 @@ import weeknd from "../../imgs/weeknd.jpg";
 import { Link } from "react-router-dom";
 
 function SongsPage() {
-  let { name, song, img } = useParams();
+  let { name, song } = useParams();
 
-  img = getImage(name);
+  const img = getImage(name);
 
   useEffect(() => {
     fetchItem();
@@ -62,6 +61,12 @@ function SongsPage() {
         <p className="lead" style={{ fontSize: "15px" }}>
           <strong>Tags:</strong> {getTags(item.toptags.tag)}
         </p>
+        <h4>Headlines:</h4>
+        <p className="lead" style={{ fontSize: "15px" }}>
+          <Link to={`/Newsp/${temporaryNewsLink(name)}`}>
+            <strong>{temporaryNewsLink(name)}</strong>
+          </Link>
+        </p>
       </div>
     </div>
   );
@@ -70,14 +75,29 @@ function SongsPage() {
 function getImage(name) {
   var img = document.createElement("img");
 
-  if (name == "Billie Eilish") {
+  if (name === "Billie Eilish") {
     return Billie;
-  } else if (name == "Tame Impala") {
+  } else if (name === "Tame Impala") {
     return Tame;
-  } else if (name == "The Weeknd") {
+  } else if (name === "The Weeknd") {
     return weeknd;
   }
   return "fail";
+}
+
+function temporaryNewsLink(name) {
+  if (name) {
+    console.log(name);
+    if (name === "The Weeknd") {
+      return "Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)";
+    } else if (name === "Billie Eilish") {
+      return "Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner";
+    } else if (name === "Tame Impala") {
+      return "Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson";
+    } else {
+      return "";
+    }
+  }
 }
 
 function escapeHREF(content) {
@@ -96,7 +116,7 @@ function getTags(tags) {
     var str = "";
     for (var i = 0; i < tags.length; i++) {
       str += tags[i].name;
-      if (i != tags.length - 1) {
+      if (i !== tags.length - 1) {
         str += ", ";
       }
     }

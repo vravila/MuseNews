@@ -68,7 +68,7 @@ function ArtistsPage({ match }) {
       </p>
       <h4>Headlines:</h4>
       <p className="lead" style={{ fontSize: "15px" }}>
-        <Link to={`/songspage/${item.name}/${getTopSongs(item.name)}`}>
+        <Link to={`/Newsp/${temporaryNewsLink(item.name)}`}>
           <strong>{temporaryNewsLink(item.name)}</strong>
         </Link>
       </p>
