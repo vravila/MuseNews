@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-
 function About() {
   useEffect(() => {
     fetchItems();
   }, []);
 
-  const tekleImg = require("./../../imgs/AlexanderTekle.jpg")
-  const ramanImg = require("./../../imgs/KedarRaman.jpg")
-  const ravilaImg = require("./../../imgs/VenkataRavila.jpg")
-  const danielImg = require("./../../imgs/DanielWalsh.jpg")
-  const samImg = require("./../../imgs/SamDauenbaugh.jpg")
+  const tekleImg = require("./../../imgs/AlexanderTekle.jpg");
+  const ramanImg = require("./../../imgs/KedarRaman.jpg");
+  const ravilaImg = require("./../../imgs/VenkataRavila.jpg");
+  const danielImg = require("./../../imgs/DanielWalsh.jpg");
+  const samImg = require("./../../imgs/SamDauenbaugh.jpg");
 
   const [items, setItems] = useState([]);
   const [issuesItems, setIssuesItems] = useState({});
@@ -38,14 +37,16 @@ function About() {
     <div>
       <h1>Welcome to Muse News!</h1>
       <b>What is it?</b>
-      <p>This is Muse News, your one-stop destination for all things music related. 
-        Want to know the top songs right now? Learn more about your favorite artists?
-        Or even have access to the hottest news? Muse-News does all of this. For all you
-        music nerds out there, come to Muse-News and have an amazing time.
+      <p>
+        This is Muse News, your one-stop destination for all things music
+        related. Want to know the top songs right now? Learn more about your
+        favorite artists? Or even have access to the hottest news? Muse-News
+        does all of this. For all you music nerds out there, come to Muse-News
+        and have an amazing time.
       </p>
       <br></br>
       <b>What can our website provide?</b>
-      <p>Our website allows the user 3 functionalities at the moment</p>
+      <p>Our website allows the user 3 functionalities at the moment:</p>
       <ul>
         <li>The user is able to see the top songs trending right now.</li>
         <li>The user is able to see some news regarding some artists.</li>
@@ -56,46 +57,41 @@ function About() {
       <b>Our Team</b>
 
       <div class="container">
-            <div class="row">
-                <div class="card" >
-                    <img src={ravilaImg} style={{width: 100}}/>
-                    <div class="card-body">
-                        <h3 class="card-title">Venkata Ravila</h3>
-                        
-                    </div>
-                </div>
-                <div class="card" >
-                  <img src={ramanImg} style={{width: 100}}/>
-                    <div class="card-body">
-                        <h3 class="card-title">Kedar Raman</h3>
-                        
-                    </div>
-                </div>
-                <div class="card" >
-                    <img src={tekleImg} style={{width: 100}}/>
-                    <div class="card-body">
-                        <h3 class="card-title">Alexander Tekle</h3>
-                        
-                    </div>
-                </div>
+        <div class="row">
+          <div class="card">
+            <img src={ravilaImg} style={{ width: "17rem", height: "17rem" }} />
+            <div class="card-body">
+              <h3 class="card-title">Venkata Ravila</h3>
             </div>
-            <div class="row">
-              <div class="card" >
-                    <img src={danielImg} style={{width: 100}}/>
-                    <div class="card-body">
-                        <h3 class="card-title">Daniel Walsh</h3>
-                       
-                    </div>
-                </div>
-                <div class="card" >
-                    <img src={samImg} style={{width: 100}}/>
-                    <div class="card-body">
-                        <h3 class="card-title">Sam Dauenbaugh</h3>
-                        
-                    </div>
-                </div>
+          </div>
+          <div class="card">
+            <img src={ramanImg} style={{ width: "17rem", height: "17rem" }} />
+            <div class="card-body">
+              <h3 class="card-title">Kedar Raman</h3>
             </div>
+          </div>
+          <div class="card">
+            <img src={tekleImg} style={{ width: "17rem", height: "17rem" }} />
+            <div class="card-body">
+              <h3 class="card-title">Alexander Tekle</h3>
+            </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="card">
+            <img src={danielImg} style={{ width: "17rem", height: "17rem" }} />
+            <div class="card-body">
+              <h3 class="card-title">Daniel Walsh</h3>
+            </div>
+          </div>
+          <div class="card">
+            <img src={samImg} style={{ width: "17rem", height: "17rem" }} />
+            <div class="card-body">
+              <h3 class="card-title">Sam Dauenbaugh</h3>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <h2>Total Number of Commits: {items.length}</h2>
       <h3>Commits Per Person:</h3>
@@ -178,6 +174,9 @@ function parseItems(items) {
     var person = item.commit.author.email;
     if (person === "36828975+vravila@users.noreply.github.com") {
       person = "venkataravila@gmail.com";
+    }
+    if (person === "36870836+donuthole55@users.noreply.github.com") {
+      person = "danwalsh98@gmail.com";
     }
     if (nameMap.has(person)) {
       nameMap.set(person, nameMap.get(person) + 1);

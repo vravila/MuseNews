@@ -23,7 +23,7 @@ export const placeInfo = [
     headerSubTitle: "See what's trending in the world of musical news today!",
     headerText: "What is muse-news?",
     title: "",
-    img: require("./imgs/about.jpg")
+    img: require("./imgs/news.jpg")
   },
   {
     id: 4,
