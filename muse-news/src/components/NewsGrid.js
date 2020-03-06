@@ -1,8 +1,30 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 
 import NewsArticle from './NewsArticle.js';
 import './../App.css';
 
+const GoogleNewsRss = require('google-news-rss');
+
+const googleNews = new GoogleNewsRss();
+
+
+//const [eilishNews, setEilishNews] = useState([]);
+//let eilish;
+const getNews = async(q) => {
+
+
+  let apikey = "bc2ebdb795c5488bb34601ca89a75e7f"
+  let requestURL = "http://newsapi.org/v2/everything?q=" + q + "&apiKey=" + apikey;
+  const resp =  fetch(requestURL).then(
+    response=>response.json()).then(
+      data=> {
+        console.log(data);
+        setEilishNews(data);
+      }
+    )
+  console.log(eilishNews);
+  //console.log(resp.json());
+}
 class NewsGrid extends Component{
 
 
@@ -15,7 +37,7 @@ class NewsGrid extends Component{
     };
 
     render(){
-        const stories = this.state.articles.map(article=> 
+        const stories = this.state.articles.map(article=>
             <NewsArticle key={article.key} title={article.title} preview={article.preview} />);
         const disp = React.Children.toArray(stories);
         return(
@@ -41,5 +63,4 @@ class NewsGrid extends Component{
         );
     }
 }
-
 export default NewsGrid;

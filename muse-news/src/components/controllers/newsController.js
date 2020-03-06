@@ -3,7 +3,7 @@ const GoogleNewsRss = require('google-news-rss');
 const googleNews = new GoogleNewsRss();
 
 //gets news on Post Maloen
-module.exports = function(artist) {
+//module.exports = function(artist) {
 
   var titles = new Array(3);
   var urls = new Array(3);
@@ -35,4 +35,4 @@ module.exports = function(artist) {
 
    return articles
 
-}
+//}
