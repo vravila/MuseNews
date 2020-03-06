@@ -61,17 +61,17 @@ function findSong(id) {
       //console.log(data);
 
       //console.log(data.body.album.images[0].url);
-
+      console.log("test")
       songInfo.set("name", data.body.name);
       songInfo.set("artist", data.body.artists[0].name);
       songInfo.set("img", data.body.album.images[0].url);
-      //console.log(songInfo);
-
-      return songInfo;
+      console.log(songInfo);
 
     }
   )
 
 
+
+  return songInfo;
 
 }
