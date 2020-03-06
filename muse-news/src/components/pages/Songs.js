@@ -11,6 +11,12 @@ function Songs() {
     var BlindingLight = spotifyController("0sf12qNH5qcw8qpgymFOqD");
     var badguy = spotifyController("2Fxmhks0bxGSBdJ92vM42m");
     var lessIKnow = spotifyController("6K4t31amVTZDgR3sKmwUJJ");
+    //BlindingLight.get("name")
+    //BlindingLight.get("artist")
+    //BlindingLight.get("img")
+    var name = "Billie Ellish";
+    var song = "bad guy";
+    var img = './../../newsImage.jpg';
 
     return(
     <div>
@@ -32,7 +38,7 @@ function Songs() {
                     <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
                 </div> 
             </div>
-            <div class="col-sm-2 my-auto" align="center"><a href="/songspage">bad guy</a></div>
+            <div class="col-sm-2 my-auto" align="center"><a href={`/songspage/${name}/${song}/${img}`}>bad guy</a></div>
             <div class="col-sm-2 my-auto" align="center"><a href="/artists/Billie%20Eilish">Billie Eilish</a></div>
         </div>
         <div class="row pt-3">
@@ -44,7 +50,7 @@ function Songs() {
                     <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
                 </div> 
             </div>
-            <div class="col-sm-2 my-auto" align="center"><a href="/songspage">The Less I Know The Better</a></div>
+            <div class="col-sm-2 my-auto" align="center"><a href="/songspage/">The Less I Know The Better</a></div>
             <div class="col-sm-2 my-auto" align="center"><a href="/artists/Tame%20Impala">Tame Impala</a></div>
         </div>
         <div class="row pt-3">

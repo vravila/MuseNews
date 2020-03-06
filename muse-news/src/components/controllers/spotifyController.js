@@ -7,6 +7,7 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 module.exports = function(id) {
+  /*
   spotifyApi.clientCredentialsGrant().then(
     function(data) {
       console.log('The access token expires in ' + data.body['expires_in']);
@@ -21,6 +22,7 @@ module.exports = function(id) {
       console.log('Something went wrong when retrieving an access token', err);
     }
   );
+  */
 }
 
 //gets an artists' album
