@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import Billie from "./../../imgs/Billie.jpg";
+import Abel from "./../../imgs/the_weeknd.jpg";
+import Tame from "./../../imgs/tame_impala.jpg";
+
 function ArtistsPage({ match }) {
   useEffect(() => {
     fetchItem();
@@ -10,6 +14,8 @@ function ArtistsPage({ match }) {
   const [item, setItem] = useState({
     bio: {},
     stats: {},
+    tags: {},
+    similar: {},
     image: {
       size: {},
       text: {}
@@ -22,16 +28,50 @@ function ArtistsPage({ match }) {
     );
     const item = await fetchItem.json();
     setItem(item.artist);
-    console.log(item.artist);
+    console.log(item);
   };
 
   return (
     <div>
-      <h4>{item.name}</h4>
-      {/* <img src={temporaryImages(item.name)} alt="" /> */}
-      <p>{escapeHREF(item.bio.content)}</p>
+      <h1>{item.name}</h1>
+      <img
+        className="center-block"
+        src={temporaryImages(item.name)}
+        alt=""
+        style={{ width: 500, height: 500 }}
+      />
+      <br />
+      <p className="lead" style={{ fontSize: "18px" }}>
+        {escapeHREF(item.bio.content)}
+      </p>
       <br></br>
-      <p>Listeners: {item.stats.listeners} </p>
+      <p className="lead" style={{ fontSize: "15px", color: "red" }}>
+        {getOnTour(item.ontour)}
+      </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Listeners:</strong> {item.stats.listeners}{" "}
+      </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Play Count:</strong> {item.stats.playcount}{" "}
+      </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Tags:</strong> {getTags(item.tags.tag)}
+      </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Similar Artists:</strong> {getTags(item.similar.artist)}
+      </p>
+      <h4>Top Songs:</h4>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <Link to={`/songspage/${item.name}/${getTopSongs(item.name)}`}>
+          <strong>{getTopSongs(item.name)}</strong>
+        </Link>
+      </p>
+      <h4>Headlines:</h4>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <Link to={`/songspage/${item.name}/${getTopSongs(item.name)}`}>
+          <strong>{getTopSongs(item.name)}</strong>
+        </Link>
+      </p>
     </div>
     // <div>
     //   <h1>Artists Page!!!</h1>
@@ -42,20 +82,51 @@ function ArtistsPage({ match }) {
   );
 }
 
+function getTags(tags) {
+  if (tags) {
+    var str = "";
+    for (var i = 0; i < tags.length; i++) {
+      str += tags[i].name;
+      if (i != tags.length - 1) {
+        str += ", ";
+      }
+    }
+    return str;
+  }
+  return "";
+}
+
+function getOnTour(ontour) {
+  if (ontour == 0) {
+    return "Not Currently On Tour";
+  }
+  return "Currently On Tour";
+}
+
+function getTopSongs(name) {
+  if (name) {
+    console.log(name);
+    if (name === "Billie Eilish") {
+      return "bad guy";
+    } else if (name === "The Weeknd") {
+      return "Blinding Lights";
+    } else if (name === "Tame Impala") {
+      return "The Less I Know The Better";
+    } else {
+      return "";
+    }
+  }
+}
+
 function temporaryImages(name) {
   if (name) {
     console.log(name);
     if (name === "Billie Eilish") {
-      console.log("Acsdfadsf");
-      return "./src/components/images/billie_eilish.jpg";
+      return Billie;
     } else if (name === "The Weeknd") {
-      return "./images/the_weeknd.jpg";
+      return Abel;
     } else if (name === "Tame Impala") {
-      return "./images/tame_impala.jpg";
-    } else if (name === "Kanye West") {
-      return "./images/kanye.jpg";
-    } else if (name === "Dua Lipa") {
-      return "./images/dua_lipa.jpg";
+      return Tame;
     } else {
       return "";
     }

@@ -1,44 +1,108 @@
-import React from 'react';
-import {useParams} from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import SongArticle from './../SongArticle';
-import './../../App.js';
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import SongArticle from "./../SongArticle";
+import "./../../App.js";
 import Billie from "../../imgs/Billie.jpg";
 import Tame from "../../imgs/Tame.jpg";
 import weeknd from "../../imgs/weeknd.jpg";
+import { Link } from "react-router-dom";
 
 function SongsPage() {
+  let { name, song, img } = useParams();
 
-    let{name,song,img} = useParams();
+  img = getImage(name);
 
-    img = getImage(name);
+  useEffect(() => {
+    fetchItem();
+    // console.log(match);
+  }, []);
 
-    return(
-        <div>
+  const [item, setItem] = useState({
+    wiki: {},
+    toptags: {}
+  });
 
-            <div class="container-fluid">
-                <h1>{song}</h1>
-                <h2>By {name}</h2>
-                <img src={img} class="img-thumbnail" alt="albumArt 1" style={{width:400, height:400}}></img>
-            </div>
-
-        </div>
+  const fetchItem = async () => {
+    console.log(song);
+    const fetchItem = await fetch(
+      `http://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${name}&track=${song}&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&format=json`
     );
+    const item = await fetchItem.json();
+    setItem(item.track);
+    console.log(item);
+  };
 
+  return (
+    <div>
+      <div class="container-fluid">
+        <h1>
+          <strong>{song}</strong>
+        </h1>
+        <h2>
+          <strong>By</strong>{" "}
+          <Link to={`../../../artists/${name}`}>{name}</Link>
+        </h2>
+        <img
+          src={img}
+          className="center-block"
+          alt="albumArt 1"
+          style={{ width: 500, height: 500 }}
+        ></img>
+        <p className="lead" style={{ fontSize: "18px" }}>
+          {escapeHREF(item.wiki.content)}
+        </p>
+        <br></br>
+        <p className="lead" style={{ fontSize: "15px" }}>
+          <strong>Listeners:</strong> {item.listeners}{" "}
+        </p>
+        <p className="lead" style={{ fontSize: "15px" }}>
+          <strong>Play Count:</strong> {item.playcount}{" "}
+        </p>
+        <p className="lead" style={{ fontSize: "15px" }}>
+          <strong>Tags:</strong> {getTags(item.toptags.tag)}
+        </p>
+      </div>
+    </div>
+  );
 }
 
-function getImage(name){
-    if(name == "Billie Eilish"){
-        return(Billie);
-    }
-    else if(name == "Tame Impala"){
-        return(Tame);
-    }
-    else if(name == "The Weeknd"){
-        return(weeknd);
-    }
-    return("fail");
+function getImage(name) {
+  var img = document.createElement("img");
 
+  if (name == "Billie Eilish") {
+    return Billie;
+  } else if (name == "Tame Impala") {
+    return Tame;
+  } else if (name == "The Weeknd") {
+    return weeknd;
+  }
+  return "fail";
+}
+
+function escapeHREF(content) {
+  console.log(typeof content);
+  console.log(content);
+  if (content) {
+    return content.substring(0, content.indexOf("<a href"));
+  }
+  //   content.indexOf("k");
+  //   return content.substring(0, content.indexOf("<a href"));
+  return content;
+}
+
+function getTags(tags) {
+  if (tags) {
+    var str = "";
+    for (var i = 0; i < tags.length; i++) {
+      str += tags[i].name;
+      if (i != tags.length - 1) {
+        str += ", ";
+      }
+    }
+    return str;
+  }
+  return "";
 }
 
 export default SongsPage;
