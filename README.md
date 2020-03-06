@@ -19,9 +19,9 @@ Kedar Raman UTEID: kvr336 GitHub ID: kedaraman
   Estimated completion time (15 hours)
   Actual completion time (17 hours)
   
-Sam Dauenbaugh  UTEID:
+Sam Dauenbaugh  UTEID: sad2929
   Estimated completion time (4 hours)
-  Actual completion time (3 hours)
+  Actual completion time (6 hours)
 
 
 
