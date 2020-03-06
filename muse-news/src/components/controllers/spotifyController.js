@@ -7,20 +7,37 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 module.exports = function(id) {
-  spotifyApi.clientCredentialsGrant().then(
-    function(data) {
-      console.log('The access token expires in ' + data.body['expires_in']);
-      console.log('The access token is ' + data.body['access_token']);
+  var request = require('request'); // "Request" library
 
-      // Save the access token so that it's used in future calls
-      spotifyApi.setAccessToken(data.body['access_token']);
+  var client_id = '31c483867b244b47965bf54c1e9aa7c1'; // Your client id
+  var client_secret = '217bf9c707e745e48cab43245857d471'; // Your secret
 
-      findSong(id);
+  // your application requests authorization
+  var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
     },
-    function(err) {
-      console.log('Something went wrong when retrieving an access token', err);
+    form: {
+      grant_type: 'client_credentials'
+    },
+    json: true
+  };
+
+  request.post(authOptions, function(error, response, body) {
+
+    //console.log(response);
+    if (!error && response.statusCode === 200) {
+
+      // use the access token to access the Spotify Web API
+      var token = body.access_token;
+
+      spotifyApi.setAccessToken(token);
+      findSong(id);
     }
-  );
+  });
+
+
 }
 
 //gets an artists' album
@@ -48,7 +65,7 @@ function findSong(id) {
       songInfo.set("name", data.body.name);
       songInfo.set("artist", data.body.artists[0].name);
       songInfo.set("img", data.body.album.images[0].url);
-      //console.log("song info: \n\n");
+      //console.log(songInfo);
 
       return songInfo;
 
