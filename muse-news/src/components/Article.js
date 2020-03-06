@@ -1,21 +1,22 @@
 import React, {Component} from 'react';
+import { Link } from "react-router-dom";
 
 class Article extends Component {
     state = {
-        title: this.props.title,
+        key: this.props.key,
+        title: "Title",
         text: "Sample Text",
-        url: "www.google.com",
-        image: require("./../newsImage.jpg")
+        url: "www.google.com"
     }
+
     render() { 
         return (
             <div>
                 <body>
                     <div style={{margin:20}}>
-                        <img src={this.state.image} />
                         <h1>{this.state.title}</h1>
                         <p>{this.state.text}</p>
-                        <a href={this.state.url} />
+                        <Link to={this.state.url}>Source</Link>
                     </div>
                 </body>
             </div>

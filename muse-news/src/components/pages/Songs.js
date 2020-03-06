@@ -1,22 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../../App.js';
 import '../controllers/spotifyController.js';
 
 
+var spotifyController = require('../controllers/spotifyController.js')
 function Songs() {
 
-    var spotifyController = require('../controllers/spotifyController.js')
+  let eilish;
+  let tame;
+  let weeknd;
 
-    var BlindingLight = spotifyController("0sf12qNH5qcw8qpgymFOqD");
-    var badguy = spotifyController("2Fxmhks0bxGSBdJ92vM42m");
-    var lessIKnow = spotifyController("6K4t31amVTZDgR3sKmwUJJ");
-    //var test1 = BlindingLight.get("name");
-    //var test2 = BlindingLight.get("artist");
-    //var test3 = BlindingLight.get("img");
-    var name = "Billie Ellish";
-    var song = "bad guy";
-    var img = './../../newsImage.jpg';
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  var spotifyController = require('./../controllers/spotifyController');
+
+  const [items, setItems] = useState([]);
+
+  const fetchItems = async () => {
+    eilish = await spotifyController("2Fxmhks0bxGSBdJ92vM42m");
+    tame = await spotifyController("6K4t31amVTZDgR3sKmwUJJ");
+    weeknd = await spotifyController("0sf12qNH5qcw8qpgymFOqD");
+  };
+
+  var name1 = "Billie Eilish";
+  var song1 = "bad guy";
+  var img1 = "";
+  var name2 = "Tame Impala";
+  var song2 = "The Less I Know The Better";
+  var img2 = "";
+  var name3 = "The Weeknd";
+  var song3 = "Blinding Lights";
+  var img3 = "";
+
+  //var test1 = eilish.get("name");
 
     return(
     <div>
@@ -35,11 +54,11 @@ function Songs() {
                     <h4 class="p-3">1</h4>
                 </div>
                 <div class="d-inline-block">
-                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
-                </div> 
+                    <img src={require('../../imgs/Billie.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img>
+                </div>
             </div>
-    <div class="col-sm-2 my-auto" align="center"><a href={`/songspage/${name}/${name}/${name}`}>{song}</a></div>
-            <div class="col-sm-2 my-auto" align="center"><a href="/artists/Billie%20Eilish">Billie Eilish</a></div>
+    <div class="col-sm-2 my-auto" align="center"><a href={`/songspage/${name1}/${song1}/${img1}`}>{song1}</a></div>
+    <div class="col-sm-2 my-auto" align="center"><a href="/artists/Billie%20Eilish">{name1}</a></div>
         </div>
         <div class="row pt-3">
             <div class="col-sm-2 my-auto" align="center">
@@ -47,11 +66,11 @@ function Songs() {
                     <h4 class="p-3">2</h4>
                 </div>
                 <div class="d-inline-block">
-                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
-                </div> 
+                    <img src={require('../../imgs/Tame.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img>
+                </div>
             </div>
-            <div class="col-sm-2 my-auto" align="center"><a href="/songspage/">The Less I Know The Better</a></div>
-            <div class="col-sm-2 my-auto" align="center"><a href="/artists/Tame%20Impala">Tame Impala</a></div>
+    <div class="col-sm-2 my-auto" align="center"><a href={`/songspage/${name2}/${song2}/${img2}`}>{song2}</a></div>
+            <div class="col-sm-2 my-auto" align="center"><a href="/artists/Tame%20Impala">{name2}</a></div>
         </div>
         <div class="row pt-3">
             <div class="col-sm-2 my-auto" align="center">
@@ -59,11 +78,11 @@ function Songs() {
                     <h4 class="p-3">3</h4>
                 </div>
                 <div class="d-inline-block">
-                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
-                </div> 
+                    <img src={require('../../imgs/weeknd.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img>
+                </div>
             </div>
-            <div class="col-sm-2 my-auto" align="center"><a href="/songspage">Blinding Lights</a></div>
-            <div class="col-sm-2 my-auto" align="center"><a href="/artists/The%20Weeknd">The Weekend</a></div>
+    <div class="col-sm-2 my-auto" align="center"><a href={`/songspage/${name3}/${song3}/${img3}`}>{song3}</a></div>
+            <div class="col-sm-2 my-auto" align="center"><a href="/artists/The%20Weeknd">{name3}</a></div>
         </div>
     </div>
     );

@@ -8,6 +8,7 @@ class NewsArticle extends Component{
     constructor(props) {
         super(props);
         this.state = {
+            key: this.props.id,
             title: this.props.title,
             image: require("./../newsImage.jpg"),
             previewText: this.props.preview
@@ -25,7 +26,7 @@ class NewsArticle extends Component{
                             <Card.Text> 
                                 {this.state.previewText}
                             </Card.Text>
-                            <Link to={`/Newsp/${this.state.title}`}>
+                            <Link to={`/Newsp/${this.state.key}`}>
                                 <Button variant="primary" style={{fontSize: 14}}>More</Button>
                             </Link>
                         </Card.Body>

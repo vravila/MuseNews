@@ -5,7 +5,7 @@ import Article from './../Article';
 
 function NewsPage(){
 
-    let {title} = useParams();
+    let {key} = useParams();
 
     return(
         <div>
@@ -16,7 +16,7 @@ function NewsPage(){
                 crossorigin="anonymous"
             />
 
-            <Article title={title}/>
+            <Article key={key} />
 
             </div>
     )
