@@ -1,39 +1,151 @@
 import React, { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./../../App.js";
-import "../controllers/spotifyController.js";
+import { Link } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './../../App.js';
+import '../controllers/spotifyController.js';
 
-var spotifyController = require("../controllers/spotifyController.js");
+//var spotifyController = require('../controllers/spotifyController.js')
+
+var spotifyController = require('./../controllers/spotifyController');
+var request = require('request'); // "Request" library
+
+
 function Songs() {
-  let eilish;
-  let tame;
-  let weeknd;
+  useEffect(()=> {
+    getAccessCode();
+    getEilish();
+    getTame();
+    getWeeknd();
+  }, [])
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
+  const [accesstoken, setAccessToken] = useState(
+    {}
+  );
 
-  var spotifyController = require("./../controllers/spotifyController");
+  const [eilish, setEilish] = useState(
+    {
+    }
+  );
 
-  const [items, setItems] = useState([]);
+  const [eilishName, setEilishName] = useState(
+    {
+    }
+  );
 
-  const fetchItems = async () => {
-    eilish = await spotifyController("2Fxmhks0bxGSBdJ92vM42m");
-    tame = await spotifyController("6K4t31amVTZDgR3sKmwUJJ");
-    weeknd = await spotifyController("0sf12qNH5qcw8qpgymFOqD");
+  const [eilishImg, setEilishImg] = useState(
+  {
+
+  });
+
+  const [tame, setTame] = useState(
+    {
+    }
+  );
+
+  const [tameName, setTameName] = useState(
+    {
+    }
+  );
+
+  const [tameImg, setTameImg] = useState(
+  {
+
+  });
+
+  const [weeknd, setWeeknd] = useState(
+    {
+    }
+  );
+
+  const [weekndName, setWeekndName] = useState(
+    {
+    }
+  );
+
+  const [weekndImg, setWeekndImg] = useState(
+  {
+
+  });
+
+
+
+
+const getAccessCode = async () => {
+  var client_id = '31c483867b244b47965bf54c1e9aa7c1'; // Your client id
+  var client_secret = '217bf9c707e745e48cab43245857d471';
+
+  var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+      'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+    },
+    form: {
+      grant_type: 'client_credentials'
+    },
+    json: true
   };
+  //return authOptions;
+  await request.post(authOptions, function(error, response, body) {
+    setAccessToken(body.access_token);
+  })
+}
 
-  var name1 = "Billie Eilish";
-  var song1 = "bad guy";
-  var img1 = "";
-  var name2 = "Tame Impala";
-  var song2 = "The Less I Know The Better";
-  var img2 = "";
-  var name3 = "The Weeknd";
-  var song3 = "Blinding Lights";
-  var img3 = "";
+const getEilish = async () => {
 
-  //var test1 = eilish.get("name");
+
+  await fetch(
+      `https://api.spotify.com/v1/tracks/2Fxmhks0bxGSBdJ92vM42m`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: 'Bearer ${accesstoken}'
+        }
+      }).then(response=>response.json()).then(
+        data=>  {
+          setEilish(data);
+          setEilishName(data.artists[0]);
+          setEilishImg(data.album.images[0]);
+        }
+      )
+    }
+
+    const getTame = async () => {
+
+
+      await fetch(
+          `https://api.spotify.com/v1/tracks/6K4t31amVTZDgR3sKmwUJJ`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: 'Bearer ${accesstoken}'
+            }
+          }).then(response=>response.json()).then(
+            data=>  {
+              setTame(data);
+              setTameName(data.artists[0]);
+              setTameImg(data.album.images[0]);
+            }
+          )
+        }
+
+        const getWeeknd = async () => {
+
+
+          await fetch(
+              `https://api.spotify.com/v1/tracks/0sf12qNH5qcw8qpgymFOqD`,
+              {
+                method: "GET",
+                headers: {
+                  Authorization: 'Bearer ${accesstoken}'
+                }
+              }).then(response=>response.json()).then(
+                data=>  {
+                  setWeeknd(data);
+                  setWeekndName(data.artists[0]);
+                  setWeekndImg(data.album.images[0]);
+                }
+              )
+            }
 
   return (
     <div>
@@ -62,7 +174,7 @@ function Songs() {
           </div>
           <div class="d-inline-block">
             <img
-              src={require("../../imgs/Billie.jpg")}
+              src={eilishImg.url}
               class="img-thumbnail"
               alt="albumArt 1"
               style={{ width: 80, height: 80 }}
@@ -70,14 +182,14 @@ function Songs() {
           </div>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${name1}/${song1}/${img1}`}>{song1}</a>
+          <a href={`/songspage/${eilishName.name}/${eilish.name}`}>{eilish.name}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/Billie%20Eilish">{name1}</a>
+          <a href="/artists/Billie%20Eilish">{eilishName.name}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
           <a href="/Newsp/Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner">
-            See News on {name1}
+            See News on {eilishName.name}
           </a>
         </div>
       </div>
@@ -88,7 +200,7 @@ function Songs() {
           </div>
           <div class="d-inline-block">
             <img
-              src={require("../../imgs/Tame.jpg")}
+              src={tameImg.url}
               class="img-thumbnail"
               alt="albumArt 1"
               style={{ width: 80, height: 80 }}
@@ -96,14 +208,14 @@ function Songs() {
           </div>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${name2}/${song2}/${img2}`}>{song2}</a>
+          <a href={`/songspage/${tameName.name}/${tame.name}`}>{tame.name}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/Tame%20Impala">{name2}</a>
+          <a href="/artists/Tame%20Impala">{tameName.name}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
           <a href="/Newsp/Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson">
-            See News on {name2}
+            See News on {tameName.name}
           </a>
         </div>
       </div>
@@ -114,7 +226,7 @@ function Songs() {
           </div>
           <div class="d-inline-block">
             <img
-              src={require("../../imgs/weeknd.jpg")}
+              src={weekndImg.url}
               class="img-thumbnail"
               alt="albumArt 1"
               style={{ width: 80, height: 80 }}
@@ -122,14 +234,14 @@ function Songs() {
           </div>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${name3}/${song3}/${img3}`}>{song3}</a>
+          <a href={`/songspage/${weekndName.name}/${weeknd.name}`}>{weeknd.name}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/The%20Weeknd">{name3}</a>
+          <a href="/artists/The%20Weeknd">{weekndName.name}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
           <a href="/Newsp/Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)">
-            See News on {name3}
+            See News on {weekndName.name}
           </a>
         </div>
       </div>
