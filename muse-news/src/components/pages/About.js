@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+
 function About() {
   useEffect(() => {
     fetchItems();
   }, []);
+
+  const tekleImg = require("./../../imgs/AlexanderTekle.jpg")
+  const ramanImg = require("./../../imgs/KedarRaman.jpg")
 
   const [items, setItems] = useState([]);
   const [issuesItems, setIssuesItems] = useState({});
@@ -29,6 +33,72 @@ function About() {
 
   return (
     <div>
+      <h1>Welcome to Muse News!</h1>
+      <b>What is it?</b>
+      <p>This is Muse News, your one-stop destination for all things music related. 
+        Want to know the top songs right now? Learn more about your favorite artists?
+        Or even have access to the hottest news? Muse-News does all of this. For all you
+        music nerds out there, come to Muse-News and have an amazing time.
+      </p>
+      <br></br>
+      <b>What can our website provide?</b>
+      <p>Our website allows the user 3 functionalities at the moment</p>
+      <ul>
+        <li>The user is able to see the top songs trending right now.</li>
+        <li>The user is able to see some news regarding some artists.</li>
+        <li>The user is able to see information about some artists.</li>
+      </ul>
+      <br></br>
+
+      <b>Our Team</b>
+
+      <div class="container">
+            <div class="row">
+                <div class="card" >
+                    <img src=""/>
+                    <div class="card-body">
+                        <h3 class="card-title">Venkata Ravila</h3>
+                        <p class="card-text" id="hubertCommits">Number of Commits: x</p>
+                        <p class="card-text" id="hubertIssues">Number of Issues: 0</p>
+                    </div>
+                </div>
+                <div class="card" >
+                  <img src={ramanImg} style={{width: 100}}/>
+                    <div class="card-body">
+                        <h3 class="card-title">Kedar Raman</h3>
+                        <p class="card-text" id="adityaCommits">Number of Commits: x</p>
+                        <p class="card-text" id="adityaIssues">Number of Issues: 3</p>
+                    </div>
+                </div>
+                <div class="card" >
+                    <img src={tekleImg} style={{width: 100}}/>
+                    <div class="card-body">
+                        <h3 class="card-title">Alexander Tekle</h3>
+                        <p class="card-text" id="rishCommits">Number of Commits: x</p>
+                        <p class="card-text" id="rishIssues">Number of Issues: 0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="card" >
+                    <img src="img/cristian.png"/>
+                    <div class="card-body">
+                        <h3 class="card-title">Daniel Walsh</h3>
+                        <p class="card-text" id="cristianCommits">Number of Commits: q</p>
+                        <p class="card-text" id="cristianIssues">Number of Issues: 0</p>
+                    </div>
+                </div>
+                <div class="card" >
+                    <img src="img/jack.png"/>
+                    <div class="card-body">
+                        <h3 class="card-title">Sam Dauenbaugh</h3>
+                        <p class="card-text" id="jackCommits">Number of Commits: x</p>
+                        <p class="card-text" id="jackIssues">Number of Issues: 0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
       <h2>Total Number of Commits: {items.length}</h2>
       <h3>Commits Per Person:</h3>
       {parseItems(items).map(item => (
