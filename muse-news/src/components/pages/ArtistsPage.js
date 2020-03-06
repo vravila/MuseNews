@@ -69,7 +69,7 @@ function ArtistsPage({ match }) {
       <h4>Headlines:</h4>
       <p className="lead" style={{ fontSize: "15px" }}>
         <Link to={`/songspage/${item.name}/${getTopSongs(item.name)}`}>
-          <strong>{getTopSongs(item.name)}</strong>
+          <strong>{temporaryNewsLink(item.name)}</strong>
         </Link>
       </p>
     </div>
@@ -127,6 +127,21 @@ function temporaryImages(name) {
       return Abel;
     } else if (name === "Tame Impala") {
       return Tame;
+    } else {
+      return "";
+    }
+  }
+}
+
+function temporaryNewsLink(name) {
+  if (name) {
+    console.log(name);
+    if (name === "The Weeknd") {
+      return "Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)";
+    } else if (name === "Billie Eilish") {
+      return "Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner";
+    } else if (name === "Tame Impala") {
+      return "Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson";
     } else {
       return "";
     }

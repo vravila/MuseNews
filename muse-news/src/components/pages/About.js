@@ -19,7 +19,7 @@ function About() {
     );
 
     const issueData = await fetch(
-      `https://api.github.com/repos/vravila/MuseNews/issues`
+      `https://api.github.com/repos/vravila/MuseNews/issues?state=all`
     );
 
     // console.log(process.env.REACT_APP_LASTFM_API_KEY);
