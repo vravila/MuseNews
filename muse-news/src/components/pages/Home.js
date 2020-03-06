@@ -6,7 +6,9 @@ import HomeCarousel from "./../HomeCarousel";
 function Home() {
   return (
     <div className="outsideContainer">
-      <div>{/* <HomeCarousel></HomeCarousel> */}</div>
+      <div>
+        <HomeCarousel></HomeCarousel>
+      </div>
       <div className="container">
         <div className="row mt-5">
           <InfoConsumer>

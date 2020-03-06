@@ -14,6 +14,8 @@ function ArtistsPage({ match }) {
   const [item, setItem] = useState({
     bio: {},
     stats: {},
+    tags: {},
+    similar: {},
     image: {
       size: {},
       text: {}
@@ -26,7 +28,7 @@ function ArtistsPage({ match }) {
     );
     const item = await fetchItem.json();
     setItem(item.artist);
-    // console.log(item.artist);
+    console.log(item);
   };
 
   return (
@@ -43,8 +45,32 @@ function ArtistsPage({ match }) {
         {escapeHREF(item.bio.content)}
       </p>
       <br></br>
+      <p className="lead" style={{ fontSize: "15px", color: "red" }}>
+        {getOnTour(item.ontour)}
+      </p>
       <p className="lead" style={{ fontSize: "15px" }}>
         <strong>Listeners:</strong> {item.stats.listeners}{" "}
+      </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Play Count:</strong> {item.stats.playcount}{" "}
+      </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Tags:</strong> {getTags(item.tags.tag)}
+      </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Similar Artists:</strong> {getTags(item.similar.artist)}
+      </p>
+      <h4>Top Songs:</h4>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <Link to={`/songspage/${item.name}/${getTopSongs(item.name)}`}>
+          <strong>{getTopSongs(item.name)}</strong>
+        </Link>
+      </p>
+      <h4>Headlines:</h4>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <Link to={`/songspage/${item.name}/${getTopSongs(item.name)}`}>
+          <strong>{getTopSongs(item.name)}</strong>
+        </Link>
       </p>
     </div>
     // <div>
@@ -54,6 +80,42 @@ function ArtistsPage({ match }) {
     //   <h4>Coldplay</h4>
     // </div>
   );
+}
+
+function getTags(tags) {
+  if (tags) {
+    var str = "";
+    for (var i = 0; i < tags.length; i++) {
+      str += tags[i].name;
+      if (i != tags.length - 1) {
+        str += ", ";
+      }
+    }
+    return str;
+  }
+  return "";
+}
+
+function getOnTour(ontour) {
+  if (ontour == 0) {
+    return "Not Currently On Tour";
+  }
+  return "Currently On Tour";
+}
+
+function getTopSongs(name) {
+  if (name) {
+    console.log(name);
+    if (name === "Billie Eilish") {
+      return "bad guy";
+    } else if (name === "The Weeknd") {
+      return "Blinding Lights";
+    } else if (name === "Tame Impala") {
+      return "The Less I Know The Better";
+    } else {
+      return "";
+    }
+  }
 }
 
 function temporaryImages(name) {
