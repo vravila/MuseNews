@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../../App.js';
 import '../controllers/spotifyController.js';
 
-
+var spotifyController = require('../controllers/spotifyController.js')
 function Songs() {
 
-    var spotifyController = require('../controllers/spotifyController.js')
+  let eilish;
+  let tame;
+  let weeknd;
 
-    var BlindingLight = spotifyController("0sf12qNH5qcw8qpgymFOqD");
-    var badguy = spotifyController("2Fxmhks0bxGSBdJ92vM42m");
-    var lessIKnow = spotifyController("6K4t31amVTZDgR3sKmwUJJ");
-    BlindingLight.get("name")
-    BlindingLight.get("artist")
-    BlindingLight.get("img")
-    var name = "Billie Ellish";
-    var song = "bad guy";
-    var img = './../../newsImage.jpg';
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  var spotifyController = require('./../controllers/spotifyController');
+
+  const [items, setItems] = useState([]);
+
+  const fetchItems = async () => {
+    eilish = await spotifyController("2Fxmhks0bxGSBdJ92vM42m");
+    tame = await spotifyController("6K4t31amVTZDgR3sKmwUJJ");
+    weeknd = await spotifyController("0sf12qNH5qcw8qpgymFOqD");
+  };
 
     return(
     <div>
@@ -35,10 +41,10 @@ function Songs() {
                     <h4 class="p-3">1</h4>
                 </div>
                 <div class="d-inline-block">
-                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
-                </div> 
+                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img>
+                </div>
             </div>
-    <div class="col-sm-2 my-auto" align="center"><a href={`/songspage/${name}/${song}/${img}`}>{song}</a></div>
+    <div class="col-sm-2 my-auto" align="center"><a href={`/songspage/`}></a></div>
             <div class="col-sm-2 my-auto" align="center"><a href="/artists/Billie%20Eilish">Billie Eilish</a></div>
         </div>
         <div class="row pt-3">
@@ -47,8 +53,8 @@ function Songs() {
                     <h4 class="p-3">2</h4>
                 </div>
                 <div class="d-inline-block">
-                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
-                </div> 
+                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img>
+                </div>
             </div>
             <div class="col-sm-2 my-auto" align="center"><a href="/songspage/">The Less I Know The Better</a></div>
             <div class="col-sm-2 my-auto" align="center"><a href="/artists/Tame%20Impala">Tame Impala</a></div>
@@ -59,8 +65,8 @@ function Songs() {
                     <h4 class="p-3">3</h4>
                 </div>
                 <div class="d-inline-block">
-                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img> 
-                </div> 
+                    <img src={require('./../../newsImage.jpg')} class="img-thumbnail" alt="albumArt 1" style={{width:80, height:80}}></img>
+                </div>
             </div>
             <div class="col-sm-2 my-auto" align="center"><a href="/songspage">Blinding Lights</a></div>
             <div class="col-sm-2 my-auto" align="center"><a href="/artists/The%20Weeknd">The Weekend</a></div>
