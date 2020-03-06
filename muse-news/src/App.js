@@ -27,7 +27,7 @@ class App extends Component {
           <Route path="/news" component={News} />
           <Route path="/newsp/:title" component={NewsPage} />
           <Route path="/songs" component={Songs} />
-          <Route path="/songspage/:name/:song/:img" component={SongsPage} />
+          <Route path="/songspage/:name?/:song?/:img?" component={SongsPage} />
         </Switch>
       </div>
     );

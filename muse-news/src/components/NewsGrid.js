@@ -5,6 +5,7 @@ import './../App.css';
 
 class NewsGrid extends Component{
 
+
     state = {
         articles: [
             {id: 1, title: 'Title One', preview: "This is a preview one"},
@@ -12,9 +13,9 @@ class NewsGrid extends Component{
             {id: 3, title: 'Title Three', preview: "This is a preview three"}
         ]
     };
-    
+
     render(){
-        const stories = this.state.articles.map(article=> 
+        const stories = this.state.articles.map(article=>
             <NewsArticle key={article.id} title={article.title} preview={article.preview} />);
         const disp = React.Children.toArray(stories);
         return(
@@ -37,7 +38,7 @@ class NewsGrid extends Component{
                     </table>
                 </body>
             </div>
-        )
+        );
     }
 }
 
