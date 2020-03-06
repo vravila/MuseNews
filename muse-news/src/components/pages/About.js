@@ -11,7 +11,7 @@ function About() {
 
   const fetchItems = async () => {
     const data = await fetch(
-      `https://api.github.com/repos/vravila/MuseNews/commits`
+      `https://api.github.com/repos/vravila/MuseNews/commits?all=true`
     );
 
     const issueData = await fetch(
