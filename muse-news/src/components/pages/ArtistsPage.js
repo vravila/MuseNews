@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import Billie from "./../../imgs/Billie.jpg";
+import Abel from "./../../imgs/the_weeknd.jpg";
+import Tame from "./../../imgs/tame_impala.jpg";
+
 function ArtistsPage({ match }) {
   useEffect(() => {
     fetchItem();
@@ -27,11 +31,21 @@ function ArtistsPage({ match }) {
 
   return (
     <div>
-      <h4>{item.name}</h4>
-      {/* <img src={temporaryImages(item.name)} alt="" /> */}
-      <p>{escapeHREF(item.bio.content)}</p>
+      <h1>{item.name}</h1>
+      <img
+        className="center-block"
+        src={temporaryImages(item.name)}
+        alt=""
+        style={{ width: 500, height: 500 }}
+      />
+      <br />
+      <p className="lead" style={{ fontSize: "18px" }}>
+        {escapeHREF(item.bio.content)}
+      </p>
       <br></br>
-      <p>Listeners: {item.stats.listeners} </p>
+      <p className="lead" style={{ fontSize: "15px" }}>
+        <strong>Listeners:</strong> {item.stats.listeners}{" "}
+      </p>
     </div>
     // <div>
     //   <h1>Artists Page!!!</h1>
@@ -46,16 +60,11 @@ function temporaryImages(name) {
   if (name) {
     console.log(name);
     if (name === "Billie Eilish") {
-      console.log("Acsdfadsf");
-      return "./src/components/images/billie_eilish.jpg";
+      return Billie;
     } else if (name === "The Weeknd") {
-      return "./images/the_weeknd.jpg";
+      return Abel;
     } else if (name === "Tame Impala") {
-      return "./images/tame_impala.jpg";
-    } else if (name === "Kanye West") {
-      return "./images/kanye.jpg";
-    } else if (name === "Dua Lipa") {
-      return "./images/dua_lipa.jpg";
+      return Tame;
     } else {
       return "";
     }
