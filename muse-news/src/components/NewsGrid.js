@@ -19,10 +19,10 @@ const getNews = async(q) => {
     response=>response.json()).then(
       data=> {
         console.log(data);
-        setEilishNews(data);
+        //setEilishNews(data);
       }
     )
-  console.log(eilishNews);
+  //console.log(eilishNews);
   //console.log(resp.json());
 }
 class NewsGrid extends Component{

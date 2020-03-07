@@ -86,11 +86,18 @@ const getAccessCode = async () => {
   };
   //return authOptions;
   await request.post(authOptions, function(error, response, body) {
-    setAccessToken(body.access_token);
+    setAccessToken(body);
+    console.log(body.access_token);
+    console.log(accesstoken)
+
   })
+
+
 }
 
 const getEilish = async () => {
+
+  console.log(accesstoken)
 
 
   await fetch(
@@ -146,7 +153,6 @@ const getEilish = async () => {
                 }
               )
             }
-
   return (
     <div>
       <div class="container-fluid">
