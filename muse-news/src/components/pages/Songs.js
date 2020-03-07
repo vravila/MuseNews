@@ -12,10 +12,10 @@ var request = require('request'); // "Request" library
 
 function Songs() {
   useEffect(()=> {
-    getAccessCode();
-    getEilish();
-    getTame();
-    getWeeknd();
+    //getAccessCode();
+    //getEilish();
+    //getTame();
+    //getWeeknd();
   }, [])
 
   const [accesstoken, setAccessToken] = useState(
@@ -153,6 +153,20 @@ const getEilish = async () => {
                 }
               )
             }
+
+
+  var name1 = "Billie Eilish";
+  var song1 = "bad guy";
+  var img1 = "";
+  var name2 = "Tame Impala";
+  var song2 = "The Less I Know The Better";
+  var img2 = "";
+  var name3 = "The Weeknd";
+  var song3 = "Blinding Lights";
+  var img3 = "";
+
+  //var test1 = eilish.get("name");
+
   return (
     <div>
       <div class="container-fluid">
@@ -169,9 +183,6 @@ const getEilish = async () => {
         <div class="col-sm-2" align="center">
           Artist
         </div>
-        <div class="col-sm-2" align="center">
-          News Links
-        </div>
       </div>
       <div class="row pt-3">
         <div class="col-sm-2 my-auto" align="center">
@@ -180,7 +191,7 @@ const getEilish = async () => {
           </div>
           <div class="d-inline-block">
             <img
-              src={eilishImg.url}
+              src={require("../../imgs/Billie.jpg")}
               class="img-thumbnail"
               alt="albumArt 1"
               style={{ width: 80, height: 80 }}
@@ -188,15 +199,13 @@ const getEilish = async () => {
           </div>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${eilishName.name}/${eilish.name}`}>{eilish.name}</a>
+          <a href={`/songspage/${name1}/${song1}/${img1}`}>{song1}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/Billie%20Eilish">{eilishName.name}</a>
+          <a href="/artists/Billie%20Eilish">{name1}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner">
-            See News on {eilishName.name}
-          </a>
+          <a href="/Newsp/1">See News on {name1}</a>
         </div>
       </div>
       <div class="row pt-3">
@@ -206,7 +215,7 @@ const getEilish = async () => {
           </div>
           <div class="d-inline-block">
             <img
-              src={tameImg.url}
+              src={require("../../imgs/Tame.jpg")}
               class="img-thumbnail"
               alt="albumArt 1"
               style={{ width: 80, height: 80 }}
@@ -214,15 +223,13 @@ const getEilish = async () => {
           </div>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${tameName.name}/${tame.name}`}>{tame.name}</a>
+          <a href={`/songspage/${name2}/${song2}/${img2}`}>{song2}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/Tame%20Impala">{tameName.name}</a>
+          <a href="/artists/Tame%20Impala">{name2}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson">
-            See News on {tameName.name}
-          </a>
+          <a href="/Newsp/2">See News on {name2}</a>
         </div>
       </div>
       <div class="row pt-3">
@@ -232,7 +239,7 @@ const getEilish = async () => {
           </div>
           <div class="d-inline-block">
             <img
-              src={weekndImg.url}
+              src={require("../../imgs/weeknd.jpg")}
               class="img-thumbnail"
               alt="albumArt 1"
               style={{ width: 80, height: 80 }}
@@ -240,15 +247,13 @@ const getEilish = async () => {
           </div>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${weekndName.name}/${weeknd.name}`}>{weeknd.name}</a>
+          <a href={`/songspage/${name3}/${song3}/${img3}`}>{song3}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/The%20Weeknd">{weekndName.name}</a>
+          <a href="/artists/The%20Weeknd">{name3}</a>
         </div>
         <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)">
-            See News on {weekndName.name}
-          </a>
+          <a href="/Newsp/3">See News on {name3}</a>
         </div>
       </div>
     </div>
