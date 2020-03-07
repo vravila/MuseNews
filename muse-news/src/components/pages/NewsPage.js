@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NewsImg from "./../../imgs/newsImage.jpg";
 
 function updateState(title) {
   var text, author, date, url, artist, song, content;
@@ -58,16 +59,24 @@ function NewsPage() {
           <h1>{title}</h1>
           <h3>By: {author}</h3>
           <h3>{date}</h3>
-          <p style={{ fontSize: 18 }}>{text}</p>
-          <br />
           <p style={{ fontSize: 18 }}>
+            <u>{text}</u>
+          </p>
+          <img
+            className="center-block"
+            src={NewsImg}
+            alt=""
+            style={{ width: 500, height: 500 }}
+          />
+          <br />
+          <p className="lead" style={{ fontSize: 16 }}>
             {content}
             <a href={url}> Read More. </a>
           </p>
-          <p style={{ fontSize: 16 }}>
+          <p style={{ fontSize: 14 }}>
             See more about {artist} <Link to={`/artists/${artist}`}>here</Link>.
           </p>
-          <p style={{ fontSize: 16 }}>
+          <p style={{ fontSize: 14 }}>
             See more about {song}{" "}
             <Link to={`/songspage/${artist}/${song}`}>here</Link>.
           </p>
