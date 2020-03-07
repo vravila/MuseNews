@@ -178,20 +178,72 @@ function About() {
         </div>
       </div>
 
-      <b>Data Sources</b>
+      <h3>Data Sources</h3>
+      <p>
+        <strong>LastFM API: </strong> Scraped using a FETCH request to
+        http://ws.audioscrobbler.com/2.0. We used the getInfo endpoint for
+        tracks and artists and the getTopSongs method for artists to find their
+        top songs. We used this API to get biographical information on artists
+        and songs for each instance.
+      </p>
+      <p>
+        <strong>Spotify API: </strong> Scraped using Node.JS to
+        https://api.spotify.com/v1. We used this API to get more information
+        about the top songs and dynamically display each song. This used a POST
+        request to authenticate and GET requests to get data.
+      </p>
+      <p>
+        <strong>Google News API: </strong> Scraped using Node.JS to
+        http://newsapi.org/v2/everything. We used this API to get news articles
+        for songs and artists. We display a preview of the article along with a
+        link to the article and other information such as publication date and
+        author.
+      </p>
+      <p>
+        <strong>Git API: </strong> Scraped using a FETCH request to
+        https://api.github.com. We use this API to dynamically get GitHub
+        statistics like commits and issues for the project as a whole and per
+        user.
+      </p>
 
-      <h2>Total Number of Commits: {items.length}</h2>
-      <h3>Commits Per Person:</h3>
+      <h3>Tools</h3>
+      <p>
+        <strong>React.JS: </strong> We used React.JS to develop the front-end of
+        the application. This allowed us to create a visually-appealing
+        application. We also used the React framework for some API calls that we
+        didn't use Node.JS for.
+      </p>
+
+      <p>
+        <strong>Node.JS: </strong> We used Node.JS to develop some back-end code
+        of the application. It was used for API calls to get data about songs,
+        artists, and news.
+      </p>
+
+      <p>
+        <strong>Bootstrap: </strong> We used Bootstrap to format our web
+        application and make it visually-appealing.
+      </p>
+
+      <h3>
+        Link to Github Repo:{" "}
+        <a href="https://github.com/vravila/MuseNews">
+          https://github.com/vravila/MuseNews
+        </a>
+      </h3>
+
+      <h3>Total Number of Commits: {items.length}</h3>
+      <h4>Commits Per Person:</h4>
       {parseItems(items).map(item => (
         <p>{item}</p>
       ))}
-      <h2>Total Number of Issues: {issuesItems.length}</h2>
-      <h3>Issues Per Person:</h3>
+      <h3>Total Number of Issues: {issuesItems.length}</h3>
+      <h4>Issues Per Person:</h4>
       {parseIssues(issuesItems).map(item => (
         <p>{item}</p>
       ))}
-      <h2>Total Number of Unit Tests: 0 </h2>
-      <h3>Unit Tests Per Person:</h3>
+      <h3>Total Number of Unit Tests: 0 </h3>
+      <h4>Unit Tests Per Person:</h4>
       <p>Kedar Raman: 0</p>
       <p>Venkata Ravila: 0</p>
       <p>Alexander Tekle: 0</p>
