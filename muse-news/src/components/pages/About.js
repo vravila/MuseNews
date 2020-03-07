@@ -40,58 +40,145 @@ function About() {
       <p>
         This is Muse News, your one-stop destination for all things music
         related. Want to know the top songs right now? Learn more about your
-        favorite artists? Or even have access to the hottest news? Muse-News
-        does all of this. For all you music nerds out there, come to Muse-News
-        and have an amazing time.
+        favorite artists? Or even have access to the hottest news about songs
+        and artists? Muse-News does all of this. Whether you are a music nerd
+        looking for the latest updates on your favorite artists or a casual
+        listener exploring songs and artists, come to Muse-News and have an
+        amazing time.
       </p>
       <br></br>
       <b>What can our website provide?</b>
       <p>Our website allows the user 3 functionalities at the moment:</p>
       <ul>
         <li>The user is able to see the top songs trending right now.</li>
-        <li>The user is able to see some news regarding some artists.</li>
-        <li>The user is able to see information about some artists.</li>
+        <li>
+          The user is able to see the latest news regarding artists and songs.
+        </li>
+        <li>The user is able to see information about artists and songs.</li>
       </ul>
+      <p>
+        Muse-News brings all of this information together in an interconnected
+        format. We integrate songs, artists, and the latest news about each to
+        provide users with easy access to their favorite artists and songs and
+        the news related to this. Links between songs, artists, and news
+        articles are one click away, meaning users can browse through each
+        category and explore related information in other categories!
+      </p>
       <br></br>
 
-      <b>Our Team</b>
+      <b>Team Muse-News</b>
 
       <div class="container">
         <div class="row">
-          <div class="card">
-            <img src={ravilaImg} style={{ width: "17rem", height: "17rem" }} />
+          <div class="card" style={{ width: "25rem", height: "40rem" }}>
+            <img src={ravilaImg} style={{ width: "25rem", height: "17rem" }} />
             <div class="card-body">
               <h3 class="card-title">Venkata Ravila</h3>
+              <h6>
+                <strong>
+                  Electrical and Computer Engineering- Software Engineering
+                </strong>
+              </h6>
+              <p>
+                Venkata is a junior Computer Engineering student at UT. He is
+                passionate about cloud computing and front-end web development.
+                In his free time, he likes to play video games and sports.
+              </p>
+              <p>
+                <strong>Primary Responsibilities:</strong> Create Home and About
+                page, front-end development in React
+              </p>
             </div>
           </div>
-          <div class="card">
-            <img src={ramanImg} style={{ width: "17rem", height: "17rem" }} />
+          <div class="card" style={{ width: "25rem", height: "40rem" }}>
+            <img src={ramanImg} style={{ width: "25rem", height: "17rem" }} />
             <div class="card-body">
               <h3 class="card-title">Kedar Raman</h3>
+              <h6>
+                <strong>
+                  Electrical and Computer Engineering- Software Engineering
+                </strong>
+              </h6>
+              <p>
+                Kedar is a junior Computer Engineering student at UT. He is
+                passionate about cloud computing, the Internet of Things, and
+                autonomous vehicles. In his free time, he likes to play sports,
+                go hiking, and explore the unique food that Austin has to offer.
+              </p>
+              <p>
+                <strong>Primary Responsibilities:</strong> Create Artists pages,
+                API calls
+              </p>
             </div>
           </div>
-          <div class="card">
-            <img src={tekleImg} style={{ width: "17rem", height: "17rem" }} />
+          <div class="card" style={{ width: "25rem", height: "40rem" }}>
+            <img src={tekleImg} style={{ width: "25rem", height: "17rem" }} />
             <div class="card-body">
               <h3 class="card-title">Alexander Tekle</h3>
+              <h6>
+                <strong>
+                  Electrical and Computer Engineering- Software Engineering
+                </strong>
+              </h6>
+              <p>
+                Alex Tekle is a third year Computer Engineering and Math student
+                at UT Austin. He’s interested in software engineering,
+                particularly data science and neural networks. In his free time,
+                he likes to play basketball and watch soccer.
+              </p>
+              <p>
+                <strong>Primary Responsibilities:</strong> API calls from
+                Node.JS
+              </p>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="card">
-            <img src={danielImg} style={{ width: "17rem", height: "17rem" }} />
+          <div class="card" style={{ width: "25rem", height: "40rem" }}>
+            <img src={danielImg} style={{ width: "25rem", height: "17rem" }} />
             <div class="card-body">
               <h3 class="card-title">Daniel Walsh</h3>
+              <h6>
+                <strong>
+                  Electrical and Computer Engineering- Software Engineering and
+                  Communications
+                </strong>
+              </h6>
+              <p>
+                Daniel is a third year Computer Engineering student at UT
+                Austin. He’s interested in real-time digital signal processing
+                and compression algorithms. In his free time, he likes to play
+                video games and bike.
+              </p>
+              <p>
+                <strong>Primary Responsibilities:</strong> Create Songs pages
+              </p>
             </div>
           </div>
-          <div class="card">
-            <img src={samImg} style={{ width: "17rem", height: "17rem" }} />
+          <div class="card" style={{ width: "25rem", height: "40rem" }}>
+            <img src={samImg} style={{ width: "25rem", height: "17rem" }} />
             <div class="card-body">
               <h3 class="card-title">Sam Dauenbaugh</h3>
+              <h6>
+                <strong>
+                  Electrical and Computer Engineering- Software Engineering and
+                  Digital Signal Processing
+                </strong>
+              </h6>
+              <p>
+                Sam is a third year Computer Engineering student at UT Austin.
+                He’s interested in communication and automation. In his free
+                time, he likes to play video games and go hiking.
+              </p>
+              <p>
+                <strong>Primary Responsibilities:</strong> Create News pages
+              </p>
             </div>
           </div>
         </div>
       </div>
+
+      <b>Data Sources</b>
 
       <h2>Total Number of Commits: {items.length}</h2>
       <h3>Commits Per Person:</h3>
