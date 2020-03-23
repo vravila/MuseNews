@@ -14,6 +14,12 @@ function News() {
               crossorigin="anonymous"
             />
 
+            {/* TODO
+              * add search bar here
+              * pass search terms to NewsGrid
+              * NewsGrid updates its entries based on search terms 
+              */}
+
             <NewsGrid />
       </div>
     );
