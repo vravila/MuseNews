@@ -7,7 +7,7 @@ const GoogleNewsRss = require('google-news-rss');
 
 const googleNews = new GoogleNewsRss();
 
-
+// TODO figure out how this works (Maybe talk to Alex?)
 //const [eilishNews, setEilishNews] = useState([]);
 //let eilish;
 const getNews = async(q) => {
@@ -27,7 +27,7 @@ const getNews = async(q) => {
 }
 class NewsGrid extends Component{
 
-
+    // TODO update this to show entries based on a search term instead of hardcoded entries.
     state = {
         articles: [
             {key: 1, title: 'Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner', preview: 'He likes when you get mardy'},
@@ -36,6 +36,7 @@ class NewsGrid extends Component{
         ]
     };
 
+    // TODO change this to show more cards instead of a hardcoded table
     render(){
         const stories = this.state.articles.map(article=>
             <NewsArticle key={article.key} title={article.title} preview={article.preview} />);
