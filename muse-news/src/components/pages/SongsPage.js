@@ -25,7 +25,7 @@ function SongsPage() {
   const fetchItem = async () => {
     console.log(song);
     const fetchItem = await fetch(
-      `http://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${name}&track=${song}&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&format=json`
+      `https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${name}&track=${song}&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&format=json`
     );
     const item = await fetchItem.json();
     setItem(item.track);

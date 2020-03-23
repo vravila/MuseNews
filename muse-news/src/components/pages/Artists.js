@@ -3,6 +3,20 @@ import { Link } from "react-router-dom";
 import Billie from "./../../imgs/Billie.jpg";
 import Abel from "./../../imgs/the_weeknd.jpg";
 import Tame from "./../../imgs/tame_impala.jpg";
+import Button from "react-bootstrap/Button";
+
+// function updateDB() {
+//   console.log("Button Pressed!!!!");
+//   const MongoClient = require("mongodb").MongoClient;
+//   const uri =
+//     "mongodb+srv://musenews:<musenews>@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
+//   const client = new MongoClient(uri, { useNewUrlParser: true });
+//   client.connect(client, function(err, db) {
+//     if (err) throw err;
+//     console.log("Database created!");
+//     db.close();
+//   });
+// }
 
 function Artists() {
   useEffect(() => {
@@ -13,7 +27,7 @@ function Artists() {
 
   const fetchItems = async () => {
     const data = await fetch(
-      `http://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&limit=3`
+      `https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=${process.env.REACT_APP_LASTFM_API_KEY}&limit=3`
     );
     // console.log(process.env.REACT_APP_LASTFM_API_KEY);
     const items = await data.json();
@@ -25,8 +39,9 @@ function Artists() {
     <div>
       <div class="container-fluid">
         <h1 class="pageHeader">America's Top Artists</h1>
-        <h2 class="sectionHeader">Top 3 Artists</h2>
+        <h2 class="sectionHeader">Top 3 Artists:</h2>
       </div>
+      {/* <Button onClick={updateDB}>Update MongoDB</Button> */}
 
       {/* <div class="album text-muted">
         <div class="container">
