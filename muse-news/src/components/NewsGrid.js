@@ -29,6 +29,7 @@ class NewsGrid extends Component{
 
     // TODO update this to show entries based on a search term instead of hardcoded entries.
     state = {
+        terms: this.props.terms,
         articles: [
             {key: 1, title: 'Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner', preview: 'He likes when you get mardy'},
             {key: 2, title: 'Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson', preview: "I don’t know if he knows how successful it is…"},
@@ -43,9 +44,8 @@ class NewsGrid extends Component{
         const disp = React.Children.toArray(stories);
         return(
             <div style={{marginLeft:20}}>
+                <h4>Search terms = {this.props.terms}</h4>
                 <body>
-                    <h1>News</h1>
-                    <br></br>
                     <table>
                         <tr>
                             <td>
