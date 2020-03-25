@@ -5,19 +5,6 @@ import Abel from "./../../imgs/the_weeknd.jpg";
 import Tame from "./../../imgs/tame_impala.jpg";
 import Button from "react-bootstrap/Button";
 
-// function updateDB() {
-//   console.log("Button Pressed!!!!");
-//   const MongoClient = require("mongodb").MongoClient;
-//   const uri =
-//     "mongodb+srv://musenews:<musenews>@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
-//   const client = new MongoClient(uri, { useNewUrlParser: true });
-//   client.connect(client, function(err, db) {
-//     if (err) throw err;
-//     console.log("Database created!");
-//     db.close();
-//   });
-// }
-
 function Artists() {
   useEffect(() => {
     fetchItems();
@@ -33,6 +20,13 @@ function Artists() {
     const items = await data.json();
     // console.log(items.artists.artist);
     setItems(items.artists.artist);
+
+    console.log("Starting Node Call...");
+    const response = await fetch("/api/testExport", {
+      method: "GET"
+    });
+    console.log(response);
+    console.log("Done with Node Call!!!");
   };
 
   return (
@@ -41,35 +35,6 @@ function Artists() {
         <h1 class="pageHeader">America's Top Artists</h1>
         <h2 class="sectionHeader">Top 3 Artists:</h2>
       </div>
-      {/* <Button onClick={updateDB}>Update MongoDB</Button> */}
-
-      {/* <div class="album text-muted">
-        <div class="container">
-          <div class="row">
-            <div class="card">
-              <img
-                src={Billie}
-                alt="Card image cap"
-                style={{ width: 100, height: 100 }}
-              />
-              <p class="card-text">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-            </div>
-            <div class="card">
-              <img data-src="holder.js/100px280/thumb" alt="Card image cap" />
-              <p class="card-text">
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       {items.map(item => (
         <Link to={`/artists/${item.name}`}>
           <div className="row-mt-1">
