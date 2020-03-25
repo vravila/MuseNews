@@ -24,8 +24,6 @@ class NewsContainer extends Component{
     }
 
     /* TODO
-     * add search bar here
-     * pass search terms to NewsGrid
      * NewsGrid updates its entries based on search terms 
      */
     render(){
