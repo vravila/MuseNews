@@ -5,6 +5,17 @@ import Abel from "./../../imgs/the_weeknd.jpg";
 import Tame from "./../../imgs/tame_impala.jpg";
 import Button from "react-bootstrap/Button";
 
+function updateDB() {
+  console.log("Starting Node Call...");
+  const response = fetch("/api/artists/updateArtists", {
+    method: "GET"
+  }).then(response => {
+    console.log(response);
+    // console.log(response.body);
+    console.log("Done with Node Call!!!");
+  });
+}
+
 function Artists() {
   useEffect(() => {
     fetchItems();
@@ -13,29 +24,57 @@ function Artists() {
   const [items, setItems] = useState([]);
 
   const fetchItems = async () => {
-    const data = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&limit=3`
-    );
+    const items = [];
+    for (var i = 1; i < 25; i++) {
+      const data = await fetch("/api/artists/getArtistByRank/" + i, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      });
+      const item = await data.json();
+      console.log(item);
+      items.push(item);
+    }
+    // setItems(items.artist);
+    // const data = await fetch(
+    //   `https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&limit=3`
+    // );
+    // console.log("Hello");
+    // const data = await fetch("/api/artists/getArtistByRank/5", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json"
+    //   }
+    // });
     // console.log(process.env.REACT_APP_LASTFM_API_KEY);
-    const items = await data.json();
+    // const items = await data.json();
+    console.log(items);
     // console.log(items.artists.artist);
-    setItems(items.artists.artist);
+    setItems(items);
 
-    console.log("Starting Node Call...");
-    const response = await fetch("/api/artists/testExport", {
-      method: "GET"
-    });
-    console.log(response);
-    // console.log(response.body);
-    console.log("Done with Node Call!!!");
+    // items.map(item => (
+    //       const response =  await(fetch"/api/artists/)
+    // ));
+
+    // console.log("Starting Node Call...");
+    // const response = await fetch("/api/artists/testExport", {
+    //   method: "GET"
+    // });
+    // console.log(response);
+    // // console.log(response.body);
+    // console.log("Done with Node Call!!!");
   };
 
   return (
     <div>
       <div class="container-fluid">
         <h1 class="pageHeader">America's Top Artists</h1>
-        <h2 class="sectionHeader">Top 3 Artists</h2>
+        <h2 class="sectionHeader">Top Artists</h2>
       </div>
+      <Button onClick={updateDB}>Update MongoDB</Button>
       {items.map(item => (
         <Link to={`/artists/${item.name}`}>
           <div className="row-mt-1">
@@ -45,7 +84,7 @@ function Artists() {
                 style={{ width: "20rem", height: "30rem", background: "azure" }}
               >
                 <img
-                  src={temporaryImages(item.name)}
+                  src={item.bingImageURL}
                   alt="Alt"
                   className="card-img-top"
                   style={{ width: "20rem", height: "25rem" }}

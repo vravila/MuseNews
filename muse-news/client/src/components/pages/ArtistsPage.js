@@ -23,11 +23,24 @@ function ArtistsPage({ match }) {
   });
 
   const fetchItem = async () => {
+    console.log("On the ledge");
+    console.log(match.params);
+    console.log("Ive been running");
     const fetchItem = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${match.params.id}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
+      "/api/artists/getArtistByName/" + match.params.id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      }
     );
+    // const fetchItem = await fetch(
+    //   `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${match.params.id}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
+    // );
     const item = await fetchItem.json();
-    setItem(item.artist);
+    setItem(item);
     console.log(item);
   };
 
@@ -36,7 +49,7 @@ function ArtistsPage({ match }) {
       <h1>{item.name}</h1>
       <img
         className="center-block"
-        src={temporaryImages(item.name)}
+        src={item.bingImageURL}
         alt=""
         style={{ width: 500, height: 500 }}
       />

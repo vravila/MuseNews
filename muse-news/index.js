@@ -2,7 +2,13 @@ const express = require("express"); //ret a funx
 const app = express();
 const path = require("path");
 
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 const artistsRoutes = require("./routes/artistsRoutes.js");
+
+// app.use(express.bodyParser());
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
