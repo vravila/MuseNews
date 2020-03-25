@@ -14,6 +14,15 @@ class NewsArticle extends Component {
     };
   }
 
+  componentDidUpdate(){
+    if(this.state.title !== this.props.title){
+      this.setState({
+        title: this.props.title,
+        previewText: this.props.preview
+      });
+    }
+  }
+
   render() {
     return (
       <div>
