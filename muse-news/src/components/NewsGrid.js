@@ -15,8 +15,8 @@ class NewsGrid extends Component{
         super(props);
         this.state = {
             terms: this.props.terms,
+            page: this.props.page,
             articles: [
-                //{key: 1, title: 'Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner', preview: 'He likes when you get mardy'},
                 {title: 'ERROR', preview: 'Something went wrong', img: './../newsImage.jpg'},
                 {title: 'ERROR', preview: 'Something went wrong', img: './../newsImage.jpg'},
                 {title: 'ERROR', preview: 'Something went wrong', img: './../newsImage.jpg'},
@@ -27,9 +27,9 @@ class NewsGrid extends Component{
         this.forceUpdate();
     }
 
-    getNews(q){
+    getNews(q, page){
         let apikey = "bc2ebdb795c5488bb34601ca89a75e7f"
-        let requestURL = "http://newsapi.org/v2/everything?q=" + q + "&apiKey=" + apikey;
+        let requestURL = "http://newsapi.org/v2/everything?q=" + q + "&page=" + page + "&apiKey=" + apikey;
         var outData = "Empty";
         const resp =  fetch(requestURL).then(
             response=>{
@@ -50,15 +50,20 @@ class NewsGrid extends Component{
 
     componentDidUpdate(){
         if(this.state.terms !== this.props.terms){
-            this.setState({terms: this.props.terms}, () => this.getNews(this.state.terms));
+            this.setState({
+                terms: this.props.terms,
+                page: this.props.page
+            }, () => this.getNews(this.state.terms, this.state.page));
+        }
+        else if(this.state.page !== this.props.page){
+            this.setState({
+                page: this.props.page
+            }, ()=> this.getNews(this.state.terms, this.state.page));
         }
     }
 
     // TODO change this to show more cards instead of a hardcoded table
     render(){
-        console.log(this.state.articles[0].title);
-        console.log(this.state.articles[0]);
-        console.log(this.state.articles);
         var cards = [];
         for(var i = 0; i < this.state.articles.length; i++){
             cards.push(<NewsArticle title={this.state.articles[i].title} preview={this.state.articles[i].preview} img={this.state.articles[i].img} />)
