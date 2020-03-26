@@ -25,7 +25,7 @@ class App extends Component {
           <Route path="/artists" exact component={Artists} />
           <Route path="/artists/:id" component={ArtistsPage} />
           <Route path="/news" component={News} />
-          <Route path="/newsp/:title" component={NewsPage} />
+          <Route path="/newsp/:terms/:index" component={NewsPage} />
           <Route path="/songs" component={Songs} />
           <Route path="/songspage/:name?/:song?/:img?" component={SongsPage} />
         </Switch>

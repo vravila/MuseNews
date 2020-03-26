@@ -8,6 +8,7 @@ class NewsArticle extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      link: this.props.link,
       title: this.props.title,
       img: this.props.img,
       previewText: this.props.preview,
@@ -17,6 +18,7 @@ class NewsArticle extends Component {
   componentDidUpdate(){
     if(this.state.title !== this.props.title){
       this.setState({
+        link: this.props.link,
         title: this.props.title,
         previewText: this.props.preview,
         img: this.props.img
@@ -34,7 +36,7 @@ class NewsArticle extends Component {
               <h3>{this.state.title}</h3>
             </Card.Title>
             <Card.Text>{this.state.previewText}</Card.Text>
-            <Link to={'http://www.google.com'/*`/Newsp/${this.state.title}`**/}>
+            <Link to={`/Newsp/${this.state.link}`}>
               <Button variant="primary" style={{ fontSize: 14 }}>
                 More
               </Button>
