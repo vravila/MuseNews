@@ -2,5 +2,12 @@ runtime: nodejs10
 instance_class: F2
 
 handlers:
+  - url: /api/.*
+    script: auto
   - url: /node_modules/bootstrap
     static_dir: bootstrap
+  - url: /
+    static_files: client/build/index.html
+    upload: client/build/index.html
+  - url: /
+    static_dir: client/build
