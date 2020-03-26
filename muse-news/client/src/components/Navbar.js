@@ -67,7 +67,7 @@ function Navbar() {
           <li className="nav-item m-auto">
             <Link
               className="nav-link text-white text-uppercase ml-5"
-              to="/artists"
+              to="/artists/1"
             >
               <h3>Artists</h3>{" "}
             </Link>

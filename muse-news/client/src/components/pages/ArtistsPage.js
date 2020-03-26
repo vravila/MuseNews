@@ -23,9 +23,7 @@ function ArtistsPage({ match }) {
   });
 
   const fetchItem = async () => {
-    console.log("On the ledge");
     console.log(match.params);
-    console.log("Ive been running");
     const fetchItem = await fetch(
       "/api/artists/getArtistByName/" + match.params.id,
       {

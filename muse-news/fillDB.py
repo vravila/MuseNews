@@ -9,21 +9,15 @@ db.list_collection_names()
 
   
 # api-endpoint 
-URL = "https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&limit=50"
-  
-# location given here 
-location = "delhi technological university"
-  
-# defining a params dict for the parameters to be sent to the API 
-PARAMS = {'address':location} 
+URL = "https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&limit=400"
   
 # sending get request and saving the response as response object 
-r = requests.get(url = URL, params = PARAMS) 
+r = requests.get(url = URL) 
   
 # extracting data in json format 
 data = r.json() 
 
-artistsCollection.remove({})
+# artistsCollection.remove({})//////////////////////////////////////////////////////////////////////////////////////////////
 # print(data)
 rank = 1;
 for artist in data['artists']['artist']:
