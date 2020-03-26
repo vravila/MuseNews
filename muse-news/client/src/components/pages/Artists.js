@@ -3,6 +3,7 @@ import { Link, Redirect, matchPath } from "react-router-dom";
 import Billie from "./../../imgs/Billie.jpg";
 import Abel from "./../../imgs/the_weeknd.jpg";
 import Tame from "./../../imgs/tame_impala.jpg";
+import AltSinging from "./../../imgs/alt_singing.jpg";
 import Button from "react-bootstrap/Button";
 
 function updateDB() {
@@ -24,7 +25,7 @@ function Artists({ match }) {
   const DEVELOPMENT_SERVER = "http://localhost:5000";
 
   const ENTRIES_PER_PAGE = 10;
-  const DATABASE_LIMIT = 50;
+  const DATABASE_LIMIT = 200;
   const LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
   const [items, setItems] = useState([]);
   const sourceName = "artists";
@@ -42,14 +43,35 @@ function Artists({ match }) {
   // console.log(match.params.page);
   // console.log("END PAGE!");
   const fetchItems = async () => {
-    const items = [];
-    for (
-      var i = match.params.page * 10 - 10 + 1;
-      i <= match.params.page * 10 && i <= DATABASE_LIMIT;
-      i++
-    ) {
-      console.log("Get by Rank " + i);
-      const data = await fetch("/api/artists/getArtistByRank/" + i, {
+    // const items = [];
+    // for (
+    //   var i = match.params.page * 10 - 10 + 1;
+    //   i <= match.params.page * 10 && i <= DATABASE_LIMIT;
+    //   i++
+    // ) {
+    //   console.log("Get by Rank " + i);
+    //   const data = await fetch("/api/artists/getArtistByRank/" + i, {
+    //     method: "GET",
+    //     // mode: "no-cors",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       // "Access-Control-Allow-Origin": "*",
+    //       // "Access-Control-Allow-Credentials": "true",
+    //       // "Access-Control-Allow-Origin": "http://localhost:5001",
+    //       Accept: "application/json"
+    //     }
+    //   });
+    //   const item = await data.json();
+    //   console.log("Done with fetch");
+    //   console.log(item);
+    //   items.push(item);
+    // }
+
+    const startIdx = match.params.page * 10 - 10 + 1;
+    const endIdx = match.params.page * 10;
+    const data = await fetch(
+      "/api/artists/getArtistByRankRanges/" + startIdx + "/" + endIdx,
+      {
         method: "GET",
         // mode: "no-cors",
         headers: {
@@ -59,12 +81,10 @@ function Artists({ match }) {
           // "Access-Control-Allow-Origin": "http://localhost:5001",
           Accept: "application/json"
         }
-      });
-      const item = await data.json();
-      console.log("Done with fetch");
-      console.log(item);
-      items.push(item);
-    }
+      }
+    );
+    const items = await data.json();
+
     // setItems(items.artist);
     // const data = await fetch(
     //   `https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&limit=3`
@@ -150,7 +170,8 @@ function Artists({ match }) {
               >
                 <img
                   src={item.bingImageURL}
-                  alt="Alt"
+                  alt="Image not Found"
+                  // onError="this.src='../../imgs/alt_singing.jpg'"
                   className="card-img-top"
                   style={{ width: "20rem", height: "25rem" }}
                 />
