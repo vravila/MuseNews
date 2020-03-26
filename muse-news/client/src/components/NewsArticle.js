@@ -26,7 +26,6 @@ class NewsArticle extends Component {
 
   render() {
     return (
-
       <div>
         <Card style={{ width: "32rem", fontSize: 14 }}>
           <Card.Img variant="top" src={this.state.img} width="318" height="190" />

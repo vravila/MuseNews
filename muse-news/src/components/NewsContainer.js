@@ -11,15 +11,33 @@ class NewsContainer extends Component{
         super(props);
         this.state = {
             terms: "Music",
+            page: 1,
             filter: "None",
             sort: "None"
         };
         this.search = this.search.bind(this);
+        this.pageUp = this.pageUp.bind(this);
+        this.pageDown = this.pageDown.bind(this);
     }
 
     search(event){
         event.preventDefault();
         this.state.terms = event.target.searchBox.value;
+        this.state.page = 1;
+        this.forceUpdate();
+    }
+    pageUp(event){
+        event.preventDefault();
+        if(this.state.page < 50){
+            this.state.page = this.state.page + 1;
+        }
+        this.forceUpdate();
+    }
+    pageDown(event){
+        event.preventDefault();
+        if(this.state.page > 1){
+            this.state.page = this.state.page - 1;
+        }
         this.forceUpdate();
     }
 
@@ -44,7 +62,12 @@ class NewsContainer extends Component{
                     </Form.Row>
                 </Form>
 
-                <NewsGrid terms={this.state.terms} />
+                <NewsGrid terms={this.state.terms} page={this.state.page} />
+                <div style = {{marginLeft: 20}}>
+                    <Button style={{display: 'inline-block'}} onClick={this.pageDown}>Previous Page</Button>
+                    <p style={{margin: 20, display: 'inline-block'}}>Page {this.state.page}</p>
+                    <Button style={{display: 'inline-block'}} onClick={this.pageUp}>Next Page</Button>
+                </div>
             </div>
         );
     }
