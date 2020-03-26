@@ -6,10 +6,10 @@ db=client['MuseNewsDatabase']
 artistsCollection = db.artists
 db.list_collection_names()
 
-
+#THERE ARE CURRENTLY 200 INSTANCES OF ARTISTS IN THE DATABASE (UP TO AND INCLUDING PAGE 4 OF LAST.FM)... TO LOAD MORE, START ON PAGE 5, RANK = 201, AND MAKE SURE REMOVE (LINE 20) IS COMMENTED OUT
   
 # api-endpoint 
-URL = "https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&limit=400"
+URL = "https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&page=4"
   
 # sending get request and saving the response as response object 
 r = requests.get(url = URL) 
@@ -17,9 +17,9 @@ r = requests.get(url = URL)
 # extracting data in json format 
 data = r.json() 
 
-# artistsCollection.remove({})//////////////////////////////////////////////////////////////////////////////////////////////
+# artistsCollection.remove({})#////////////////////////////////////////////////////////////////////////////////////////////////////
 # print(data)
-rank = 1;
+rank = 151;
 for artist in data['artists']['artist']:
     artistName = artist['name']
     artistURL = "https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+artistName+"&api_key=10b860590d5168c53783ae9728a9b395&format=json"

@@ -44,6 +44,20 @@ router.get("/getArtistByRank/:rank", (req, res) => {
   });
 });
 
+router.get("/getArtistByRankRanges/:startNo/:endNo", (req, res) => {
+  console.log(
+    "GET to /getArtistByRankRanges for " +
+      req.params.startNo +
+      " to " +
+      req.params.endNo
+  );
+  getArtistByRankRanges(req.params.startNo, req.params.endNo).then(returned => {
+    console.log("Returned!");
+    console.log(returned);
+    res.status(200).json(returned);
+  });
+});
+
 router.get("/getArtistByName/:name", (req, res) => {
   console.log("GET to /getArtist for " + req.params.name);
   getArtistByName(req.params.name).then(returned => {
@@ -107,6 +121,26 @@ async function getArtistByRank(inputrank) {
   console.log("Connected..." + inputrank);
   const collection = client.db(dbName).collection(collectionName);
   returnedArtist = collection.findOne({ rank: parseInt(inputrank) });
+  console.log(returnedArtist);
+  console.log("Done looking");
+  client.close();
+  return returnedArtist;
+}
+
+async function getArtistByRankRanges(start, end) {
+  const dbName = "MuseNewsDatabase";
+  const collectionName = "artists";
+  const MongoClient = require("mongodb").MongoClient;
+  const uri =
+    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
+  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+  // .then(function(db) {
+  console.log("Connected..." + start + " : " + end);
+  const collection = client.db(dbName).collection(collectionName);
+  returnedCursorArtist = collection.find({
+    rank: { $gt: parseInt(start) - 1, $lt: parseInt(end) + 1 }
+  });
+  const returnedArtist = returnedCursorArtist.sort({ rank: 1 }).toArray();
   console.log(returnedArtist);
   console.log("Done looking");
   client.close();
