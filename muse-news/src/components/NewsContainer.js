@@ -10,7 +10,7 @@ class NewsContainer extends Component{
     constructor(props){
         super(props);
         this.state = {
-            terms: "News",
+            terms: "Music",
             filter: "None",
             sort: "None"
         };
