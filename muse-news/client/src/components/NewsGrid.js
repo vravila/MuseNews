@@ -6,7 +6,6 @@ import NewsArticle from './NewsArticle.js';
 import './../App.css';
 
 const GoogleNewsRss = require('google-news-rss');
-
 const googleNews = new GoogleNewsRss();
 
 class NewsGrid extends Component{
@@ -30,7 +29,6 @@ class NewsGrid extends Component{
     getNews(q, page){
         let apikey = "bc2ebdb795c5488bb34601ca89a75e7f"
         let requestURL = "http://newsapi.org/v2/everything?q=" + q + "&page=" + page + "&apiKey=" + apikey;
-        var outData = "Empty";
         const resp =  fetch(requestURL).then(
             response=>{
                 return response.json();
@@ -62,11 +60,11 @@ class NewsGrid extends Component{
         }
     }
 
-    // TODO change this to show more cards instead of a hardcoded table
     render(){
         var cards = [];
         for(var i = 0; i < this.state.articles.length; i++){
-            cards.push(<NewsArticle title={this.state.articles[i].title} preview={this.state.articles[i].preview} img={this.state.articles[i].img} />)
+            cards.push(<NewsArticle title={this.state.articles[i].title} preview={this.state.articles[i].preview} img={this.state.articles[i].img} 
+                link={this.state.terms + '/' + ((this.state.page - 1) * 20 + i)}/>)
         }
         var grid = []
         for(var r = 0; r < 5; r++){
