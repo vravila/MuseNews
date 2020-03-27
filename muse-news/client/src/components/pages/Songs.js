@@ -61,6 +61,18 @@ function Songs({ match }) {
           Top Songs: Page {match.params.page} out of {LAST_PAGE}
         </h2>
       </div>
+      <div class="container-fluid">
+        <h2 class="sectionHeader">
+          <form>
+            <label>
+              Song Name:
+              <input type="text" name="name"/>
+            </label>
+              <Button onClick="searchSong(name)">Submit</Button>
+          </form>
+        </h2>
+      </div>
+`      
       {/* <Button onClick={updateDB}>Update MongoDB</Button> */}
       {/* <Button onClick={push(`/songs/` + prevPage(match.params.page))}>
         {" "}
@@ -152,6 +164,10 @@ function temporaryImages(name) {
       return "";
     }
   }
+}
+
+function searchSong(){
+
 }
 
 export default Songs;
