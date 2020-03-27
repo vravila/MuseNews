@@ -8,9 +8,9 @@ import weeknd from "../../imgs/weeknd.jpg";
 import { Link } from "react-router-dom";
 
 function SongsPage() {
-  let { name, song } = useParams();
+  let { song, artist } = useParams();
 
-  const img = getImage(name);
+  const img = getImage(artist);
 
   useEffect(() => {
     fetchItem();
@@ -24,11 +24,30 @@ function SongsPage() {
 
   const fetchItem = async () => {
     console.log(song);
+    console.log(artist);
+    // const fetchItem = await fetch(
+    //   `https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${name}&track=${song}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
+    // );
+    // const item = await fetchItem.json();
+    // setItem(item.track);
+    // console.log(item);
+
     const fetchItem = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${name}&track=${song}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
+      "/api/songs/getSongByNameAndArtist/" + song + "/" + artist,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      }
     );
+    // const fetchItem = await fetch(
+    //   `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${match.params.id}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
+    // );
     const item = await fetchItem.json();
-    setItem(item.track);
+    setItem(item);
+    console.log("Done with fetch");
     console.log(item);
   };
 
@@ -40,15 +59,17 @@ function SongsPage() {
         </h1>
         <h2>
           <strong>By</strong>{" "}
-          <Link to={`../../../artists/${name}`}>{name}</Link>
+          <Link to={`../../../artistspage/${artist}`}>{artist}</Link>
         </h2>
+        <h2>Rank on Charts: {item.rank}</h2>
         <img
-          src={img}
+          src={item.bingImageURL}
           className="center-block"
-          alt="albumArt 1"
+          alt="No Image for Song Art"
           style={{ width: 500, height: 500 }}
         ></img>
         <p className="lead" style={{ fontSize: "18px" }}>
+          {/* {item.wiki.content} */}
           {escapeHREF(item.wiki.content)}
         </p>
         <br></br>
@@ -63,8 +84,8 @@ function SongsPage() {
         </p>
         <h4>Headlines:</h4>
         <p className="lead" style={{ fontSize: "15px" }}>
-          <Link to={`/Newsp/${temporaryNewsLink(name)}`}>
-            <strong>{temporaryNewsLink(name)}</strong>
+          <Link to={`/Newsp/${temporaryNewsLink(artist)}`}>
+            <strong>{temporaryNewsLink(artist)}</strong>
           </Link>
         </p>
       </div>
@@ -103,6 +124,9 @@ function temporaryNewsLink(name) {
 function escapeHREF(content) {
   console.log(typeof content);
   console.log(content);
+  if (content === "No Wiki for this Song!") {
+    return content;
+  }
   if (content) {
     return content.substring(0, content.indexOf("<a href"));
   }

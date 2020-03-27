@@ -18,12 +18,14 @@ app.use(function(req, res, next) {
 //////////////////
 
 const artistsRoutes = require("./routes/artistsRoutes.js");
+const songsRoutes = require("./routes/songsRoutes.js");
 
 // app.use(express.bodyParser());
 
 app.use(express.static(path.join(__dirname, "/client/build")));
 
 app.use("/api/artists", artistsRoutes);
+app.use("/api/songs", songsRoutes);
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));

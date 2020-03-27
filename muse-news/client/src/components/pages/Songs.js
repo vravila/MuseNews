@@ -1,263 +1,157 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './../../App.js';
-import '../controllers/spotifyController.js';
+import React, { useState, useEffect } from "react";
+import { Link, Redirect, matchPath } from "react-router-dom";
+import Billie from "./../../imgs/Billie.jpg";
+import Abel from "./../../imgs/the_weeknd.jpg";
+import Tame from "./../../imgs/tame_impala.jpg";
+import AltSinging from "./../../imgs/alt_singing.jpg";
+import Button from "react-bootstrap/Button";
 
-//var spotifyController = require('../controllers/spotifyController.js')
+function Songs({ match }) {
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
-var spotifyController = require('./../controllers/spotifyController');
-var request = require('request'); // "Request" library
+  const DEVELOPMENT_SERVER = "http://localhost:5000";
 
+  const ENTRIES_PER_PAGE = 10;
+  const DATABASE_LIMIT = 300;
+  const LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
+  const [items, setItems] = useState([]);
+  const sourceName = "songs";
 
-function Songs() {
-  useEffect(()=> {
-    //getAccessCode();
-    //getEilish();
-    //getTame();
-    //getWeeknd();
-  }, [])
+  var showPrevButton = true;
+  var showNextButton = true;
 
-  const [accesstoken, setAccessToken] = useState(
-    {}
-  );
-
-  const [eilish, setEilish] = useState(
-    {
-    }
-  );
-
-  const [eilishName, setEilishName] = useState(
-    {
-    }
-  );
-
-  const [eilishImg, setEilishImg] = useState(
-  {
-
-  });
-
-  const [tame, setTame] = useState(
-    {
-    }
-  );
-
-  const [tameName, setTameName] = useState(
-    {
-    }
-  );
-
-  const [tameImg, setTameImg] = useState(
-  {
-
-  });
-
-  const [weeknd, setWeeknd] = useState(
-    {
-    }
-  );
-
-  const [weekndName, setWeekndName] = useState(
-    {
-    }
-  );
-
-  const [weekndImg, setWeekndImg] = useState(
-  {
-
-  });
-
-
-
-
-const getAccessCode = async () => {
-  var client_id = '31c483867b244b47965bf54c1e9aa7c1'; // Your client id
-  var client_secret = '217bf9c707e745e48cab43245857d471';
-
-  var authOptions = {
-    url: 'https://accounts.spotify.com/api/token',
-    headers: {
-      'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-    },
-    form: {
-      grant_type: 'client_credentials'
-    },
-    json: true
-  };
-  //return authOptions;
-  await request.post(authOptions, function(error, response, body) {
-    setAccessToken(body);
-    console.log(body.access_token);
-    console.log(accesstoken)
-
-  })
-
-
-}
-
-const getEilish = async () => {
-
-  console.log(accesstoken)
-
-
-  await fetch(
-      `https://api.spotify.com/v1/tracks/2Fxmhks0bxGSBdJ92vM42m`,
+  if (match.params.page == 1) {
+    showPrevButton = false;
+  }
+  if (match.params.page == LAST_PAGE) {
+    showNextButton = false;
+  }
+  // console.log("PAGE!");
+  // console.log(match.params.page);
+  // console.log("END PAGE!");
+  const fetchItems = async () => {
+    const startIdx = match.params.page * 10 - 10 + 1;
+    const endIdx = match.params.page * 10;
+    const data = await fetch(
+      "/api/songs/getSongsByRankRanges/" + startIdx + "/" + endIdx,
       {
         method: "GET",
+        // mode: "no-cors",
         headers: {
-          Authorization: 'Bearer ${accesstoken}'
+          "Content-Type": "application/json",
+          // "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Credentials": "true",
+          // "Access-Control-Allow-Origin": "http://localhost:5001",
+          Accept: "application/json"
         }
-      }).then(response=>response.json()).then(
-        data=>  {
-          setEilish(data);
-          setEilishName(data.artists[0]);
-          setEilishImg(data.album.images[0]);
-        }
-      )
-    }
-
-    const getTame = async () => {
-
-
-      await fetch(
-          `https://api.spotify.com/v1/tracks/6K4t31amVTZDgR3sKmwUJJ`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: 'Bearer ${accesstoken}'
-            }
-          }).then(response=>response.json()).then(
-            data=>  {
-              setTame(data);
-              setTameName(data.artists[0]);
-              setTameImg(data.album.images[0]);
-            }
-          )
-        }
-
-        const getWeeknd = async () => {
-
-
-          await fetch(
-              `https://api.spotify.com/v1/tracks/0sf12qNH5qcw8qpgymFOqD`,
-              {
-                method: "GET",
-                headers: {
-                  Authorization: 'Bearer ${accesstoken}'
-                }
-              }).then(response=>response.json()).then(
-                data=>  {
-                  setWeeknd(data);
-                  setWeekndName(data.artists[0]);
-                  setWeekndImg(data.album.images[0]);
-                }
-              )
-            }
-
-
-  var name1 = "Billie Eilish";
-  var song1 = "bad guy";
-  var img1 = "";
-  var name2 = "Tame Impala";
-  var song2 = "The Less I Know The Better";
-  var img2 = "";
-  var name3 = "The Weeknd";
-  var song3 = "Blinding Lights";
-  var img3 = "";
-
-  //var test1 = eilish.get("name");
+      }
+    );
+    const items = await data.json();
+    console.log(items);
+    setItems(items);
+  };
 
   return (
     <div>
       <div class="container-fluid">
-        <h1 class="pageHeader">America's Top Charts</h1>
-        <h2 class="sectionHeader">Top 3 Songs</h2>
+        <h1 class="pageHeader">America's Top Songs</h1>
+        <h2 class="sectionHeader">
+          Top Songs: Page {match.params.page} out of {LAST_PAGE}
+        </h2>
       </div>
-      <div class="row pt-3">
-        <div class="col-sm-2" align="center">
-          Album
-        </div>
-        <div class="col-sm-2" align="center">
-          Song Title
-        </div>
-        <div class="col-sm-2" align="center">
-          Artist
-        </div>
+      {/* <Button onClick={updateDB}>Update MongoDB</Button> */}
+      {/* <Button onClick={push(`/songs/` + prevPage(match.params.page))}>
+        {" "}
+        PREV{" "}
+      </Button> */}
+      <div style={{ "padding-bottom": "70px" }}>
+        {/* <table> */}
+        {/* <tr> */}
+        {/* <tc> */}
+        <Link
+          className={
+            showPrevButton
+              ? "fa float-left h3 font-weight-light text-primary"
+              : "fa hidden float-left h3 font-weight-light text-primary"
+          }
+          to={`/redirectPages/${sourceName}/${prevPage(match.params.page)}`}
+        >
+          Previous Page ({match.params.page - 1})
+        </Link>
+        <Link
+          className={
+            showNextButton
+              ? "fa float-right h3 font-weight-light text-primary"
+              : "fa hidden float-right h3 font-weight-light text-primary"
+          }
+          to={`/redirectPages/songs/` + nextPage(match.params.page, LAST_PAGE)}
+        >
+          Next Page ({parseInt(match.params.page) + 1})
+        </Link>
+        {/* </tc> */}
+        {/* </tr> */}
+        {/* </table> */}
+        <hr className="lead"></hr>
       </div>
-      <div class="row pt-3">
-        <div class="col-sm-2 my-auto" align="center">
-          <div class="d-inline-block">
-            <h4 class="p-3">1</h4>
+      {items.map(item => (
+        <Link to={`/songspage/${item.name}/${item.artist.name}`}>
+          <div className="row-mt-1">
+            <div className="col-3 col-sm-3 mx-auto mb-2">
+              <div
+                className="card center-block"
+                style={{ width: "20rem", height: "30rem", background: "azure" }}
+              >
+                <img
+                  src={item.bingImageURL}
+                  alt="Image not Found"
+                  // onError="this.src='../../imgs/alt_singing.jpg'"
+                  className="card-img-top"
+                  style={{ width: "20rem", height: "25rem" }}
+                />
+
+                <div className="card-body">
+                  {/* <Link to={`/artists/${item.name}`}> */}
+                  <h3 className="card-title text-uppecase">{item.name}</h3>
+                  {/* </Link> */}
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="d-inline-block">
-            <img
-              src={require("../../imgs/Billie.jpg")}
-              class="img-thumbnail"
-              alt="albumArt 1"
-              style={{ width: 80, height: 80 }}
-            ></img>
-          </div>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${name1}/${song1}/${img1}`}>{song1}</a>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/Billie%20Eilish">{name1}</a>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/1">See News on {name1}</a>
-        </div>
-      </div>
-      <div class="row pt-3">
-        <div class="col-sm-2 my-auto" align="center">
-          <div class="d-inline-block">
-            <h4 class="p-3">2</h4>
-          </div>
-          <div class="d-inline-block">
-            <img
-              src={require("../../imgs/Tame.jpg")}
-              class="img-thumbnail"
-              alt="albumArt 1"
-              style={{ width: 80, height: 80 }}
-            ></img>
-          </div>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${name2}/${song2}/${img2}`}>{song2}</a>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/Tame%20Impala">{name2}</a>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/2">See News on {name2}</a>
-        </div>
-      </div>
-      <div class="row pt-3">
-        <div class="col-sm-2 my-auto" align="center">
-          <div class="d-inline-block">
-            <h4 class="p-3">3</h4>
-          </div>
-          <div class="d-inline-block">
-            <img
-              src={require("../../imgs/weeknd.jpg")}
-              class="img-thumbnail"
-              alt="albumArt 1"
-              style={{ width: 80, height: 80 }}
-            ></img>
-          </div>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href={`/songspage/${name3}/${song3}/${img3}`}>{song3}</a>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href="/artists/The%20Weeknd">{name3}</a>
-        </div>
-        <div class="col-sm-2 my-auto" align="center">
-          <a href="/Newsp/3">See News on {name3}</a>
-        </div>
-      </div>
+        </Link>
+      ))}
     </div>
   );
+}
+
+function prevPage(currPage) {
+  if (currPage == 1) {
+    return 1;
+  }
+  return parseInt(currPage) - 1;
+}
+
+function nextPage(currPage, lastPage) {
+  if (currPage == lastPage) {
+    return lastPage;
+  }
+  return parseInt(currPage) + 1;
+}
+
+function temporaryImages(name) {
+  if (name) {
+    console.log(name);
+    if (name === "Billie Eilish") {
+      return Billie;
+    } else if (name === "The Weeknd") {
+      return Abel;
+    } else if (name === "Tame Impala") {
+      return Tame;
+    } else {
+      return "";
+    }
+  }
 }
 
 export default Songs;

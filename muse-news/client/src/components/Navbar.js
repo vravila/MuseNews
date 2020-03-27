@@ -49,7 +49,7 @@ function Navbar() {
           <li className="nav-item m-auto">
             <Link
               className="nav-link text-white text-uppercase ml-5"
-              to="/songs"
+              to="/songs/1"
             >
               <h3>Songs</h3>{" "}
             </Link>
