@@ -22,7 +22,8 @@ class NewsGrid extends Component{
                 {title: 'ERROR', preview: 'Something went wrong', img: './../newsImage.jpg'}
             ]
         }
-        this.getNews(this.state.terms);
+        //this.getNews(this.state.terms);
+        this.generateSplashPage();
         this.forceUpdate();
     }
 
@@ -36,14 +37,66 @@ class NewsGrid extends Component{
             data=> {
                 console.log(data);
                 var newArticles = []
-                for(var i = 0; i < 20; i++){
-                    newArticles.push({key: i, title: data.articles[i].title, preview: data.articles[i].description, img: data.articles[i].urlToImage});
+                for(var i = 0; i < data.articles.length; i++){
+                    newArticles.push({title: data.articles[i].title, preview: data.articles[i].description, img: data.articles[i].urlToImage});
                 }
                 this.setState({articles: newArticles}, () => this.forceUpdate());
             }
 
         );
         console.log(this.state);
+    }
+
+    getTopNews(q, page){
+        let apikey = "bc2ebdb795c5488bb34601ca89a75e7f"
+        let requestURL = "http://newsapi.org/v2/top-headlines?q=" + q + "&page=" + page + "&apiKey=" + apikey;
+        const resp =  fetch(requestURL).then(
+            response=>{
+                return response.json();
+            }).then(
+            data=> {
+                console.log(data);
+                var newArticles = []
+                for(var i = 0; i < data.articles.length; i++){
+                    newArticles.push({title: data.articles[i].title, preview: data.articles[i].description, img: data.articles[i].urlToImage});
+                }
+                this.setState({articles: newArticles}, () => this.forceUpdate());
+            }
+
+        );
+        console.log(this.state);
+    }
+
+    async getArticle(q, num){
+        let apikey = "bc2ebdb795c5488bb34601ca89a75e7f"
+        let requestURL = "http://newsapi.org/v2/everything?q=" + q + "&page=" + "1" + "&apiKey=" + apikey;
+        var article1;
+        var article2;
+        const resp =  await fetch(requestURL).then(
+            response=>{
+                return response.json();
+            }).then(
+            data=> {
+                article1 = {title: data.articles[num-1].title, preview: data.articles[num-1].description, img: data.articles[num-1].urlToImage, term: q};
+                article2 = {title: data.articles[num].title, preview: data.articles[num].description, img: data.articles[num].urlToImage, term: q};
+            }
+
+        );
+        console.log(article1);
+        return {article1, article2};
+    }
+
+    async generateSplashPage(){
+        var artists = ["The Weeknd", "Billie Eilish", "Lady Gaga", "Kanye West", "Tame Impala", "Dua Lipa", "Post Malone", "Lana Del Rey", "Ariana Grande", "Doja Cat"];
+        var newArticles = [];
+        for(var i = 0; i < artists.length; i++){
+            var news = await this.getArticle(artists[i], 1);
+            console.log(news.article1);
+            newArticles.push(news.article1);
+            newArticles.push(news.article2);
+        }
+        console.log(newArticles);
+        this.setState({articles: newArticles}, () => this.forceUpdate());
     }
 
     componentDidUpdate(){
@@ -63,8 +116,8 @@ class NewsGrid extends Component{
     render(){
         var cards = [];
         for(var i = 0; i < this.state.articles.length; i++){
-            cards.push(<NewsArticle title={this.state.articles[i].title} preview={this.state.articles[i].preview} img={this.state.articles[i].img} 
-                link={this.state.terms + '/' + ((this.state.page - 1) * 20 + i)}/>)
+            cards.push(<NewsArticle title={this.state.articles[i].title} preview={this.state.articles[i].preview} img={this.state.articles[i].img}
+                link={this.state.articles[i].term + '/' + (i % 2)}/>)
         }
         var grid = []
         for(var r = 0; r < 5; r++){

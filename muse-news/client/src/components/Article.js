@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from "react-router-dom";
 
 const GoogleNewsRss = require('google-news-rss');
 const googleNews = new GoogleNewsRss();
@@ -69,10 +70,10 @@ class Article extends Component {
                     {this.state.content}
                     <a href={this.state.url}> Read More... </a>
                 </p>
-                {/*
                 <p style={{ fontSize: 14 }}>
-                    See more about {artist} <Link to={`/artists/${artist}`}>here</Link>.
+                    See more about {this.state.terms} <Link to={`/artistspage/${this.state.terms}`}>here</Link>.
                 </p>
+                {/*
                 <p style={{ fontSize: 14 }}>
                     See more about {song}{" "}
                     <Link to={`/songspage/${artist}/${song}`}>here</Link>.

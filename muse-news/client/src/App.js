@@ -26,6 +26,8 @@ class App extends Component {
           <Route path="/artists/:page" component={Artists} />
           <Route path="/artistspage/:id" component={ArtistsPage} />
           <Route path="/news" component={News} />
+          {//<Route path="/news/:terms" component={News} />
+          }
           <Route path="/songs/:page" component={Songs} />
           <Route path="/songspage/:song/:artist" component={SongsPage} />
           <Route
