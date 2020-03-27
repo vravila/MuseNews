@@ -15,6 +15,7 @@ class NewsGrid extends Component{
         this.state = {
             terms: this.props.terms,
             page: this.props.page,
+            type: this.props.type,
             articles: [
                 {title: 'ERROR', preview: 'Something went wrong', img: './../newsImage.jpg'},
                 {title: 'ERROR', preview: 'Something went wrong', img: './../newsImage.jpg'},
@@ -38,27 +39,7 @@ class NewsGrid extends Component{
                 console.log(data);
                 var newArticles = []
                 for(var i = 0; i < data.articles.length; i++){
-                    newArticles.push({title: data.articles[i].title, preview: data.articles[i].description, img: data.articles[i].urlToImage});
-                }
-                this.setState({articles: newArticles}, () => this.forceUpdate());
-            }
-
-        );
-        console.log(this.state);
-    }
-
-    getTopNews(q, page){
-        let apikey = "bc2ebdb795c5488bb34601ca89a75e7f"
-        let requestURL = "http://newsapi.org/v2/top-headlines?q=" + q + "&page=" + page + "&apiKey=" + apikey;
-        const resp =  fetch(requestURL).then(
-            response=>{
-                return response.json();
-            }).then(
-            data=> {
-                console.log(data);
-                var newArticles = []
-                for(var i = 0; i < data.articles.length; i++){
-                    newArticles.push({title: data.articles[i].title, preview: data.articles[i].description, img: data.articles[i].urlToImage});
+                    newArticles.push({title: data.articles[i].title, preview: data.articles[i].description, img: data.articles[i].urlToImage, term: q});
                 }
                 this.setState({articles: newArticles}, () => this.forceUpdate());
             }
@@ -105,21 +86,32 @@ class NewsGrid extends Component{
         if(this.state.terms !== this.props.terms){
             this.setState({
                 terms: this.props.terms,
-                page: this.props.page
+                page: this.props.page,
+                type: this.props.type
             }, () => this.getNews(this.state.terms, this.state.page));
         }
-        else if(this.state.page !== this.props.page){
+        else if(this.state.terms === "Splash" && this.state.page != this.props.page){
             this.setState({
                 page: this.props.page
             }, ()=> this.generateSplashPage(this.state.page));
+        }else if(this.state.page !== this.props.page){
+            this.setState({
+                page: this.props.page
+            }, ()=> this.getNews(this.state.terms, this.state.page));
         }
     }
 
     render(){
         var cards = [];
         for(var i = 0; i < this.state.articles.length; i++){
+            var linker = this.state.articles[i].term + '/';
+            if(this.state.type === "Splash"){
+                linker += '' + ((this.state.page - 1) * 2 + (i % 2));
+            }else{
+                linker += '' + (20 * (this.state.page - 1) + i);
+            }
             cards.push(<NewsArticle title={this.state.articles[i].title} preview={this.state.articles[i].preview} img={this.state.articles[i].img}
-                link={this.state.articles[i].term + '/' + ((this.state.page - 1) * 2 + (i % 2))}/>)
+                link={linker}/>)
         }
         var grid = []
         for(var r = 0; r < 5; r++){

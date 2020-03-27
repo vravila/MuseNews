@@ -10,7 +10,8 @@ class NewsContainer extends Component{
     constructor(props){
         super(props);
         this.state = {
-            terms: "Music",
+            terms: "Splash",
+            type: "Splash",
             page: 1,
             filter: "None",
             sort: "None"
@@ -24,6 +25,7 @@ class NewsContainer extends Component{
         event.preventDefault();
         this.state.terms = event.target.searchBox.value;
         this.state.page = 1;
+        this.state.type = "artist";
         this.forceUpdate();
     }
     pageUp(event){
@@ -62,7 +64,7 @@ class NewsContainer extends Component{
                     </Form.Row>
                 </Form>
 
-                <NewsGrid terms={this.state.terms} page={this.state.page} />
+                <NewsGrid terms={this.state.terms} page={this.state.page} type={this.state.type}/>
                 <div style = {{marginLeft: 20}}>
                     <Button style={{display: 'inline-block'}} onClick={this.pageDown}>Previous Page</Button>
                     <p style={{margin: 20, display: 'inline-block'}}>Page {this.state.page}</p>

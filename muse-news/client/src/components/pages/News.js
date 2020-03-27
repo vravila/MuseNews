@@ -1,9 +1,8 @@
 import React from 'react';
+import { useParams } from "react-router-dom";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NewsContainer from './../NewsContainer';
-
-function search(event){
-}
 
 function News() {
 
@@ -12,7 +11,7 @@ function News() {
 
             <NewsContainer />
 
-      </div>
+        </div>
     );
 }
   
