@@ -24,7 +24,11 @@ class NewsGrid extends Component{
             ]
         }
         //this.getNews(this.state.terms);
-        this.generateSplashPage(this.state.page);
+        if(this.state.type === "Splash"){
+            this.generateSplashPage(this.state.page);
+        }else{
+            this.getNews(this.state.terms, this.state.page);
+        }
         this.forceUpdate();
     }
 

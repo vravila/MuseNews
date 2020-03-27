@@ -6,10 +6,16 @@ import NewsContainer from './../NewsContainer';
 
 function News() {
 
+    let {artist} = useParams();
+    var terms = artist;
+    if(terms === undefined){
+        terms = "Splash";
+    }
+
     return (
         <div className="News">
 
-            <NewsContainer />
+            <NewsContainer terms={terms} />
 
         </div>
     );

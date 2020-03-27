@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Article from './../Article.js';
-import NewsImg from "./../../imgs/newsImage.jpg";
 
 
 function NewsPage() {

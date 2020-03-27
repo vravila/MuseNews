@@ -9,9 +9,12 @@ class NewsContainer extends Component{
 
     constructor(props){
         super(props);
+        var typeArg = "Splash";
+        if(this.props.terms !== "Splash")
+            typeArg = "artist"
         this.state = {
-            terms: "Splash",
-            type: "Splash",
+            terms: this.props.terms,
+            type: typeArg,
             page: 1,
             filter: "None",
             sort: "None"
@@ -43,9 +46,6 @@ class NewsContainer extends Component{
         this.forceUpdate();
     }
 
-    /* TODO
-     * NewsGrid updates its entries based on search terms 
-     */
     render(){
         return(
             <div>
