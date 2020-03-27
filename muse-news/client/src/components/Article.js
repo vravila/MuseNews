@@ -62,7 +62,7 @@ class Article extends Component {
                     className="center-block"
                     src={this.state.img}
                     alt=""
-                    style={{ width: 500, height: 500 }}
+                    style={{ width: 900, height: 600 }}
                 />
                 <br />
                 <p className="lead" style={{ fontSize: 16 }}>
