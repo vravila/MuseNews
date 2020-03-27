@@ -11,6 +11,7 @@ function SongsPage() {
   let { song, artist } = useParams();
 
   const img = getImage(artist);
+  var artistLink = "/wtf";
 
   useEffect(() => {
     fetchItem();
@@ -21,6 +22,8 @@ function SongsPage() {
     wiki: {},
     toptags: {}
   });
+
+  const [linkItem, setLinkItem] = useState({});
 
   const fetchItem = async () => {
     console.log(song);
@@ -45,10 +48,44 @@ function SongsPage() {
     // const fetchItem = await fetch(
     //   `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${match.params.id}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
     // );
+
     const item = await fetchItem.json();
     setItem(item);
     console.log("Done with fetch");
     console.log(item);
+
+    artistLink = await getArtistLink(artist);
+
+    const artistLinkItem = await fetch(
+      "/api/artists/getArtistByName/" + artist,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      }
+    );
+    const linkItem = await artistLinkItem.json();
+    setLinkItem(linkItem);
+    console.log("LinkItem");
+    console.log(linkItem);
+    if (linkItem == null) {
+      console.log("Artists DOES NOT Exist");
+      artistLink = "/artistDNE";
+    } else {
+      console.log("Artists Exists");
+      artistLink = "/artistspage/" + artist;
+    }
+
+    // if (artistLinkItem == null) {
+    //   console.log("Artists DOES NOT Exist");
+    //   artistLink = "/artistDNE";
+    // } else {
+    //   console.log("Artists Exists");
+    //   artistLink = "/artistspage/" + artist;
+    // }
+    // console.log(artistLink);
   };
 
   return (
@@ -59,7 +96,10 @@ function SongsPage() {
         </h1>
         <h2>
           <strong>By</strong>{" "}
-          <Link to={`../../../artistspage/${artist}`}>{artist}</Link>
+          {/* <Link to={`../../../artistspage/${artist}`}>{artist}</Link> */}
+          {/* <a href=>V2 {artist} ]]]</a> */}
+          <Link to={link(linkItem, artist)}>{artist}</Link>
+          {/* {getArtistLink(artist)} */}
         </h2>
         <h2>Rank on Charts: {item.rank}</h2>
         <img
@@ -91,6 +131,35 @@ function SongsPage() {
       </div>
     </div>
   );
+}
+
+function link(linkItem, name) {
+  if (linkItem == null) {
+    console.log("Artists DOES NOT Exist");
+    return "/artistDNE";
+  }
+  console.log("Artists Exists");
+  var retstr = "../../../artistspage/" + name;
+  console.log(retstr);
+  return retstr;
+}
+
+async function getArtistLink(name) {
+  const fetchItem = await fetch("/api/artists/getArtistByName/" + name, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    }
+  });
+  if (fetchItem == null) {
+    console.log("Artists DOES NOT Exist");
+    return "/artistDNE";
+  }
+  console.log("Artists Exists");
+  var retstr = "../../../artistspage/" + name;
+  console.log(retstr);
+  return retstr;
 }
 
 function getImage(name) {

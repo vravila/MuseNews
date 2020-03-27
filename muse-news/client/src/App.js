@@ -8,6 +8,7 @@ import Songs from "./components/pages/Songs";
 import SongsPage from "./components/pages/SongsPage";
 import NewsPage from "./components/pages/NewsPage";
 import RedirectPages from "./components/pages/RedirectPages";
+import ArtistDNE from "./components/pages/ArtistDNE";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,6 +34,7 @@ class App extends Component {
             path="/redirectPages/:source/:page"
             component={RedirectPages}
           />
+          <Route path="/artistdne" component={ArtistDNE} />
         </Switch>
       </div>
     );

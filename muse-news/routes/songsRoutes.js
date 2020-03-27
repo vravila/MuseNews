@@ -53,6 +53,15 @@ router.get("/getSongByNameAndArtist/:songname/:artistname", (req, res) => {
   );
 });
 
+router.get("/getSongsByAnArtist/:artistname", (req, res) => {
+  console.log("GET to /getSongsByAnArtist for " + req.params.artistname);
+  getSongsByAnArtist(req.params.artistname).then(returned => {
+    console.log("Returned!");
+    console.log(returned);
+    res.status(200).json(returned);
+  });
+});
+
 async function getSongByNameAndArtist(song, artist) {
   var returnedSong;
   const dbName = "MuseNewsDatabase";
@@ -65,6 +74,24 @@ async function getSongByNameAndArtist(song, artist) {
   console.log("Connected...");
   const collection = client.db(dbName).collection(collectionName);
   returnedSong = collection.findOne({ name: song, "artist.name": artist });
+  console.log(returnedSong);
+  console.log("Done looking");
+  client.close();
+  return returnedSong;
+}
+
+async function getSongsByAnArtist(artist) {
+  const dbName = "MuseNewsDatabase";
+  const collectionName = "songs";
+  const MongoClient = require("mongodb").MongoClient;
+  const uri =
+    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
+  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+  // .then(function(db) {
+  console.log("Connected...");
+  const collection = client.db(dbName).collection(collectionName);
+  returnedCursorSong = collection.find({ "artist.name": artist });
+  const returnedSong = returnedCursorSong.sort({ rank: 1 }).toArray();
   console.log(returnedSong);
   console.log("Done looking");
   client.close();

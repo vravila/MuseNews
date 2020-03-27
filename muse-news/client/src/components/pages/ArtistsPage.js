@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Billie from "./../../imgs/Billie.jpg";
 import Abel from "./../../imgs/the_weeknd.jpg";
 import Tame from "./../../imgs/tame_impala.jpg";
+import ArtistsListOfSongs from "./../ArtistsListOfSongs";
 
 function ArtistsPage({ match }) {
   useEffect(() => {
@@ -22,10 +23,23 @@ function ArtistsPage({ match }) {
     }
   });
 
+  const [songItem, setSongItem] = useState([]);
+
   const fetchItem = async () => {
     console.log(match.params);
     const fetchItem = await fetch(
       "/api/artists/getArtistByName/" + match.params.id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      }
+    );
+
+    const fetchItemSongs = await fetch(
+      "/api/songs/getSongsByAnArtist/" + match.params.id,
       {
         method: "GET",
         headers: {
@@ -40,6 +54,11 @@ function ArtistsPage({ match }) {
     const item = await fetchItem.json();
     setItem(item);
     console.log(item);
+
+    const songItem = await fetchItemSongs.json();
+    setSongItem(songItem);
+    console.log("Song Item");
+    console.log(songItem);
   };
 
   return (
@@ -72,11 +91,13 @@ function ArtistsPage({ match }) {
         <strong>Similar Artists:</strong> {getTags(item.similar.artist)}
       </p>
       <h4>Top Songs:</h4>
-      <p className="lead" style={{ fontSize: "15px" }}>
-        <Link to={`/songspage/${item.name}/${getTopSongs(item.name)}`}>
-          <strong>{getTopSongs(item.name)}</strong>
-        </Link>
-      </p>
+      {songItem.map(songItem => (
+        <p className="lead" style={{ fontSize: "15px" }}>
+          <Link to={`/songspage/${songItem.name}/${item.name}`}>
+            {songItem.name}
+          </Link>
+        </p>
+      ))}
       <h4>Headlines:</h4>
       <p className="lead" style={{ fontSize: "15px" }}>
         <Link to={`/Newsp/${temporaryNewsLink(item.name)}`}>
