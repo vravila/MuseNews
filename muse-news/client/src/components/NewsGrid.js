@@ -63,13 +63,13 @@ class NewsGrid extends Component{
                 return response.json();
             }).then(
             data=> {
+                console.log(data);
                 article1 = {title: data.articles[index].title, preview: data.articles[index].description, img: data.articles[index].urlToImage, term: q};
                 index++;
                 article2 = {title: data.articles[index].title, preview: data.articles[index].description, img: data.articles[index].urlToImage, term: q};
             }
 
         );
-        console.log(article1);
         return {article1, article2};
     }
 
@@ -78,7 +78,6 @@ class NewsGrid extends Component{
         var newArticles = [];
         for(var i = 0; i < artists.length; i++){
             var news = await this.getArticle(artists[i], page);
-            console.log(news.article1);
             newArticles.push(news.article1);
             newArticles.push(news.article2);
         }
