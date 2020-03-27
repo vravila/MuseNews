@@ -27,14 +27,18 @@ class App extends Component {
           <Route path="/artists/:page" component={Artists} />
           <Route path="/artistspage/:id" component={ArtistsPage} />
           <Route path="/news" component={News} />
-          <Route path="/newsp/:title" component={NewsPage} />
+          <Route path="/newsa/:artist" component={News} />
           <Route path="/songs/:page" component={Songs} />
           <Route path="/songspage/:song/:artist" component={SongsPage} />
           <Route
             path="/redirectPages/:source/:page"
             component={RedirectPages}
           />
+<<<<<<< HEAD
           <Route path="/artistdne" component={ArtistDNE} />
+=======
+          <Route path="/newsp/:terms/:index" component={NewsPage} />
+>>>>>>> newsPage
         </Switch>
       </div>
     );
