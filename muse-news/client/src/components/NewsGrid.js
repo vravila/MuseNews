@@ -23,7 +23,7 @@ class NewsGrid extends Component{
             ]
         }
         //this.getNews(this.state.terms);
-        this.generateSplashPage();
+        this.generateSplashPage(this.state.page);
         this.forceUpdate();
     }
 
@@ -70,6 +70,7 @@ class NewsGrid extends Component{
     async getArticle(q, num){
         let apikey = "bc2ebdb795c5488bb34601ca89a75e7f"
         let requestURL = "http://newsapi.org/v2/everything?q=" + q + "&page=" + "1" + "&apiKey=" + apikey;
+        var index = 2 * (num - 1);
         var article1;
         var article2;
         const resp =  await fetch(requestURL).then(
@@ -77,8 +78,9 @@ class NewsGrid extends Component{
                 return response.json();
             }).then(
             data=> {
-                article1 = {title: data.articles[num-1].title, preview: data.articles[num-1].description, img: data.articles[num-1].urlToImage, term: q};
-                article2 = {title: data.articles[num].title, preview: data.articles[num].description, img: data.articles[num].urlToImage, term: q};
+                article1 = {title: data.articles[index].title, preview: data.articles[index].description, img: data.articles[index].urlToImage, term: q};
+                index++;
+                article2 = {title: data.articles[index].title, preview: data.articles[index].description, img: data.articles[index].urlToImage, term: q};
             }
 
         );
@@ -86,11 +88,11 @@ class NewsGrid extends Component{
         return {article1, article2};
     }
 
-    async generateSplashPage(){
+    async generateSplashPage(page){
         var artists = ["The Weeknd", "Billie Eilish", "Lady Gaga", "Kanye West", "Tame Impala", "Dua Lipa", "Post Malone", "Lana Del Rey", "Ariana Grande", "Doja Cat"];
         var newArticles = [];
         for(var i = 0; i < artists.length; i++){
-            var news = await this.getArticle(artists[i], 1);
+            var news = await this.getArticle(artists[i], page);
             console.log(news.article1);
             newArticles.push(news.article1);
             newArticles.push(news.article2);
@@ -109,7 +111,7 @@ class NewsGrid extends Component{
         else if(this.state.page !== this.props.page){
             this.setState({
                 page: this.props.page
-            }, ()=> this.getNews(this.state.terms, this.state.page));
+            }, ()=> this.generateSplashPage(this.state.page));
         }
     }
 
@@ -117,7 +119,7 @@ class NewsGrid extends Component{
         var cards = [];
         for(var i = 0; i < this.state.articles.length; i++){
             cards.push(<NewsArticle title={this.state.articles[i].title} preview={this.state.articles[i].preview} img={this.state.articles[i].img}
-                link={this.state.articles[i].term + '/' + (i % 2)}/>)
+                link={this.state.articles[i].term + '/' + ((this.state.page - 1) * 2 + (i % 2))}/>)
         }
         var grid = []
         for(var r = 0; r < 5; r++){
