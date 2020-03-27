@@ -34,11 +34,8 @@ class App extends Component {
             path="/redirectPages/:source/:page"
             component={RedirectPages}
           />
-<<<<<<< HEAD
           <Route path="/artistdne" component={ArtistDNE} />
-=======
           <Route path="/newsp/:terms/:index" component={NewsPage} />
->>>>>>> newsPage
         </Switch>
       </div>
     );
