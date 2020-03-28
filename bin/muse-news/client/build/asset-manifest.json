@@ -1,0 +1,41 @@
+{
+  "files": {
+    "main.css": "/static/css/main.17138a2b.chunk.css",
+    "main.js": "/static/js/main.4ccc58e6.chunk.js",
+    "main.js.map": "/static/js/main.4ccc58e6.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.ef6569fc.js",
+    "runtime-main.js.map": "/static/js/runtime-main.ef6569fc.js.map",
+    "static/css/2.47e06e2e.chunk.css": "/static/css/2.47e06e2e.chunk.css",
+    "static/js/2.e95a84b3.chunk.js": "/static/js/2.e95a84b3.chunk.js",
+    "static/js/2.e95a84b3.chunk.js.map": "/static/js/2.e95a84b3.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.a7cdfd3749edd651f199d40c1892b3c2.js": "/precache-manifest.a7cdfd3749edd651f199d40c1892b3c2.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.47e06e2e.chunk.css.map": "/static/css/2.47e06e2e.chunk.css.map",
+    "static/css/main.17138a2b.chunk.css.map": "/static/css/main.17138a2b.chunk.css.map",
+    "static/js/2.e95a84b3.chunk.js.LICENSE.txt": "/static/js/2.e95a84b3.chunk.js.LICENSE.txt",
+    "static/media/AlexanderTekle.jpg": "/static/media/AlexanderTekle.14fa381f.jpg",
+    "static/media/Billie.jpg": "/static/media/Billie.b5a014f6.jpg",
+    "static/media/BillieHome.jpg": "/static/media/BillieHome.5a1f087a.jpg",
+    "static/media/DanielWalsh.jpg": "/static/media/DanielWalsh.c4fdbf73.jpg",
+    "static/media/KedarRaman.jpg": "/static/media/KedarRaman.eb631f02.jpg",
+    "static/media/SamDauenbaugh.jpg": "/static/media/SamDauenbaugh.7b8b2aea.jpg",
+    "static/media/Tame.jpg": "/static/media/Tame.201588d2.jpg",
+    "static/media/VenkataRavila.jpg": "/static/media/VenkataRavila.a96ef47b.jpg",
+    "static/media/about.jpg": "/static/media/about.df11f705.jpg",
+    "static/media/artists.jpg": "/static/media/artists.9c8d2644.jpg",
+    "static/media/drake_home.jpg": "/static/media/drake_home.63dd2e6d.jpg",
+    "static/media/logo.svg": "/static/media/logo.ee7cd8ed.svg",
+    "static/media/songs.jpg": "/static/media/songs.32ad9b4f.jpg",
+    "static/media/tame_impala.jpg": "/static/media/tame_impala.4c36513a.jpg",
+    "static/media/weeknd.jpg": "/static/media/weeknd.86b76ef5.jpg",
+    "static/media/weeknd_home.jpg": "/static/media/weeknd_home.aa795e50.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ef6569fc.js",
+    "static/css/2.47e06e2e.chunk.css",
+    "static/js/2.e95a84b3.chunk.js",
+    "static/css/main.17138a2b.chunk.css",
+    "static/js/main.4ccc58e6.chunk.js"
+  ]
+}

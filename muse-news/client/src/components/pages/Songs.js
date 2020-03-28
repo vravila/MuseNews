@@ -66,14 +66,13 @@ function Songs({ match }) {
           <form>
             <label>
               Song Name:
-              <input type="text" name="name"/>
+              <input type="text" name="name" />
             </label>
-              <Button onClick="searchSong(name)">Submit</Button>
+            <Button onClick="searchSong(name)">Submit</Button>
           </form>
         </h2>
       </div>
-`      
-      {/* <Button onClick={updateDB}>Update MongoDB</Button> */}
+      `{/* <Button onClick={updateDB}>Update MongoDB</Button> */}
       {/* <Button onClick={push(`/songs/` + prevPage(match.params.page))}>
         {" "}
         PREV{" "}
@@ -113,7 +112,7 @@ function Songs({ match }) {
             <div className="col-3 col-sm-3 mx-auto mb-2">
               <div
                 className="card center-block"
-                style={{ width: "20rem", height: "30rem", background: "azure" }}
+                style={{ width: "20rem", height: "32rem", background: "azure" }}
               >
                 <img
                   src={item.bingImageURL}
@@ -126,6 +125,9 @@ function Songs({ match }) {
                 <div className="card-body">
                   {/* <Link to={`/artists/${item.name}`}> */}
                   <h3 className="card-title text-uppecase">{item.name}</h3>
+                  <h5 className="card-title text-uppecase">
+                    Rank: {item.rank}
+                  </h5>
                   {/* </Link> */}
                 </div>
               </div>
@@ -166,8 +168,6 @@ function temporaryImages(name) {
   }
 }
 
-function searchSong(){
-
-}
+function searchSong() {}
 
 export default Songs;

@@ -166,7 +166,7 @@ function Artists({ match }) {
             <div className="col-3 col-sm-3 mx-auto mb-2">
               <div
                 className="card center-block"
-                style={{ width: "20rem", height: "30rem", background: "azure" }}
+                style={{ width: "20rem", height: "32rem", background: "azure" }}
               >
                 <img
                   src={item.bingImageURL}
@@ -179,6 +179,9 @@ function Artists({ match }) {
                 <div className="card-body">
                   {/* <Link to={`/artists/${item.name}`}> */}
                   <h3 className="card-title text-uppecase">{item.name}</h3>
+                  <h5 className="card-title text-uppecase">
+                    Rank: {item.rank}
+                  </h5>
                   {/* </Link> */}
                 </div>
               </div>
