@@ -13,10 +13,17 @@ function SongsPage() {
   const img = getImage(artist);
   var artistLink = "/wtf";
 
+  let track = song + " " + artist;
+
   useEffect(() => {
+    fetchTweets(track);
     fetchItem();
     // console.log(match);
   }, []);
+
+  const[tweets, setTweets] = useState(
+    {}
+  );
 
   const [item, setItem] = useState({
     wiki: {},
@@ -25,6 +32,19 @@ function SongsPage() {
 
   const [linkItem, setLinkItem] = useState({});
 
+  const fetchTweets = async (name) => {
+    /*const fetchTweets = await fetch("/api/artists/getArtistTweets").then(ret => {
+      ret.json().then(ret2 => {
+        console.log(ret2);
+      })
+    })*/
+
+    const fetchTweets = await fetch("/api/artists/getArtistTweets/"+name)
+    const tweets = await fetchTweets.json();
+    setTweets(tweets);
+
+  }
+  console.log(tweets);
   const fetchItem = async () => {
     console.log(song);
     console.log(artist);
@@ -128,6 +148,15 @@ function SongsPage() {
             <strong>{temporaryNewsLink(artist)}</strong>
           </Link>
         </p>
+        <div class = "Tweets">
+          <h2>Recent Tweets</h2>
+
+          <div dangerouslySetInnerHTML={{ __html: tweets[0] }} />
+          <div dangerouslySetInnerHTML={{ __html: tweets[1] }} />
+          <div dangerouslySetInnerHTML={{ __html: tweets[2] }} />
+          <div dangerouslySetInnerHTML={{ __html: tweets[3] }} />
+          <div dangerouslySetInnerHTML={{ __html: tweets[4] }} />
+        </div>
       </div>
     </div>
   );
