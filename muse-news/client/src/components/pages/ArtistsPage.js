@@ -4,12 +4,28 @@ import { Link } from "react-router-dom";
 import Billie from "./../../imgs/Billie.jpg";
 import Abel from "./../../imgs/the_weeknd.jpg";
 import Tame from "./../../imgs/tame_impala.jpg";
+import Tweets from "./../../components/Tweets.js";
 
 function ArtistsPage({ match }) {
+  /*const data = fetch("/api/artists/getArtistTweets").then(weeknd => {
+    weeknd.json().then(
+      weeknd2 => {
+        console.log(weeknd2)
+      }
+    )
+  })*/
+
+  let x = "<h1>Hello</h1>"
+
   useEffect(() => {
+    fetchTweets();
     fetchItem();
-    console.log(match);
+    //console.log(match);
   }, []);
+
+  const[tweets, setTweets] = useState(
+    {}
+  );
 
   const [item, setItem] = useState({
     bio: {},
@@ -22,8 +38,22 @@ function ArtistsPage({ match }) {
     }
   });
 
+  const fetchTweets = async () => {
+    /*const fetchTweets = await fetch("/api/artists/getArtistTweets").then(ret => {
+      ret.json().then(ret2 => {
+        console.log(ret2);
+      })
+    })*/
+
+    const fetchTweets = await fetch("/api/artists/getArtistTweets")
+    const tweets = await fetchTweets.json();
+    setTweets(tweets);
+
+  }
+  console.log(tweets);
+
   const fetchItem = async () => {
-    console.log(match.params);
+    //console.log(match.params);
     const fetchItem = await fetch(
       "/api/artists/getArtistByName/" + match.params.id,
       {
@@ -41,6 +71,9 @@ function ArtistsPage({ match }) {
     setItem(item);
     console.log(item);
   };
+  console.log(item.name)
+  //console.log(item);
+
 
   return (
     <div>
@@ -77,12 +110,21 @@ function ArtistsPage({ match }) {
           <strong>{getTopSongs(item.name)}</strong>
         </Link>
       </p>
-      <h4>Headlines:</h4>
+      <h4>Headlines</h4>
       <p className="lead" style={{ fontSize: "15px" }}>
         <Link to={`/Newsp/${temporaryNewsLink(item.name)}`}>
           <strong>{temporaryNewsLink(item.name)}</strong>
         </Link>
       </p>
+      <div class = "Tweets">
+        <h2>Recent Tweets</h2>
+
+        <div dangerouslySetInnerHTML={{ __html: tweets[0] }} />
+        <div dangerouslySetInnerHTML={{ __html: tweets[1] }} />
+        <div dangerouslySetInnerHTML={{ __html: tweets[2] }} />
+        <div dangerouslySetInnerHTML={{ __html: tweets[3] }} />
+        <div dangerouslySetInnerHTML={{ __html: tweets[4] }} />
+      </div>
     </div>
     // <div>
     //   <h1>Artists Page!!!</h1>
@@ -94,6 +136,8 @@ function ArtistsPage({ match }) {
 }
 
 function getTags(tags) {
+
+
   if (tags) {
     var str = "";
     for (var i = 0; i < tags.length; i++) {
@@ -116,7 +160,7 @@ function getOnTour(ontour) {
 
 function getTopSongs(name) {
   if (name) {
-    console.log(name);
+    //console.log(name);
     if (name === "Billie Eilish") {
       return "bad guy";
     } else if (name === "The Weeknd") {
@@ -131,7 +175,7 @@ function getTopSongs(name) {
 
 function temporaryImages(name) {
   if (name) {
-    console.log(name);
+    //console.log(name);
     if (name === "Billie Eilish") {
       return Billie;
     } else if (name === "The Weeknd") {
@@ -146,7 +190,7 @@ function temporaryImages(name) {
 
 function temporaryNewsLink(name) {
   if (name) {
-    console.log(name);
+    //console.log(name);
     if (name === "The Weeknd") {
       return "Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)";
     } else if (name === "Billie Eilish") {
@@ -160,8 +204,8 @@ function temporaryNewsLink(name) {
 }
 
 function escapeHREF(content) {
-  console.log(typeof content);
-  console.log(content);
+  //console.log(typeof content);
+  //console.log(content);
   if (content) {
     return content.substring(0, content.indexOf("<a href"));
   }
