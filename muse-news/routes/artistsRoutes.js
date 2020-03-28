@@ -75,10 +75,10 @@ router.get("/getArtistByName/:name", (req, res) => {
   });
 });
 
-router.get("/getArtistTweets", (req, res) => {
+router.get("/getArtistTweets/:name", (req, res) => {
   //res.status(200).json("testing")
   //console.log("HERE")
-  getArtistTweets().then(returned=>{
+  getArtistTweets(req.params.name).then(returned=>{
     res.status(200).json(returned);
   });
 });
@@ -199,9 +199,9 @@ function putArtist(artist) {
   });
 }
 
-function getArtistTweets() {
+function getArtistTweets(name) {
   return new Promise(function(resolve, reject) {
-    getTweets().then(function(tweets) {
+    getTweets(name).then(function(tweets) {
       const urls = new Array(5);
 
       for (i=0;i<5;i++) {
@@ -221,9 +221,9 @@ function getArtistTweets() {
     })
   })
 }
-function getTweets() {
+function getTweets(name) {
   return new Promise(function (resolve, reject) {
-     client.get('search/tweets', {q: 'The Weeknd', count: 5}, function(error, tweets, response) {
+     client.get('search/tweets', {q: name, count: 5}, function(error, tweets, response) {
        resolve(tweets);
     });
   })

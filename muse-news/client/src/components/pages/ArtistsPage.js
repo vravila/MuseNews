@@ -18,7 +18,7 @@ function ArtistsPage({ match }) {
   let x = "<h1>Hello</h1>"
 
   useEffect(() => {
-    fetchTweets();
+    fetchTweets(match.params.id);
     fetchItem();
     //console.log(match);
   }, []);
@@ -38,14 +38,14 @@ function ArtistsPage({ match }) {
     }
   });
 
-  const fetchTweets = async () => {
+  const fetchTweets = async (name) => {
     /*const fetchTweets = await fetch("/api/artists/getArtistTweets").then(ret => {
       ret.json().then(ret2 => {
         console.log(ret2);
       })
     })*/
 
-    const fetchTweets = await fetch("/api/artists/getArtistTweets")
+    const fetchTweets = await fetch("/api/artists/getArtistTweets/"+name)
     const tweets = await fetchTweets.json();
     setTweets(tweets);
 
