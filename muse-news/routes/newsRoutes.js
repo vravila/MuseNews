@@ -19,7 +19,11 @@ router.get("/getNewsPage/:page", (req, res) => {
   getNewsPage(req.params.page).then(returned => {
     console.log("Returned!");
     console.log(returned);
-    res.status(200).json(returned);
+    if (returned.length === 0) {
+      res.status(404).json(returned);
+    } else {
+      res.status(200).json(returned);
+    }
   });
 });
 

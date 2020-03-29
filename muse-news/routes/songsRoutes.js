@@ -29,7 +29,7 @@ router.get("/getSongsByRank/:rank", (req, res) => {
 
 router.get("/getSongTweets/:name", (req, res) => {
   //res.status(200).json("testing")
-  //console.log("HERE")
+  console.log("HERE");
   getSongTweets(req.params.name).then(returned => {
     res.status(200).json(returned);
   });
