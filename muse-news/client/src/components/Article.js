@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Row from "react-bootstrap/Row";
 
 const GoogleNewsRss = require("google-news-rss");
 const googleNews = new GoogleNewsRss();
@@ -16,11 +17,41 @@ class Article extends Component {
       text: "text",
       img: "./../NewsImage.jpg",
       content: "empty",
-      url: "https://news.google.com"
+      url: "https://news.google.com",
+      songNames: []
     };
     this.getArticle = this.getArticle.bind(this);
 
     this.getArticle();
+
+  }
+
+  componentDidMount() {
+    console.log("mounted");
+    fetch(
+      "/api/songs/getSongsByAnArtist/" + this.state.terms,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      }
+    ).then(results => {
+      return results.json();
+    }).then(data => {
+      console.log(data);
+      var numSongs = 5;
+      var names = [];
+      if(numSongs > data.length)
+        numSongs = data.length;
+      for(var i = 0; i < numSongs; i++){
+        names.push(data[i].name);
+      }
+      this.setState({
+        songNames: names
+      }, () => this.forceUpdate());
+    });
   }
 
   getArticle() {
@@ -58,6 +89,16 @@ class Article extends Component {
   }
 
   render() {
+
+    var songLinks = [];
+    for(var i = 0; i < this.state.songNames.length; i++){
+      songLinks.push(
+        <Row><Link to={`/songspage/${this.state.songNames[i]}/${this.state.terms}`} style={{marginLeft:15, fontSize:14}}>
+          {this.state.songNames[i]}
+        </Link></Row>
+      );
+    }
+
     return (
       <div style={{ margin: 20 }}>
         <h1>{this.state.title}</h1>
@@ -84,12 +125,9 @@ class Article extends Component {
           </Link>
           .
         </p>
-        {/*
-                <p style={{ fontSize: 14 }}>
-                    See more about {song}{" "}
-                    <Link to={`/songspage/${artist}/${song}`}>here</Link>.
-                </p>
-                */}
+
+        <p style={{ fontSize: 14 }}>Songs by {this.state.terms}:</p>
+        {songLinks}
       </div>
     );
   }
