@@ -65,7 +65,7 @@ function Songs({ match }) {
         <h2 class="sectionHeader">
           <form>
             <label>
-              Song Name:
+              Song Name: 
               <input type="text" name="name" />
             </label>
             <Button onClick="searchSong(name)">Submit</Button>
@@ -117,7 +117,7 @@ function Songs({ match }) {
             <div className="col-3 col-sm-3 mx-auto mb-2">
               <div
                 className="card center-block"
-                style={{ width: "20rem", height: "32rem", background: "azure" }}
+                style={{ width: "20rem", height: "32rem", background: "black" }}
               >
                 <img
                   src={item.bingImageURL}
@@ -173,6 +173,16 @@ function temporaryImages(name) {
   }
 }
 
-function searchSong() {}
+function searchSong(name) {
+  var item = items.get(name);  
+  <Link
+    id="linkToSongsPage"
+    to={`/songspage/${item.name}/${item.artist.name}`}
+    >
+  </Link>
+
+
+
+}
 
 export default Songs;
