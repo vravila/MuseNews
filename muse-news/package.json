@@ -10,10 +10,12 @@
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
+    "chai-http": "^4.3.0",
     "concurrently": "^5.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "google-news-rss": "^0.4.1",
+    "mocha": "^7.1.1",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
     "node-fetch": "^2.6.0",
@@ -25,7 +27,8 @@
     "start": "nodemon index.js",
     "server": "nodemon index.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "mocha"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,5 +44,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "chai": "^4.2.0"
   }
 }

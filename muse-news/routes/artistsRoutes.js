@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router(); //ret a funx
 const app = express();
-var Twitter = require('twitter');
+var Twitter = require("twitter");
 
 var client = new Twitter({
   consumer_key: "r0cNjq1UbABQJUwGumA10eSOV",
@@ -48,7 +48,11 @@ router.get("/getArtistByRank/:rank", (req, res) => {
   getArtistByRank(req.params.rank).then(returned => {
     console.log("Returned!");
     console.log(returned);
-    res.status(200).json(returned);
+    if (returned === null) {
+      res.status(404).json(returned);
+    } else {
+      res.status(200).json(returned);
+    }
   });
 });
 
@@ -61,8 +65,12 @@ router.get("/getArtistByRankRanges/:startNo/:endNo", (req, res) => {
   );
   getArtistByRankRanges(req.params.startNo, req.params.endNo).then(returned => {
     console.log("Returned!");
-    console.log(returned);
-    res.status(200).json(returned);
+    console.log(returned + typeof returned + returned.length);
+    if (returned.length === 0) {
+      res.status(404).json(returned);
+    } else {
+      res.status(200).json(returned);
+    }
   });
 });
 
@@ -71,14 +79,18 @@ router.get("/getArtistByName/:name", (req, res) => {
   getArtistByName(req.params.name).then(returned => {
     console.log("Returned!");
     console.log(returned);
-    res.status(200).json(returned);
+    if (returned === null) {
+      res.status(404).json(returned);
+    } else {
+      res.status(200).json(returned);
+    }
   });
 });
 
 router.get("/getArtistTweets/:name", (req, res) => {
   //res.status(200).json("testing")
   //console.log("HERE")
-  getArtistTweets(req.params.name).then(returned=>{
+  getArtistTweets(req.params.name).then(returned => {
     res.status(200).json(returned);
   });
 });
@@ -204,7 +216,7 @@ function getArtistTweets(name) {
     getTweets(name).then(function(tweets) {
       const urls = new Array(5);
 
-      for (i=0;i<5;i++) {
+      for (i = 0; i < 5; i++) {
         id = tweets.statuses[i].id_str;
         user = tweets.statuses[i].user.screen_name;
         url = "http://twitter.com/" + user + "/status/" + id;
@@ -214,27 +226,31 @@ function getArtistTweets(name) {
       //console.log(urls);
 
       const promises = urls.map(url => convertToHtml(url));
-      Promise.all(promises).then((data) => {
-          // data = [promise1,promise2]
-          resolve(data)
+      Promise.all(promises).then(data => {
+        // data = [promise1,promise2]
+        resolve(data);
       });
-    })
-  })
+    });
+  });
 }
 function getTweets(name) {
-  return new Promise(function (resolve, reject) {
-     client.get('search/tweets', {q: name, count: 5}, function(error, tweets, response) {
-       resolve(tweets);
+  return new Promise(function(resolve, reject) {
+    client.get("search/tweets", { q: name, count: 5 }, function(
+      error,
+      tweets,
+      response
+    ) {
+      resolve(tweets);
     });
-  })
+  });
 }
 
 function convertToHtml(url) {
-  return new Promise(function (resolve, reject) {
-    client.get('statuses/oembed', {url: url}, function(error, response) {
+  return new Promise(function(resolve, reject) {
+    client.get("statuses/oembed", { url: url }, function(error, response) {
       resolve(response.html);
-    })
-  })
+    });
+  });
 }
 
 function testExport() {

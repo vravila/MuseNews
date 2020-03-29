@@ -19,14 +19,18 @@ router.get("/getSongsByRank/:rank", (req, res) => {
   getSongByRank(req.params.rank).then(returned => {
     console.log("Returned!");
     console.log(returned);
-    res.status(200).json(returned);
+    if (returned === null) {
+      res.status(404).json(returned);
+    } else {
+      res.status(200).json(returned);
+    }
   });
 });
 
 router.get("/getSongTweets/:name", (req, res) => {
   //res.status(200).json("testing")
   //console.log("HERE")
-  getSongTweets(req.params.name).then(returned=>{
+  getSongTweets(req.params.name).then(returned => {
     res.status(200).json(returned);
   });
 });
@@ -41,7 +45,11 @@ router.get("/getSongsByRankRanges/:startNo/:endNo", (req, res) => {
   getSongsByRankRanges(req.params.startNo, req.params.endNo).then(returned => {
     console.log("Returned!");
     console.log(returned);
-    res.status(200).json(returned);
+    if (returned.length === 0) {
+      res.status(404).json(returned);
+    } else {
+      res.status(200).json(returned);
+    }
   });
 });
 
@@ -56,7 +64,11 @@ router.get("/getSongByNameAndArtist/:songname/:artistname", (req, res) => {
     returned => {
       console.log("Returned!");
       console.log(returned);
-      res.status(200).json(returned);
+      if (returned === null) {
+        res.status(404).json(returned);
+      } else {
+        res.status(200).json(returned);
+      }
     }
   );
 });
@@ -66,7 +78,11 @@ router.get("/getSongsByAnArtist/:artistname", (req, res) => {
   getSongsByAnArtist(req.params.artistname).then(returned => {
     console.log("Returned!");
     console.log(returned);
-    res.status(200).json(returned);
+    if (returned.length === 0) {
+      res.status(404).json(returned);
+    } else {
+      res.status(200).json(returned);
+    }
   });
 });
 
@@ -148,7 +164,7 @@ function getSongTweets(name) {
     getTweets(name).then(function(tweets) {
       const urls = new Array(5);
 
-      for (i=0;i<5;i++) {
+      for (i = 0; i < 5; i++) {
         id = tweets.statuses[i].id_str;
         user = tweets.statuses[i].user.screen_name;
         url = "http://twitter.com/" + user + "/status/" + id;
@@ -158,27 +174,31 @@ function getSongTweets(name) {
       //console.log(urls);
 
       const promises = urls.map(url => convertToHtml(url));
-      Promise.all(promises).then((data) => {
-          // data = [promise1,promise2]
-          resolve(data)
+      Promise.all(promises).then(data => {
+        // data = [promise1,promise2]
+        resolve(data);
       });
-    })
-  })
+    });
+  });
 }
 function getTweets(name) {
-  return new Promise(function (resolve, reject) {
-     client.get('search/tweets', {q: name, count: 5}, function(error, tweets, response) {
-       resolve(tweets);
+  return new Promise(function(resolve, reject) {
+    client.get("search/tweets", { q: name, count: 5 }, function(
+      error,
+      tweets,
+      response
+    ) {
+      resolve(tweets);
     });
-  })
+  });
 }
 
 function convertToHtml(url) {
-  return new Promise(function (resolve, reject) {
-    client.get('statuses/oembed', {url: url}, function(error, response) {
+  return new Promise(function(resolve, reject) {
+    client.get("statuses/oembed", { url: url }, function(error, response) {
       resolve(response.html);
-    })
-  })
+    });
+  });
 }
 
 function testExport() {
