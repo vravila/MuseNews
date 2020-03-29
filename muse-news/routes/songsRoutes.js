@@ -23,6 +23,14 @@ router.get("/getSongsByRank/:rank", (req, res) => {
   });
 });
 
+router.get("/getSongTweets/:name", (req, res) => {
+  //res.status(200).json("testing")
+  //console.log("HERE")
+  getSongTweets(req.params.name).then(returned=>{
+    res.status(200).json(returned);
+  });
+});
+
 router.get("/getSongsByRankRanges/:startNo/:endNo", (req, res) => {
   console.log(
     "GET to /getSongByRankRanges for " +
@@ -133,6 +141,44 @@ async function getSongsByRankRanges(start, end) {
   console.log("Done looking");
   client.close();
   return returnedSong;
+}
+
+function getSongTweets(name) {
+  return new Promise(function(resolve, reject) {
+    getTweets(name).then(function(tweets) {
+      const urls = new Array(5);
+
+      for (i=0;i<5;i++) {
+        id = tweets.statuses[i].id_str;
+        user = tweets.statuses[i].user.screen_name;
+        url = "http://twitter.com/" + user + "/status/" + id;
+        urls[i] = url;
+      }
+
+      //console.log(urls);
+
+      const promises = urls.map(url => convertToHtml(url));
+      Promise.all(promises).then((data) => {
+          // data = [promise1,promise2]
+          resolve(data)
+      });
+    })
+  })
+}
+function getTweets(name) {
+  return new Promise(function (resolve, reject) {
+     client.get('search/tweets', {q: name, count: 5}, function(error, tweets, response) {
+       resolve(tweets);
+    });
+  })
+}
+
+function convertToHtml(url) {
+  return new Promise(function (resolve, reject) {
+    client.get('statuses/oembed', {url: url}, function(error, response) {
+      resolve(response.html);
+    })
+  })
 }
 
 function testExport() {
