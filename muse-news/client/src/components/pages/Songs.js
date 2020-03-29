@@ -82,6 +82,7 @@ function Songs({ match }) {
         {/* <tr> */}
         {/* <tc> */}
         <Link
+          id="prevButton"
           className={
             showPrevButton
               ? "fa float-left h3 font-weight-light text-primary"
@@ -92,6 +93,7 @@ function Songs({ match }) {
           Previous Page ({match.params.page - 1})
         </Link>
         <Link
+          id="nextButton"
           className={
             showNextButton
               ? "fa float-right h3 font-weight-light text-primary"
@@ -107,7 +109,10 @@ function Songs({ match }) {
         <hr className="lead"></hr>
       </div>
       {items.map(item => (
-        <Link to={`/songspage/${item.name}/${item.artist.name}`}>
+        <Link
+          id="linkToSongsPage"
+          to={`/songspage/${item.name}/${item.artist.name}`}
+        >
           <div className="row-mt-1">
             <div className="col-3 col-sm-3 mx-auto mb-2">
               <div

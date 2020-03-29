@@ -11,12 +11,12 @@ class NewsArticle extends Component {
       link: this.props.link,
       title: this.props.title,
       img: this.props.img,
-      previewText: this.props.preview,
+      previewText: this.props.preview
     };
   }
 
-  componentDidUpdate(){
-    if(this.state.title !== this.props.title){
+  componentDidUpdate() {
+    if (this.state.title !== this.props.title) {
       this.setState({
         link: this.props.link,
         title: this.props.title,
@@ -30,14 +30,25 @@ class NewsArticle extends Component {
     return (
       <div>
         <Card style={{ width: "32rem", fontSize: 14 }}>
-          <Card.Img variant="top" src={this.state.img} width="318" height="190" />
+          <Card.Img
+            variant="top"
+            src={this.state.img}
+            width="318"
+            height="190"
+          />
           <Card.Body>
             <Card.Title>
               <h3>{this.state.title}</h3>
             </Card.Title>
-            <Card.Text>{this.state.previewText}</Card.Text>
+            <Card.Text id="newsArticlePreview">
+              {this.state.previewText}
+            </Card.Text>
             <Link to={`/Newsp/${this.state.link}`}>
-              <Button variant="primary" style={{ fontSize: 14 }}>
+              <Button
+                id="moreButton"
+                variant="primary"
+                style={{ fontSize: 14 }}
+              >
                 More
               </Button>
             </Link>

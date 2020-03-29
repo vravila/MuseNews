@@ -33,12 +33,17 @@ function Navbar() {
           </li>
 
           <li className="nav-item active m-auto">
-            <Link className="nav-link text-white text-uppercase ml-5" to="/">
+            <Link
+              id="homeButton"
+              className="nav-link text-white text-uppercase ml-5"
+              to="/"
+            >
               <h3>Home</h3> <span class="sr-only">(current)</span>
             </Link>
           </li>
           <li className="nav-item m-auto">
             <Link
+              id="aboutButton"
               className="nav-link text-white text-uppercase ml-5"
               to="/about"
             >
@@ -48,6 +53,7 @@ function Navbar() {
 
           <li className="nav-item m-auto">
             <Link
+              id="songsButton"
               className="nav-link text-white text-uppercase ml-5"
               to="/songs/1"
             >
@@ -57,6 +63,7 @@ function Navbar() {
 
           <li className="nav-item m-auto">
             <Link
+              id="newsButton"
               className="nav-link text-white text-uppercase ml-5"
               to="/news"
             >
@@ -66,6 +73,7 @@ function Navbar() {
 
           <li className="nav-item m-auto">
             <Link
+              id="artistsButton"
               className="nav-link text-white text-uppercase ml-5"
               to="/artists/1"
             >

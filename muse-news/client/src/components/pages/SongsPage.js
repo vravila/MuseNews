@@ -94,11 +94,13 @@ function SongsPage() {
         <h1>
           <strong>{song}</strong>
         </h1>
-        <h2>
+        <h2 id="borderArtistLink">
           <strong>By</strong>{" "}
           {/* <Link to={`../../../artistspage/${artist}`}>{artist}</Link> */}
           {/* <a href=>V2 {artist} ]]]</a> */}
-          <Link to={link(linkItem, artist)}>{artist}</Link>
+          <Link id="artistLink" to={link(linkItem, artist)}>
+            {artist}
+          </Link>
           {/* {getArtistLink(artist)} */}
         </h2>
         <h2>Rank on Charts: {item.rank}</h2>

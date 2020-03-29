@@ -15,7 +15,7 @@ function ArtistsPage({ match }) {
     )
   })*/
 
-  let x = "<h1>Hello</h1>"
+  let x = "<h1>Hello</h1>";
 
   useEffect(() => {
     fetchTweets(match.params.id);
@@ -23,9 +23,7 @@ function ArtistsPage({ match }) {
     //console.log(match);
   }, []);
 
-  const[tweets, setTweets] = useState(
-    {}
-  );
+  const [tweets, setTweets] = useState({});
 
   const [item, setItem] = useState({
     bio: {},
@@ -38,22 +36,20 @@ function ArtistsPage({ match }) {
     }
   });
 
-  const fetchTweets = async (name) => {
+  const fetchTweets = async name => {
     /*const fetchTweets = await fetch("/api/artists/getArtistTweets").then(ret => {
       ret.json().then(ret2 => {
         console.log(ret2);
       })
     })*/
 
-    const fetchTweets = await fetch("/api/artists/getArtistTweets/"+name)
+    const fetchTweets = await fetch("/api/artists/getArtistTweets/" + name);
     const tweets = await fetchTweets.json();
     setTweets(tweets);
-
-  }
+  };
   console.log(tweets);
 
   const [songItem, setSongItem] = useState([]);
-
 
   const fetchItem = async () => {
     //console.log(match.params);
@@ -90,9 +86,8 @@ function ArtistsPage({ match }) {
     console.log("Song Item");
     console.log(songItem);
   };
-  console.log(item.name)
+  console.log(item.name);
   //console.log(item);
-
 
   return (
     <div>
@@ -125,11 +120,16 @@ function ArtistsPage({ match }) {
       </p>
       <h4>Top Songs:</h4>
       {songItem.map(songItem => (
-        <p className="lead" style={{ fontSize: "15px" }}>
-          <Link to={`/songspage/${songItem.name}/${item.name}`}>
-            {songItem.name}
-          </Link>
-        </p>
+        <div name={`song`}>
+          <p className="lead" style={{ fontSize: "15px" }}>
+            <Link
+              id="linkToSong"
+              to={`/songspage/${songItem.name}/${item.name}`}
+            >
+              {songItem.name}
+            </Link>
+          </p>
+        </div>
       ))}
       <h4>Headlines:</h4>
       <p className="lead" style={{ fontSize: "15px" }}>
@@ -137,7 +137,7 @@ function ArtistsPage({ match }) {
           <strong>{temporaryNewsLink(item.name)}</strong>
         </Link>
       </p>
-      <div class = "Tweets">
+      <div class="Tweets">
         <h2>Recent Tweets</h2>
 
         <div dangerouslySetInnerHTML={{ __html: tweets[0] }} />
@@ -157,8 +157,6 @@ function ArtistsPage({ match }) {
 }
 
 function getTags(tags) {
-
-
   if (tags) {
     var str = "";
     for (var i = 0; i < tags.length; i++) {

@@ -209,6 +209,7 @@ class NewsGrid extends Component {
       }
       cards.push(
         <NewsArticle
+          id="newsArticle"
           title={this.state.articles[i].title}
           preview={this.state.articles[i].preview}
           img={this.state.articles[i].img}
