@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import { Redirect } from "react-router-dom";
 
 import NewsGrid from "./NewsGrid";
 
@@ -15,7 +16,8 @@ class NewsContainer extends Component {
       type: typeArg,
       page: 1,
       filter: "None",
-      sort: "None"
+      sort: "None",
+      dne: false
     };
     this.search = this.search.bind(this);
     this.pageUp = this.pageUp.bind(this);
@@ -27,8 +29,26 @@ class NewsContainer extends Component {
     this.state.terms = event.target.searchBox.value;
     this.state.page = 1;
     this.state.type = "artist";
+    fetch(
+      "/api/artists/getArtistByName/" + this.state.terms,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        }
+      }
+    ).then(results => {
+      if(!results.ok){
+        this.setState({
+          dne: true
+        }, () => this.forceUpdate());
+      }
+      return results.json();
+    });
     this.forceUpdate();
   }
+
   pageUp(event) {
     event.preventDefault();
     if (this.state.page < 50) {
@@ -45,8 +65,13 @@ class NewsContainer extends Component {
   }
 
   render() {
+    var redirect = <p></p>;
+    if(this.state.dne){
+      redirect = <Redirect to='/artistdne' />;
+    }
     return (
       <div>
+        {redirect}
         <h1 style={{ marginLeft: 20 }}>News</h1>
 
         <Form style={{ marginLeft: 20 }} onSubmit={this.search}>
