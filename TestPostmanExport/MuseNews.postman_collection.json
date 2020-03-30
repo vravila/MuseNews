@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "ba715267-a23f-4337-9407-c4caa211e89e",
+		"name": "MuseNews",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TestArtistsPage",
+			"item": [
+				{
+					"name": "https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&page=1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cec62f48-b892-4211-959c-471a2fc29289",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "384f9b339bb6489a9f8d69652d148cb9",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&page=1",
+							"protocol": "https",
+							"host": [
+								"ws",
+								"audioscrobbler",
+								"com"
+							],
+							"path": [
+								"2.0",
+								""
+							],
+							"query": [
+								{
+									"key": "format",
+									"value": "json"
+								},
+								{
+									"key": "method",
+									"value": "chart.gettopartists"
+								},
+								{
+									"key": "api_key",
+									"value": "10b860590d5168c53783ae9728a9b395"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

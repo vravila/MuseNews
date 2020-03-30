@@ -86,7 +86,7 @@ function ArtistsPage({ match }) {
     console.log("Song Item");
     console.log(songItem);
   };
-  console.log(item.name);
+  // console.log(item.name);
   //console.log(item);
 
   return (
@@ -131,12 +131,15 @@ function ArtistsPage({ match }) {
           </p>
         </div>
       ))}
-      <h4>Headlines:</h4>
-      <p className="lead" style={{ fontSize: "15px" }}>
+      <h4>
+        See the latest headlines about {item.name}{" "}
+        <Link to={`/Newsa/${item.name}`}>here</Link>
+      </h4>
+      {/* <p className="lead" style={{ fontSize: "15px" }}>
         <Link to={`/Newsp/${temporaryNewsLink(item.name)}`}>
           <strong>{temporaryNewsLink(item.name)}</strong>
         </Link>
-      </p>
+      </p> */}
       <div class="Tweets">
         <h2>Recent Tweets</h2>
 

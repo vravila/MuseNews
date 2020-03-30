@@ -14,10 +14,15 @@ function About() {
 
   const [items, setItems] = useState([]);
   const [issuesItems, setIssuesItems] = useState({});
+  const [secondItems, setSecondItems] = useState([]);
 
   const fetchItems = async () => {
     const data = await fetch(
-      `https://api.github.com/repos/vravila/MuseNews/commits?per_page=100`
+      `https://api.github.com/repos/vravila/MuseNews/commits?page=1&per_page=100`
+    );
+
+    const secondData = await fetch(
+      "https://api.github.com/repos/vravila/MuseNews/commits?page=2&per_page=100"
     );
 
     const issueData = await fetch(
@@ -26,11 +31,13 @@ function About() {
 
     // console.log(process.env.REACT_APP_LASTFM_API_KEY);
     const items = await data.json();
+    const secondItems = await secondData.json();
     const issuesItems = await issueData.json();
 
     console.log(items);
     setItems(items);
     setIssuesItems(issuesItems);
+    setSecondItems(secondItems);
   };
 
   return (
@@ -106,8 +113,9 @@ function About() {
                 go hiking, and explore the unique food that Austin has to offer.
               </p>
               <p>
-                <strong>Primary Responsibilities:</strong> Create Artists pages,
-                API calls
+                <strong>Primary Responsibilities:</strong> Front-End React.JS
+                for Artists pages, Back-End Node.JS/Express.JS API development,
+                Selenium & Mocha tests
               </p>
             </div>
           </div>
@@ -200,6 +208,11 @@ function About() {
         author.
       </p>
       <p>
+        <strong>Bing Images API: </strong> Scraped using Node.JS to
+        https://api.cognitive.microsoft.com/bing/v7.0/images. We used this API
+        to get images for each instance of the Song and Artist models.
+      </p>
+      <p>
         <strong>Git API: </strong> Scraped using a FETCH request to
         https://api.github.com. We use this API to dynamically get GitHub
         statistics like commits and issues for the project as a whole and per
@@ -217,7 +230,22 @@ function About() {
       <p>
         <strong>Node.JS: </strong> We used Node.JS to develop some back-end code
         of the application. It was used for API calls to get data about songs,
-        artists, and news.
+        artists, and news. We created endpoints for our server that our
+        front-end would use to interact with our MongoDB database. This easily
+        separated the front-end and back-end.
+      </p>
+
+      <p>
+        <strong>Express.JS: </strong> We used the Express.JS framework to format
+        how we set up Node.JS calls. This consisted of having a routes folder
+        with all of the endpoints, among other schemas.
+      </p>
+
+      <p>
+        <strong>MongoDB: </strong> We used MongoDB to store the data for our
+        website. We store all instances of songs and artists in the 'songs' and
+        'artists' collections of our MongoDB database. We store many instances
+        of news articles in the 'news' collection of our MongoDB database.
       </p>
 
       <p>
@@ -232,9 +260,9 @@ function About() {
         </a>
       </h3>
 
-      <h3>Total Number of Commits: {items.length}</h3>
+      <h3>Total Number of Commits: {items.length + secondItems.length}</h3>
       <h4>Commits Per Person:</h4>
-      {parseItems(items).map(item => (
+      {parseItems(items, secondItems).map(item => (
         <p>{item}</p>
       ))}
       <h3>Total Number of Issues: {issuesItems.length}</h3>
@@ -242,13 +270,13 @@ function About() {
       {parseIssues(issuesItems).map(item => (
         <p>{item}</p>
       ))}
-      <h3>Total Number of Unit Tests: 0 </h3>
+      <h3>Total Number of Unit Tests: 10 </h3>
       <h4>Unit Tests Per Person:</h4>
-      <p>Kedar Raman: 0</p>
-      <p>Venkata Ravila: 0</p>
-      <p>Alexander Tekle: 0</p>
-      <p>Sam Dauenbaugh: 0</p>
-      <p>Daniel Walsh: 0</p>
+      <p>Kedar Raman: 2</p>
+      <p>Venkata Ravila: 2</p>
+      <p>Alexander Tekle: 2</p>
+      <p>Sam Dauenbaugh: 2</p>
+      <p>Daniel Walsh: 2</p>
     </div>
     // <div>
     //   <h1>Artists Page!!!</h1>
@@ -304,7 +332,7 @@ function parseIssues(items) {
   return mapToStr;
 }
 
-function parseItems(items) {
+function parseItems(items, secondItems) {
   //   items.forEach(parseItemsHelper);
   let nameMap = new Map();
 
@@ -316,6 +344,29 @@ function parseItems(items) {
     }
     if (person === "36870836+donuthole55@users.noreply.github.com") {
       person = "danwalsh98@gmail.com";
+    }
+    if (person === "32229316+kedaraman@users.noreply.github.com") {
+      person = "kedar.v.raman@gmail.com";
+    }
+    if (nameMap.has(person)) {
+      nameMap.set(person, nameMap.get(person) + 1);
+    } else {
+      nameMap.set(person, 1);
+    }
+    // console.log(item.commit.author.email);
+  }
+
+  for (var i = 0; i < secondItems.length; i++) {
+    var item = secondItems[i];
+    var person = item.commit.author.email;
+    if (person === "36828975+vravila@users.noreply.github.com") {
+      person = "venkataravila@gmail.com";
+    }
+    if (person === "36870836+donuthole55@users.noreply.github.com") {
+      person = "danwalsh98@gmail.com";
+    }
+    if (person === "32229316+kedaraman@users.noreply.github.com") {
+      person = "kedar.v.raman@gmail.com";
     }
     if (nameMap.has(person)) {
       nameMap.set(person, nameMap.get(person) + 1);

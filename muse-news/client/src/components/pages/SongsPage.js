@@ -21,9 +21,7 @@ function SongsPage() {
     // console.log(match);
   }, []);
 
-  const[tweets, setTweets] = useState(
-    {}
-  );
+  const [tweets, setTweets] = useState({});
 
   const [item, setItem] = useState({
     wiki: {},
@@ -32,18 +30,17 @@ function SongsPage() {
 
   const [linkItem, setLinkItem] = useState({});
 
-  const fetchTweets = async (name) => {
+  const fetchTweets = async name => {
     /*const fetchTweets = await fetch("/api/artists/getArtistTweets").then(ret => {
       ret.json().then(ret2 => {
         console.log(ret2);
       })
     })*/
 
-    const fetchTweets = await fetch("/api/artists/getArtistTweets/"+name)
+    const fetchTweets = await fetch("/api/artists/getArtistTweets/" + name);
     const tweets = await fetchTweets.json();
     setTweets(tweets);
-
-  }
+  };
   console.log(tweets);
   const fetchItem = async () => {
     console.log(song);
@@ -144,13 +141,16 @@ function SongsPage() {
         <p className="lead" style={{ fontSize: "15px" }}>
           <strong>Tags:</strong> {getTags(item.toptags.tag)}
         </p>
-        <h4>Headlines:</h4>
-        <p className="lead" style={{ fontSize: "15px" }}>
+        <h4>
+          See the latest headlines about {item.name} and {artist}{" "}
+          <Link to={`/Newsa/${artist}`}>here</Link>
+        </h4>
+        {/* <p className="lead" style={{ fontSize: "15px" }}>
           <Link to={`/Newsp/${temporaryNewsLink(artist)}`}>
             <strong>{temporaryNewsLink(artist)}</strong>
           </Link>
-        </p>
-        <div class = "Tweets">
+        </p> */}
+        <div class="Tweets">
           <h2>Recent Tweets</h2>
 
           <div dangerouslySetInnerHTML={{ __html: tweets[0] }} />
