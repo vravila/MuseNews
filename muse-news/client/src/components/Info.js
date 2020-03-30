@@ -29,7 +29,7 @@ class Info extends Component {
                 <h5 className="card-title">{headerSubTitle}</h5>
                 <p className="card-text">{headerText}</p>
                 <Link
-                  to={`/${headerTitle}`}
+                  to={`/${headerTitle}/1`}
                   className="btn btn-outline-primary text-uppercase"
                 >
                   More Info
