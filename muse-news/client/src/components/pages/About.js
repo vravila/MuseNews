@@ -208,6 +208,12 @@ function About() {
         author.
       </p>
       <p>
+        <strong>Twitter API: </strong> Scraped using Node.JS to
+        http://twitter.com/. The Twitter API provides access to several of
+        Twitter’s core features. We implemented querying an artist or song name
+        through the Twitter API to find and display relevant tweets.
+      </p>
+      <p>
         <strong>Bing Images API: </strong> Scraped using Node.JS to
         https://api.cognitive.microsoft.com/bing/v7.0/images. We used this API
         to get images for each instance of the Song and Artist models.
