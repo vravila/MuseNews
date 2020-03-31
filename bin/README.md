@@ -16,8 +16,8 @@ Alexander Tekle UTEID: at36953
   Actual completion time (17 hours)
   
 Kedar Raman UTEID: kvr336 GitHub ID: kedaraman
-  Estimated completion time (15 hours)
-  Actual completion time (17 hours)
+  Estimated completion time (45 hours)
+  Actual completion time (55 hours)
   
 Sam Dauenbaugh  UTEID: sad2929
   Estimated completion time (14 hours)
