@@ -136,7 +136,7 @@ public class ArtistsPageTest
 	}
 	
 	/*
-	 * Test 8: Tests the search bar on the news page
+	 * Test 8: Tests the news more button
 	 */
 	@Test
 	public void testNewsMoreButton() throws InterruptedException
