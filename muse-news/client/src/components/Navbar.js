@@ -55,7 +55,8 @@ function Navbar() {
             <Link
               id="songsButton"
               className="nav-link text-white text-uppercase ml-5"
-              to="/songs/1"
+              //to="/songs/1"
+              to="/songs/splash/none/rank/none/none/none/none/none/none/none/1"
             >
               <h3>Songs</h3>{" "}
             </Link>

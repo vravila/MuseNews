@@ -15,9 +15,13 @@ function Songs({ match }) {
 
   const ENTRIES_PER_PAGE = 10;
   const DATABASE_LIMIT = 300;
-  const LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
+  var LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
   const [items, setItems] = useState([]);
+  const passedInParams = useState({});
   const sourceName = "songs";
+
+  var showNextButton = useState({});
+  var showPrevButton = useState({});
 
   var showPrevButton = true;
   var showNextButton = true;
@@ -25,8 +29,57 @@ function Songs({ match }) {
   if (match.params.page == 1) {
     showPrevButton = false;
   }
-  if (match.params.page == LAST_PAGE) {
-    showNextButton = false;
+  // if (match.params.page == LAST_PAGE) {
+  //   showNextButton = false;
+  // }
+
+  passedInParams.mode = match.params.mode;
+  passedInParams.searchterms = match.params.searchterms;
+  passedInParams.sort = match.params.sort;
+  passedInParams.artistSearch = match.params.artistSearch;
+  passedInParams.minPlayCount = match.params.minPlayCount;
+  passedInParams.maxPlayCount = match.params.maxPlayCount;
+  passedInParams.minListeners = match.params.minListeners;
+  passedInParams.maxListeners = match.params.maxListeners;
+  passedInParams.minRank = match.params.minRank;
+  passedInParams.maxRank = match.params.maxRank;
+  passedInParams.page = match.params.page;
+
+  // printParams(match);
+  printPassedInParams(passedInParams);
+
+  console.log("******************************");
+
+  if (passedInParams.searchterms === "none") {
+    passedInParams.searchterms = "";
+  }
+
+  if (passedInParams.minPlayCount === "none") {
+    passedInParams.minPlayCount = "";
+  }
+
+  if (passedInParams.maxPlayCount === "none") {
+    passedInParams.maxPlayCount = "";
+  }
+
+  if (passedInParams.minListeners === "none") {
+    passedInParams.minListeners = "";
+  }
+
+  if (passedInParams.maxListeners === "none") {
+    passedInParams.maxListeners = "";
+  }
+
+  if (passedInParams.minRank === "none") {
+    passedInParams.minRank = "";
+  }
+
+  if (passedInParams.maxRank === "none") {
+    passedInParams.maxRank = "";
+  }
+
+  if (passedInParams.artistSearch === "none") {
+    passedInParams.artistSearch = "";
   }
   // console.log("PAGE!");
   // console.log(match.params.page);
@@ -34,34 +87,178 @@ function Songs({ match }) {
   const fetchItems = async () => {
     const startIdx = match.params.page * 10 - 10 + 1;
     const endIdx = match.params.page * 10;
-    const data = await fetch(
-      "/api/songs/getSongsByRankRanges/" + startIdx + "/" + endIdx,
-      {
-        method: "GET",
-        // mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Allow-Credentials": "true",
-          // "Access-Control-Allow-Origin": "http://localhost:5001",
-          Accept: "application/json"
-        }
+
+    const apiURL =
+      "/api/songs/querySongs/" +
+      match.params.searchterms +
+      "/" +
+      match.params.sort +
+      "/" +
+      match.params.artistSearch +
+      "/" +
+      match.params.minPlayCount +
+      "/" +
+      match.params.maxPlayCount +
+      "/" +
+      match.params.minListeners +
+      "/" +
+      match.params.maxListeners +
+      "/" +
+      match.params.minRank +
+      "/" +
+      match.params.maxRank +
+      "/" +
+      match.params.page;
+    console.log("URL: " + apiURL);
+
+    const data = await fetch(apiURL, {
+      method: "GET",
+      // mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Credentials": "true",
+        // "Access-Control-Allow-Origin": "http://localhost:5001",
+        Accept: "application/json"
       }
-    );
+    });
     const items = await data.json();
     console.log(items);
     setItems(items);
   };
 
+  if (items.length < ENTRIES_PER_PAGE) {
+    console.log("LAST PAGE");
+    showNextButton = false;
+    LAST_PAGE = match.params.page;
+  } else {
+    console.log("NOT LAST PAGE");
+  }
+
   return (
     <div>
       <div class="container-fluid">
         <h1 class="pageHeader">America's Top Songs</h1>
-        <h2 class="sectionHeader">
-          Top Songs: Page {match.params.page} out of {LAST_PAGE}
-        </h2>
+        <h2 class="sectionHeader">Top Songs: Page {match.params.page}</h2>
+        <form
+          action="/redirectSongsPages"
+          className="multi-range-field my-5 pb-5"
+        >
+          <label>
+            Search Songs:
+            <input
+              type="text"
+              id="search"
+              name="search"
+              defaultValue={passedInParams.searchterms}
+            ></input>
+          </label>
+          <label>
+            Sort By:
+            <select id="sort" name="sort">
+              <option
+                value="rank"
+                selected={passedInParams.sort === "rank" ? "selected" : ""}
+              >
+                Rank
+              </option>
+              <option
+                value="nameAsc"
+                selected={passedInParams.sort === "nameAsc" ? "selected" : ""}
+              >
+                Song Title Ascending
+              </option>
+              <option
+                value="nameDesc"
+                selected={passedInParams.sort === "nameDesc" ? "selected" : ""}
+              >
+                Song Title Descending
+              </option>
+            </select>
+          </label>
+          <br></br>
+          Filters:<br></br>
+          <label>
+            Artists:
+            <input
+              type="text"
+              id="artistSearch"
+              name="artistSearch"
+              defaultValue={passedInParams.artistSearch}
+            ></input>
+          </label>
+          <label>
+            Play Count:
+            <input
+              type="number"
+              id="minPlayCount"
+              name="minPlayCount"
+              min="0"
+              max="25598881"
+              defaultValue={passedInParams.minPlayCount}
+            ></input>
+            to
+            <input
+              type="number"
+              id="maxPlayCount"
+              name="maxPlayCount"
+              min="0"
+              max="25598881"
+              defaultValue={passedInParams.maxPlayCount}
+            ></input>
+          </label>
+          <label>
+            Listeners:
+            <input
+              type="number"
+              id="minListeners"
+              name="minListeners"
+              min="0"
+              max="2144166"
+              defaultValue={passedInParams.minListeners}
+            ></input>
+            to
+            <input
+              type="number"
+              id="maxListeners"
+              name="maxListeners"
+              min="0"
+              max="2144166"
+              defaultValue={passedInParams.maxListeners}
+            ></input>
+          </label>
+          <label>
+            Rank:
+            <input
+              type="number"
+              id="minRank"
+              name="minRank"
+              min="1"
+              max="300"
+              defaultValue={passedInParams.minRank}
+            ></input>
+            to
+            <input
+              type="number"
+              id="maxRank"
+              name="maxRank"
+              min="1"
+              max="300"
+              defaultValue={passedInParams.maxRank}
+            ></input>
+          </label>
+          <label>
+            <input
+              type="hidden"
+              id="source"
+              name="source"
+              value="songs"
+            ></input>
+          </label>
+          <input type="submit" value="Submit"></input>
+        </form>
       </div>
-      <div class="container-fluid">
+      {/* <div class="container-fluid">
         <h2 class="sectionHeader">
           <form>
             <label>
@@ -71,7 +268,7 @@ function Songs({ match }) {
             <Button onClick="searchSong(name)">Submit</Button>
           </form>
         </h2>
-      </div>
+      </div> */}
       `{/* <Button onClick={updateDB}>Update MongoDB</Button> */}
       {/* <Button onClick={push(`/songs/` + prevPage(match.params.page))}>
         {" "}
@@ -88,7 +285,17 @@ function Songs({ match }) {
               ? "fa float-left h3 font-weight-light text-primary"
               : "fa hidden float-left h3 font-weight-light text-primary"
           }
-          to={`/redirectPages/${sourceName}/${prevPage(match.params.page)}`}
+          to={`/redirectSongsPages?source=songs&search=${
+            passedInParams.searchterms
+          }&sort=${passedInParams.sort}&artistSearch=${
+            passedInParams.artistSearch
+          }&minPlayCount=${passedInParams.minPlayCount}&maxPlayCount=${
+            passedInParams.maxPlayCount
+          }&minListeners=${passedInParams.minListeners}&maxListeners=${
+            passedInParams.maxListeners
+          }&minRank=${passedInParams.minRank}&maxRank=${
+            passedInParams.maxRank
+          }&page=${prevPage(match.params.page)}`}
         >
           Previous Page ({match.params.page - 1})
         </Link>
@@ -99,7 +306,17 @@ function Songs({ match }) {
               ? "fa float-right h3 font-weight-light text-primary"
               : "fa hidden float-right h3 font-weight-light text-primary"
           }
-          to={`/redirectPages/songs/` + nextPage(match.params.page, LAST_PAGE)}
+          to={`/redirectSongsPages?source=songs&search=${
+            passedInParams.searchterms
+          }&sort=${passedInParams.sort}&artistSearch=${
+            passedInParams.artistSearch
+          }&minPlayCount=${passedInParams.minPlayCount}&maxPlayCount=${
+            passedInParams.maxPlayCount
+          }&minListeners=${passedInParams.minListeners}&maxListeners=${
+            passedInParams.maxListeners
+          }&minRank=${passedInParams.minRank}&maxRank=${
+            passedInParams.maxRank
+          }&page=${nextPage(match.params.page, LAST_PAGE)}`}
         >
           Next Page ({parseInt(match.params.page) + 1})
         </Link>
@@ -171,6 +388,19 @@ function temporaryImages(name) {
       return "";
     }
   }
+}
+
+function printPassedInParams(match) {
+  console.log("Version 2");
+  console.log("Mode: " + match.mode);
+  console.log("Search Terms: " + match.searchterms);
+  console.log("Sort by : " + match.sort);
+  console.log("On tour:" + match.ontour);
+  console.log("Min Play Count : " + match.minPlayCount);
+  console.log("Max Play Count : " + match.maxPlayCount);
+  console.log("Min Listeners : " + match.minListeners);
+  console.log("Max Listeners : " + match.maxListeners);
+  console.log("Page: " + match.page);
 }
 
 // function searchSong(name) {

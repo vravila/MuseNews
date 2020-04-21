@@ -8,6 +8,7 @@ import Songs from "./components/pages/Songs";
 import SongsPage from "./components/pages/SongsPage";
 import NewsPage from "./components/pages/NewsPage";
 import RedirectPages from "./components/pages/RedirectPages";
+import RedirectSongsPages from "./components/pages/RedirectSongsPages";
 import ArtistDNE from "./components/pages/ArtistDNE";
 
 import "./App.css";
@@ -33,13 +34,18 @@ class App extends Component {
           <Route path="/artistspage/:id" component={ArtistsPage} />
           <Route path="/news" component={News} />
           <Route path="/newsa/:artist" component={News} />
-          <Route path="/songs/:page" component={Songs} />
+          {/* <Route path="/songs/:page" component={Songs} /> */}
+          <Route
+            path="/songs/:mode/:searchterms/:sort/:artistSearch/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:minRank/:maxRank/:page"
+            component={Songs}
+          />
           <Route path="/songspage/:song/:artist" component={SongsPage} />
           {/* <Route
             path="/redirectPages/:source/:page"
             component={RedirectPages}
           /> */}
           <Route path="/redirectPages" component={RedirectPages} />
+          <Route path="/redirectSongsPages" component={RedirectSongsPages} />
           <Route path="/artistdne" component={ArtistDNE} />
           <Route path="/newsp/:terms/:index" component={NewsPage} />
         </Switch>

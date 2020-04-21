@@ -96,7 +96,7 @@ class RedirectPages extends Component {
       urlString += "/" + values.minListeners;
     }
 
-    if (values.maxPlayCount === "") {
+    if (values.maxListeners === "") {
       console.log("no max Listeners");
       urlString += "/none";
     } else {

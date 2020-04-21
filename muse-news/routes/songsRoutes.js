@@ -14,6 +14,46 @@ router.get("/testExport", (req, res) => {
   res.status(200).send("Successfully Reached Endpoint");
 });
 
+router.get(
+  "/querySongs/:searchterms/:sort/:artistSearch/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:minRank/:maxRank/:page",
+  (req, res) => {
+    console.log("GET to /querySongs for ==> ");
+    console.log(req.params.searchterms);
+    console.log(req.params.sort);
+    console.log(req.params.artistSearch);
+    console.log(req.params.minPlayCount);
+    console.log(req.params.maxPlayCount);
+    console.log(req.params.minListeners);
+    console.log(req.params.maxListeners);
+    console.log(req.params.minRank);
+    console.log(req.params.maxRank);
+    console.log(req.params.page);
+    querySongs(
+      req.params.searchterms,
+      req.params.sort,
+      req.params.artistSearch,
+      req.params.minPlayCount,
+      req.params.maxPlayCount,
+      req.params.minListeners,
+      req.params.maxListeners,
+      req.params.minRank,
+      req.params.maxRank,
+      req.params.page
+    ).then(returned => {
+      console.log("Returned!");
+      // console.log(returned);
+      for (var i = 0; i < returned.length; i++) {
+        console.log(returned[i]["name"]);
+      }
+      if (returned === null) {
+        res.status(404).json(returned);
+      } else {
+        res.status(200).json(returned);
+      }
+    });
+  }
+);
+
 router.get("/getSongsByRank/:rank", (req, res) => {
   console.log("GET to /getSongsByRank for " + req.params.rank);
   getSongByRank(req.params.rank).then(returned => {
@@ -85,6 +125,127 @@ router.get("/getSongsByAnArtist/:artistname", (req, res) => {
     }
   });
 });
+
+async function querySongs(
+  searchterms,
+  sort,
+  artistSearch,
+  minPlayCount,
+  maxPlayCount,
+  minListeners,
+  maxListeners,
+  minRank,
+  maxRank,
+  page
+) {
+  var start = 1;
+  var end = 10;
+  var query = {};
+  var sortQuery = {};
+  if (searchterms != "none") {
+    query["name"] = { $regex: ".*" + searchterms + ".*" };
+  }
+
+  if (sort === "nameAsc") {
+    sortQuery = { name: 1 };
+  } else if (sort === "nameDesc") {
+    sortQuery = { name: -1 };
+  } else if (sort === "listeners") {
+    sortQuery = { "stats.listeners": 1 };
+  } else {
+    sortQuery = { rank: 1 };
+  }
+
+  if (artistSearch != "none") {
+    query["artist.name"] = { $regex: ".*" + artistSearch + ".*" };
+  }
+
+  if (minPlayCount === "none") {
+    if (maxPlayCount !== "none") {
+      query["playcount"] = { $gte: 0, $lte: parseInt(maxPlayCount) };
+    }
+  } else {
+    if (maxPlayCount === "none") {
+      query["playcount"] = {
+        $gte: parseInt(minPlayCount),
+        $lte: 1000000000
+      };
+    } else {
+      query["playcount"] = {
+        $gte: parseInt(minPlayCount),
+        $lte: parseInt(maxPlayCount)
+      };
+    }
+  }
+
+  if (minListeners === "none") {
+    if (maxListeners !== "none") {
+      query["listeners"] = { $gte: 0, $lte: parseInt(maxListeners) };
+    }
+  } else {
+    if (maxListeners === "none") {
+      query["listeners"] = {
+        $gte: parseInt(minListeners),
+        $lte: 1000000000
+      };
+    } else {
+      query["listeners"] = {
+        $gte: parseInt(minListeners),
+        $lte: parseInt(maxListeners)
+      };
+    }
+  }
+
+  if (minRank === "none") {
+    if (maxRank !== "none") {
+      query["rank"] = { $gte: 1, $lte: parseInt(maxRank) };
+    }
+  } else {
+    if (maxRank === "none") {
+      query["rank"] = {
+        $gte: parseInt(minRank),
+        $lte: 300
+      };
+    } else {
+      query["rank"] = {
+        $gte: parseInt(minRank),
+        $lte: parseInt(maxRank)
+      };
+    }
+  }
+
+  const PAGE_SIZE = 10;
+  const skip = (page - 1) * 10;
+
+  // const testQuery = {
+  //   "stats.playcount": { $gte: 1, $lte: 1000000000 }
+  // };
+
+  console.log(query);
+  console.log(sortQuery);
+
+  const dbName = "MuseNewsDatabase";
+  const collectionName = "songs";
+  const MongoClient = require("mongodb").MongoClient;
+  const uri =
+    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
+  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+  // .then(function(db) {
+  console.log("Connected..." + start + " : " + end);
+  const collection = client.db(dbName).collection(collectionName);
+  returnedCursorArtist = collection
+    .find(query)
+    .skip(skip)
+    .limit(PAGE_SIZE);
+  const returnedArtist = returnedCursorArtist.sort(sortQuery).toArray();
+  // for (var i = 0; i < returnedArtist["artist"].length; i++) {
+  //   console.log(artist[i]["name"]);
+  // }
+  // console.log(returnedArtist);
+  console.log("Done looking");
+  client.close();
+  return returnedArtist;
+}
 
 async function getSongByNameAndArtist(song, artist) {
   var returnedSong;
