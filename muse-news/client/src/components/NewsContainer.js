@@ -25,6 +25,9 @@ class NewsContainer extends Component {
     this.search = this.search.bind(this);
     this.pageUp = this.pageUp.bind(this);
     this.pageDown = this.pageDown.bind(this);
+    this.dateSort = this.dateSort.bind(this);
+    this.popularitySort = this.popularitySort.bind(this);
+    this.relevanceSort = this.relevanceSort.bind(this);
   }
 
   search(event) {
@@ -52,24 +55,21 @@ class NewsContainer extends Component {
     this.forceUpdate();
   }
 
-  dateSort(event){
-    event.preventDefault();
+  dateSort(){
     this.setState({
-      sort: "Date"
+      sort: "date"
     }, () => this.forceUpdate());
   }
 
-  popularitySort(event){
-    event.preventDefault();
+  popularitySort(){
     this.setState({
-      sort: "Popularity"
+      sort: "popularity"
     }, () => this.forceUpdate());
   }
 
-  relevanceSort(event){
-    event.preventDefault();
+  relevanceSort(){
     this.setState({
-      sort: "Relevance"
+      sort: "relevance"
     }, () => this.forceUpdate());
   }
 
@@ -140,8 +140,8 @@ class NewsContainer extends Component {
 
             <Dropdown.Menu>
               <Dropdown.Item onSelect={this.dateSort}>Date</Dropdown.Item>
-              <Dropdown.Item href={this.relevanceSort}>Relevance</Dropdown.Item>
-              <Dropdown.Item href={this.popularitySort}>Popularity</Dropdown.Item>
+              <Dropdown.Item onSelect={this.relevanceSort}>Relevance</Dropdown.Item>
+              <Dropdown.Item onSelect={this.popularitySort}>Popularity</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <Dropdown style={{ display: "inline-block", marginLeft: 5}}>

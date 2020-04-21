@@ -50,10 +50,20 @@ class NewsGrid extends Component {
   }
 
   getNews(q, page) {
+    var sortBy = "";
+    if(this.state.sort === "date"){
+      console.log("date");
+      sortBy = "&sortBy=publishedAt";
+    }else if(this.state.sort === "popularity"){
+      sortBy = "&sortBy=popularity";
+    }else if(this.state.sort === "relevance"){
+      sortBy = "&sortBy=relevancy";
+    }
     let apikey = "bc2ebdb795c5488bb34601ca89a75e7f";
     let requestURL =
       "http://newsapi.org/v2/everything?q=" +
       q +
+      sortBy +
       "&page=" +
       page +
       "&apiKey=" +
@@ -190,12 +200,20 @@ class NewsGrid extends Component {
         },
         () => this.generateSplashPage(this.state.page)
       );
-    } else if (this.state.page !== this.props.page) {
+    } else if(this.state.page !== this.props.page){
       this.setState(
         {
-          page: this.props.page
+          page: this.props.page,
+          sort: this.props.sort,
+          filter: this.props.filter
         },
         () => this.getNews(this.state.terms, this.state.page)
+      );
+    } else if(this.state.sort !== this.props.sort){
+      this.setState(
+        {
+          sort: this.props.sort
+        }, () => this.getNews(this.state.terms, this.state.page)
       );
     }
   }
