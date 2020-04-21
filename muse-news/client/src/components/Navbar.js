@@ -75,7 +75,8 @@ function Navbar() {
             <Link
               id="artistsButton"
               className="nav-link text-white text-uppercase ml-5"
-              to="/artists/1"
+              // to="/artists/1"
+              to="/artists/splash/none/rank/false/none/none/none/none/1"
             >
               <h3>Artists</h3>{" "}
             </Link>

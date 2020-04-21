@@ -43,6 +43,42 @@ router.get("/testExport", (req, res) => {
 //   );
 // });
 
+router.get(
+  "/queryArtists/:searchterms/:sort/:ontour/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:page",
+  (req, res) => {
+    console.log("GET to /queryArtists for ==> ");
+    console.log(req.params.searchterms);
+    console.log(req.params.sort);
+    console.log(req.params.ontour);
+    console.log(req.params.minPlayCount);
+    console.log(req.params.maxPlayCount);
+    console.log(req.params.minListeners);
+    console.log(req.params.maxListeners);
+    console.log(req.params.page);
+    queryArtists(
+      req.params.searchterms,
+      req.params.sort,
+      req.params.ontour,
+      req.params.minPlayCount,
+      req.params.maxPlayCount,
+      req.params.minListeners,
+      req.params.maxListeners,
+      req.params.page
+    ).then(returned => {
+      console.log("Returned!");
+      // console.log(returned);
+      for (var i = 0; i < returned.length; i++) {
+        console.log(returned[i]["name"]);
+      }
+      if (returned === null) {
+        res.status(404).json(returned);
+      } else {
+        res.status(200).json(returned);
+      }
+    });
+  }
+);
+
 router.get("/getArtistByRank/:rank", (req, res) => {
   console.log("GET to /getArtistByRank for " + req.params.rank);
   getArtistByRank(req.params.rank).then(returned => {
@@ -99,6 +135,112 @@ router.get("/updateArtists", (req, res) => {
   updateArtists();
   res.status(200).send("Successfully Reached Update Artists Endpoint");
 });
+
+async function queryArtists(
+  searchterms,
+  sort,
+  ontour,
+  minPlayCount,
+  maxPlayCount,
+  minListeners,
+  maxListeners,
+  page
+) {
+  var start = 1;
+  var end = 10;
+  var query = {};
+  var sortQuery = {};
+  if (searchterms != "none") {
+    query["name"] = { $regex: ".*" + searchterms + ".*" };
+  }
+
+  if (sort === "nameAsc") {
+    sortQuery = { name: 1 };
+  } else if (sort === "nameDesc") {
+    sortQuery = { name: -1 };
+  } else if (sort === "listeners") {
+    sortQuery = { "stats.listeners": 1 };
+  } else {
+    sortQuery = { rank: 1 };
+  }
+
+  if (ontour === "true") {
+    query["ontour"] = "1";
+  }
+
+  if (minPlayCount === "none") {
+    if (maxPlayCount !== "none") {
+      query["stats.playcount"] = { $gte: 0, $lte: parseInt(maxPlayCount) };
+    }
+  } else {
+    if (maxPlayCount === "none") {
+      query["stats.playcount"] = {
+        $gte: parseInt(minPlayCount),
+        $lte: 1000000000
+      };
+    } else {
+      query["stats.playcount"] = {
+        $gte: parseInt(minPlayCount),
+        $lte: parseInt(maxPlayCount)
+      };
+    }
+  }
+
+  if (minListeners === "none") {
+    if (maxListeners !== "none") {
+      query["stats.listeners"] = { $gte: 0, $lte: parseInt(maxListeners) };
+    }
+  } else {
+    if (maxListeners === "none") {
+      query["stats.listeners"] = {
+        $gte: parseInt(minListeners),
+        $lte: 1000000000
+      };
+    } else {
+      query["stats.listeners"] = {
+        $gte: parseInt(minListeners),
+        $lte: parseInt(maxListeners)
+      };
+    }
+  }
+
+  const PAGE_SIZE = 10;
+  const skip = (page - 1) * 10;
+
+  // const testQuery = {
+  //   "stats.playcount": { $gte: 1, $lte: 1000000000 }
+  // };
+
+  const testQuery = {
+    "stats.listeners": { $gt: 10 }
+  };
+
+  console.log("ontour: " + typeof ontour);
+  console.log(query);
+  console.log(sortQuery);
+
+  const dbName = "MuseNewsDatabase";
+  const collectionName = "artists";
+  const MongoClient = require("mongodb").MongoClient;
+  const uri =
+    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
+  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+  // .then(function(db) {
+  console.log("Connected..." + start + " : " + end);
+  const collection = client.db(dbName).collection(collectionName);
+  returnedCursorArtist = collection
+    .find(query)
+    .skip(skip)
+    .limit(PAGE_SIZE);
+  const returnedArtist = returnedCursorArtist.sort(sortQuery).toArray();
+  // for (var i = 0; i < returnedArtist["artist"].length; i++) {
+  //   console.log(artist[i]["name"]);
+  // }
+  // console.log(returnedArtist);
+  console.log("Done looking");
+  client.close();
+  return returnedArtist;
+}
 
 function updateArtists() {
   console.log("Hello");

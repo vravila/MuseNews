@@ -6,8 +6,12 @@ handlers:
     script: auto
   - url: /node_modules/bootstrap
     static_dir: bootstrap
+  - url: /(.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg|html))$ #Test this
+    static_files: client/build/\1
+    upload: client/build/.*\.(ico|jpg|jpeg|png|gif|woff|ttf|otf|eot|svg|html)$
+    secure: always
   - url: /
     static_files: client/build/index.html
     upload: client/build/index.html
-  - url: /
-    static_dir: client/build
+  # - url: /.*
+  #   static_dir: client/build

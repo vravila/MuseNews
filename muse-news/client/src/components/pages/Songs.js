@@ -117,7 +117,7 @@ function Songs({ match }) {
             <div className="col-3 col-sm-3 mx-auto mb-2">
               <div
                 className="card center-block bg-dark text-white"
-                style={{ width: "20rem", height: "32rem" }}
+                style={{ width: "20rem", height: "35rem" }}
               >
                 <img
                   src={item.bingImageURL}

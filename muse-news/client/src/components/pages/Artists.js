@@ -1,3 +1,4 @@
+import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import { Link, Redirect, matchPath } from "react-router-dom";
 import Billie from "./../../imgs/Billie.jpg";
@@ -5,17 +6,7 @@ import Abel from "./../../imgs/the_weeknd.jpg";
 import Tame from "./../../imgs/tame_impala.jpg";
 import AltSinging from "./../../imgs/alt_singing.jpg";
 import Button from "react-bootstrap/Button";
-
-function updateDB() {
-  console.log("Starting Node Call...");
-  const response = fetch("/api/artists/updateArtists", {
-    method: "GET"
-  }).then(response => {
-    console.log(response);
-    // console.log(response.body);
-    console.log("Done with Node Call!!!");
-  });
-}
+import { push } from "react-router-redux";
 
 function Artists({ match }) {
   useEffect(() => {
@@ -26,113 +17,222 @@ function Artists({ match }) {
 
   const ENTRIES_PER_PAGE = 10;
   const DATABASE_LIMIT = 200;
-  const LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
+  var LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
   const [items, setItems] = useState([]);
+  const passedInParams = useState({});
   const sourceName = "artists";
 
-  var showPrevButton = true;
-  var showNextButton = true;
+  var showNextButton = useState({});
+  var showPrevButton = useState({});
+  showPrevButton = true;
+  showNextButton = true;
+
+  // var showPrevButton = true;
+  // var showNextButton = true;
 
   if (match.params.page == 1) {
     showPrevButton = false;
   }
-  if (match.params.page == LAST_PAGE) {
-    showNextButton = false;
+  // if (match.params.page == LAST_PAGE) {
+  //   showNextButton = false;
+  // }
+
+  passedInParams.mode = passedInParams.mode = match.params.mode;
+  passedInParams.searchterms = match.params.searchterms;
+  passedInParams.sort = match.params.sort;
+  passedInParams.ontour = match.params.ontour;
+  passedInParams.minPlayCount = match.params.minPlayCount;
+  passedInParams.maxPlayCount = match.params.maxPlayCount;
+  passedInParams.minListeners = match.params.minListeners;
+  passedInParams.maxListeners = match.params.maxListeners;
+  passedInParams.page = match.params.page;
+
+  // printParams(match);
+  printPassedInParams(passedInParams);
+
+  console.log("******************************");
+
+  if (passedInParams.searchterms === "none") {
+    passedInParams.searchterms = "";
   }
+
+  if (passedInParams.minPlayCount === "none") {
+    passedInParams.minPlayCount = "";
+  }
+
+  if (passedInParams.maxPlayCount === "none") {
+    passedInParams.maxPlayCount = "";
+  }
+
+  if (passedInParams.minListeners === "none") {
+    passedInParams.minListeners = "";
+  }
+
+  if (passedInParams.maxListeners === "none") {
+    passedInParams.maxListeners = "";
+  }
+
   // console.log("PAGE!");
   // console.log(match.params.page);
   // console.log("END PAGE!");
   const fetchItems = async () => {
-    // const items = [];
-    // for (
-    //   var i = match.params.page * 10 - 10 + 1;
-    //   i <= match.params.page * 10 && i <= DATABASE_LIMIT;
-    //   i++
-    // ) {
-    //   console.log("Get by Rank " + i);
-    //   const data = await fetch("/api/artists/getArtistByRank/" + i, {
+    const startIdx = match.params.page * 10 - 10 + 1;
+    const endIdx = match.params.page * 10;
+
+    const apiURL =
+      "/api/artists/queryArtists/" +
+      match.params.searchterms +
+      "/" +
+      match.params.sort +
+      "/" +
+      match.params.ontour +
+      "/" +
+      match.params.minPlayCount +
+      "/" +
+      match.params.maxPlayCount +
+      "/" +
+      match.params.minListeners +
+      "/" +
+      match.params.maxListeners +
+      "/" +
+      match.params.page;
+    console.log("URL: " + apiURL);
+
+    // const data = await fetch(
+    //   "/api/artists/getArtistByRankRanges/" + startIdx + "/" + endIdx,
+    //   {
     //     method: "GET",
     //     // mode: "no-cors",
     //     headers: {
     //       "Content-Type": "application/json",
-    //       // "Access-Control-Allow-Origin": "*",
-    //       // "Access-Control-Allow-Credentials": "true",
-    //       // "Access-Control-Allow-Origin": "http://localhost:5001",
     //       Accept: "application/json"
     //     }
-    //   });
-    //   const item = await data.json();
-    //   console.log("Done with fetch");
-    //   console.log(item);
-    //   items.push(item);
-    // }
-
-    const startIdx = match.params.page * 10 - 10 + 1;
-    const endIdx = match.params.page * 10;
-    const data = await fetch(
-      "/api/artists/getArtistByRankRanges/" + startIdx + "/" + endIdx,
-      {
-        method: "GET",
-        // mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Allow-Credentials": "true",
-          // "Access-Control-Allow-Origin": "http://localhost:5001",
-          Accept: "application/json"
-        }
-      }
-    );
-    const items = await data.json();
-
-    // setItems(items.artist);
-    // const data = await fetch(
-    //   `https://ws.audioscrobbler.com/2.0/?format=json&method=chart.gettopartists&api_key=10b860590d5168c53783ae9728a9b395&limit=3`
-    // );
-    // console.log("Hello");
-    // const data = await fetch("/api/artists/getArtistByRank/5", {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Accept: "application/json"
     //   }
-    // });
-    // console.log(process.env.REACT_APP_LASTFM_API_KEY);
-    // const items = await data.json();
+    // );
+    const data = await fetch(apiURL, {
+      method: "GET",
+      // mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    });
+    const items = await data.json();
     console.log(items);
+
     // console.log(items.artists.artist);
     setItems(items);
-
-    // items.map(item => (
-    //       const response =  await(fetch"/api/artists/)
-    // ));
-
-    // console.log("Starting Node Call...");
-    // const response = await fetch("/api/artists/testExport", {
-    //   method: "GET"
-    // });
-    // console.log(response);
-    // // console.log(response.body);
-    // console.log("Done with Node Call!!!");
   };
+
+  if (items.length < ENTRIES_PER_PAGE) {
+    console.log("LAST PAGE");
+    showNextButton = false;
+    LAST_PAGE = match.params.page;
+  } else {
+    console.log("NOT LAST PAGE");
+  }
 
   return (
     <div>
       <div class="container-fluid">
         <h1 class="pageHeader">America's Top Artists</h1>
-        <h2 class="sectionHeader">
-          Top Artists: Page {match.params.page} out of {LAST_PAGE}
-        </h2>
+        <h2 class="sectionHeader">Top Artists: Page {match.params.page}</h2>
+        <form action="/redirectPages" className="multi-range-field my-5 pb-5">
+          <label>
+            Search Artists:
+            <input
+              type="text"
+              id="search"
+              name="search"
+              defaultValue={passedInParams.searchterms}
+            ></input>
+          </label>
+          <label>
+            Sort By:
+            <select id="sort" name="sort">
+              <option
+                value="rank"
+                selected={passedInParams.sort === "rank" ? "selected" : ""}
+              >
+                Rank
+              </option>
+              <option
+                value="nameAsc"
+                selected={passedInParams.sort === "nameAsc" ? "selected" : ""}
+              >
+                Name Ascending
+              </option>
+              <option
+                value="nameDesc"
+                selected={passedInParams.sort === "nameDesc" ? "selected" : ""}
+              >
+                Name Descending
+              </option>
+            </select>
+          </label>
+          <br></br>
+          Filters:<br></br>
+          <label>
+            Currently on Tour:
+            <input
+              name="ontour"
+              type="checkbox"
+              defaultChecked={passedInParams.ontour === "true" ? "true" : ""}
+            />
+          </label>
+          <br></br>
+          <label>
+            Play Count:
+            <input
+              type="number"
+              id="minPlayCount"
+              name="minPlayCount"
+              min="0"
+              max="100882739"
+              defaultValue={passedInParams.minPlayCount}
+            ></input>
+            to
+            <input
+              type="number"
+              id="maxPlayCount"
+              name="maxPlayCount"
+              min="0"
+              max="100882739"
+              defaultValue={passedInParams.maxPlayCount}
+            ></input>
+          </label>
+          <label>
+            Listeners:
+            <input
+              type="number"
+              id="minListeners"
+              name="minListeners"
+              min="0"
+              max="1473588"
+              defaultValue={passedInParams.minListeners}
+            ></input>
+            to
+            <input
+              type="number"
+              id="maxListeners"
+              name="maxListeners"
+              min="0"
+              max="1473588"
+              defaultValue={passedInParams.maxListeners}
+            ></input>
+          </label>
+          <label>
+            <input
+              type="hidden"
+              id="source"
+              name="source"
+              value="artists"
+            ></input>
+          </label>
+          <input type="submit" value="Submit"></input>
+        </form>
       </div>
-      {/* <Button onClick={updateDB}>Update MongoDB</Button> */}
-      {/* <Button onClick={push(`/artists/` + prevPage(match.params.page))}>
-        {" "}
-        PREV{" "}
-      </Button> */}
       <div style={{ "padding-bottom": "70px" }}>
-        {/* <table> */}
-        {/* <tr> */}
-        {/* <tc> */}
         <Link
           id="prevButton"
           className={
@@ -140,7 +240,15 @@ function Artists({ match }) {
               ? "fa float-left h3 font-weight-light text-primary"
               : "fa hidden float-left h3 font-weight-light text-primary"
           }
-          to={`/redirectPages/${sourceName}/${prevPage(match.params.page)}`}
+          to={`/redirectPages?source=artists&search=${
+            passedInParams.searchterms
+          }&sort=${passedInParams.sort}&ontour=${
+            passedInParams.ontour === "true" ? "on" : ""
+          }&minPlayCount=${passedInParams.minPlayCount}&maxPlayCount=${
+            passedInParams.maxPlayCount
+          }&minListeners=${passedInParams.minListeners}&maxListeners=${
+            passedInParams.maxListeners
+          }&page=${prevPage(match.params.page)}`}
         >
           Previous Page ({match.params.page - 1})
         </Link>
@@ -151,9 +259,15 @@ function Artists({ match }) {
               ? "fa float-right h3 font-weight-light text-primary"
               : "fa hidden float-right h3 font-weight-light text-primary"
           }
-          to={
-            `/redirectPages/artists/` + nextPage(match.params.page, LAST_PAGE)
-          }
+          to={`/redirectPages?source=artists&search=${
+            passedInParams.searchterms
+          }&sort=${passedInParams.sort}&ontour=${
+            passedInParams.ontour === "true" ? "on" : ""
+          }&minPlayCount=${passedInParams.minPlayCount}&maxPlayCount=${
+            passedInParams.maxPlayCount
+          }&minListeners=${passedInParams.minListeners}&maxListeners=${
+            passedInParams.maxListeners
+          }&page=${nextPage(match.params.page, LAST_PAGE)}`}
         >
           Next Page ({parseInt(match.params.page) + 1})
         </Link>
@@ -168,7 +282,7 @@ function Artists({ match }) {
             <div className="col-3 col-sm-3 mx-auto mb-2">
               <div
                 className="card center-block bg-dark text-white"
-                style={{ width: "20rem", height: "32rem" }}
+                style={{ width: "20rem", height: "35rem" }}
               >
                 <img
                   src={item.bingImageURL}
@@ -193,7 +307,22 @@ function Artists({ match }) {
       ))}
     </div>
   );
+  ReactDOM.render(fetchItems, document.getElementById("root"));
 }
+
+// function formSubmit() {
+//   console.log("submit form");
+//   push("/home"); // navigate to some route
+// }
+
+// function callAPI() {
+//   console.log("Hi");
+//   return (
+//     <div>
+//       <h1>Test</h1>
+//     </div>
+//   );
+// }
 
 function prevPage(currPage) {
   if (currPage == 1) {
@@ -222,6 +351,31 @@ function temporaryImages(name) {
       return "";
     }
   }
+}
+
+function printParams(match) {
+  console.log("Mode: " + match.params.mode);
+  console.log("Search Terms: " + match.params.searchterms);
+  console.log("Sort by : " + match.params.sort);
+  console.log("On tour:" + match.params.ontour);
+  console.log("Min Play Count : " + match.params.minPlayCount);
+  console.log("Max Play Count : " + match.params.maxPlayCount);
+  console.log("Min Listeners : " + match.params.minListeners);
+  console.log("Max Listeners : " + match.params.maxListeners);
+  console.log("Page: " + match.params.page);
+}
+
+function printPassedInParams(match) {
+  console.log("Version 2");
+  console.log("Mode: " + match.mode);
+  console.log("Search Terms: " + match.searchterms);
+  console.log("Sort by : " + match.sort);
+  console.log("On tour:" + match.ontour);
+  console.log("Min Play Count : " + match.minPlayCount);
+  console.log("Max Play Count : " + match.maxPlayCount);
+  console.log("Min Listeners : " + match.minListeners);
+  console.log("Max Listeners : " + match.maxListeners);
+  console.log("Page: " + match.page);
 }
 
 export default Artists;
