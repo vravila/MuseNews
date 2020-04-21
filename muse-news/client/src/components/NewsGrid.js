@@ -15,6 +15,8 @@ class NewsGrid extends Component {
       terms: this.props.terms,
       page: this.props.page,
       type: this.props.type,
+      sort: this.props.sort,
+      filter: this.props.filter,
       articles: [
         {
           title: "ERROR",

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Dropdown from "react-bootstrap/Dropdown"
 import { Redirect } from "react-router-dom";
 
 import NewsGrid from "./NewsGrid";
@@ -17,6 +19,7 @@ class NewsContainer extends Component {
       page: 1,
       filter: "None",
       sort: "None",
+      filter: "None",
       dne: false
     };
     this.search = this.search.bind(this);
@@ -49,6 +52,35 @@ class NewsContainer extends Component {
     this.forceUpdate();
   }
 
+  dateSort(event){
+    event.preventDefault();
+    this.setState({
+      sort: "Date"
+    }, () => this.forceUpdate());
+  }
+
+  popularitySort(event){
+    event.preventDefault();
+    this.setState({
+      sort: "Popularity"
+    }, () => this.forceUpdate());
+  }
+
+  relevanceSort(event){
+    event.preventDefault();
+    this.setState({
+      sort: "Relevance"
+    }, () => this.forceUpdate());
+  }
+
+  dateFilter(event){
+    event.preventDefault();
+  }
+
+  sourceFilter(event){
+    event.preventDefault();
+  }
+
   pageUp(event) {
     event.preventDefault();
     if (this.state.page < 50) {
@@ -56,6 +88,7 @@ class NewsContainer extends Component {
     }
     this.forceUpdate();
   }
+
   pageDown(event) {
     event.preventDefault();
     if (this.state.page > 1) {
@@ -99,10 +132,36 @@ class NewsContainer extends Component {
           </Form.Row>
         </Form>
 
+        <div style={{ marginLeft: 20, marginBottom: 10 }}>
+          <Dropdown style={{ display: "inline-block" }}>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+              Sort By:
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onSelect={this.dateSort}>Date</Dropdown.Item>
+              <Dropdown.Item href={this.relevanceSort}>Relevance</Dropdown.Item>
+              <Dropdown.Item href={this.popularitySort}>Popularity</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Dropdown style={{ display: "inline-block", marginLeft: 5}}>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+              Filter By:
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onSelect={this.dateFilter}>Date</Dropdown.Item>
+              <Dropdown.Item onSelect={this.sourceFilter}>Source</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+
         <NewsGrid
           terms={this.state.terms}
           page={this.state.page}
           type={this.state.type}
+          sort={this.state.sort}
+          filter={this.state.filter}
         />
         <div style={{ marginLeft: 20 }}>
           <Button style={{ display: "inline-block" }} onClick={this.pageDown}>
