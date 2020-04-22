@@ -28,6 +28,9 @@ class NewsContainer extends Component {
     this.dateSort = this.dateSort.bind(this);
     this.popularitySort = this.popularitySort.bind(this);
     this.relevanceSort = this.relevanceSort.bind(this);
+    this.lastDayFilter = this.lastDayFilter.bind(this);
+    this.last2DaysFilter = this.last2DaysFilter.bind(this);
+    this.lastWeekFilter = this.lastWeekFilter.bind(this);
   }
 
   search(event) {
@@ -73,12 +76,26 @@ class NewsContainer extends Component {
     }, () => this.forceUpdate());
   }
 
-  dateFilter(event){
-    event.preventDefault();
+  lastDayFilter(){
+    this.setState({
+      filter: "24h"
+    }, () => this.forceUpdate());
   }
 
-  sourceFilter(event){
-    event.preventDefault();
+  last2DaysFilter(){
+    this.setState({
+      filter: "48h"
+    }, () => this.forceUpdate());
+  }
+
+  lastWeekFilter(){
+    this.setState({
+      filter: "7d"
+    }, () => this.forceUpdate());
+  }
+
+  sourceFilter(){
+    return null;
   }
 
   pageUp(event) {
@@ -150,8 +167,9 @@ class NewsContainer extends Component {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onSelect={this.dateFilter}>Date</Dropdown.Item>
-              <Dropdown.Item onSelect={this.sourceFilter}>Source</Dropdown.Item>
+              <Dropdown.Item onSelect={this.lastDayFilter}>Last 24 Hours</Dropdown.Item>
+              <Dropdown.Item onSelect={this.last2DaysFilter}>Last 48 Hours</Dropdown.Item>
+              <Dropdown.Item onSelect={this.lastWeekFilter}>Last Week</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
