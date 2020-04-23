@@ -15,6 +15,8 @@ class NewsGrid extends Component {
       terms: this.props.terms,
       page: this.props.page,
       type: this.props.type,
+      sort: this.props.sort,
+      filter: this.props.filter,
       articles: [
         {
           title: "ERROR",
@@ -48,10 +50,36 @@ class NewsGrid extends Component {
   }
 
   getNews(q, page) {
+    var sortBy = "";
+    var filterBy = "";
+    //get sort parameter
+    if(this.state.sort === "date"){
+      sortBy = "&sortBy=publishedAt";
+    }else if(this.state.sort === "popularity"){
+      sortBy = "&sortBy=popularity";
+    }else if(this.state.sort === "relevance"){
+      sortBy = "&sortBy=relevancy";
+    }
+    //get filter parameter
+    if(this.state.filter === "24h"){
+      var startTime = new Date();
+      startTime.setDate(startTime.getDate() - 1); //one day back
+      filterBy = "&from=" + startTime.toISOString();
+    }else if(this.state.filter === "48h"){
+      var startTime = new Date();
+      startTime.setDate(startTime.getDate() - 2); //two days back
+      filterBy = "&from=" + startTime.toISOString();
+    }else if(this.state.filter === "7d"){
+      var startTime = new Date();
+      startTime.setDate(startTime.getDate() - 7); //one week back
+      filterBy = "&from=" + startTime.toISOString();
+    }
     let apikey = "bc2ebdb795c5488bb34601ca89a75e7f";
     let requestURL =
       "http://newsapi.org/v2/everything?q=" +
       q +
+      filterBy +
+      sortBy +
       "&page=" +
       page +
       "&apiKey=" +
@@ -188,13 +216,27 @@ class NewsGrid extends Component {
         },
         () => this.generateSplashPage(this.state.page)
       );
-    } else if (this.state.page !== this.props.page) {
+    } else if(this.state.page !== this.props.page){
       this.setState(
         {
-          page: this.props.page
+          page: this.props.page,
+          sort: this.props.sort,
+          filter: this.props.filter
         },
         () => this.getNews(this.state.terms, this.state.page)
       );
+    } else if(this.state.sort !== this.props.sort){
+      this.setState(
+        {
+          sort: this.props.sort
+        }, () => this.getNews(this.state.terms, this.state.page)
+      );
+    } else if(this.state.filter !== this.props.filter){
+      this.setState(
+        {
+          filter: this.props.filter
+        }, () => this.getNews(this.state.terms, this.state.page)
+      )
     }
   }
 
