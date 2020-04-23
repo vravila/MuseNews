@@ -9,7 +9,7 @@ function News() {
     let {artist} = useParams();
     var terms = artist;
     if(terms === undefined){
-        terms = "Splash";
+        terms = "Billie Eilish";
     }
 
     return (
