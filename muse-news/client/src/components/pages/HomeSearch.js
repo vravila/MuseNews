@@ -44,7 +44,7 @@ class HomeSearch extends Component {
       urlString = "/songs/search/"+encodeURIComponent(encodeURIComponent(values.search))+"/rank/none/none/none/none/none/none/none/1"
     }
     else {
-      urlString = "/news"
+      urlString = "/Newsa/"+encodeURIComponent(encodeURIComponent(values.search));
     }
     /*
 
