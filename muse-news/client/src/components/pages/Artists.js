@@ -201,6 +201,7 @@ function Artists({ match }) {
               defaultValue={passedInParams.maxPlayCount}
             ></input>
           </label>
+          <br></br>
           <label>
             Listeners:
             <input
@@ -229,7 +230,8 @@ function Artists({ match }) {
               value="artists"
             ></input>
           </label>
-          <input type="submit" value="Submit"></input>
+          <br></br>
+          <input type="submit" class="btn btn-primary" value="Submit"></input>
         </form>
       </div>
       <div style={{ "padding-bottom": "70px" }}>
