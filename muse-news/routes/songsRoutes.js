@@ -39,13 +39,13 @@ router.get(
       req.params.minRank,
       req.params.maxRank,
       req.params.page
-    ).then(returned => {
+    ).then((returned) => {
       console.log("Returned!");
       // console.log(returned);
       for (var i = 0; i < returned.length; i++) {
         console.log(returned[i]["name"]);
       }
-      if (returned === null) {
+      if (returned === null || returned.length == 0) {
         res.status(404).json(returned);
       } else {
         res.status(200).json(returned);
@@ -56,7 +56,7 @@ router.get(
 
 router.get("/getSongsByRank/:rank", (req, res) => {
   console.log("GET to /getSongsByRank for " + req.params.rank);
-  getSongByRank(req.params.rank).then(returned => {
+  getSongByRank(req.params.rank).then((returned) => {
     console.log("Returned!");
     console.log(returned);
     if (returned === null) {
@@ -70,7 +70,7 @@ router.get("/getSongsByRank/:rank", (req, res) => {
 router.get("/getSongTweets/:name", (req, res) => {
   //res.status(200).json("testing")
   console.log("HERE");
-  getSongTweets(req.params.name).then(returned => {
+  getSongTweets(req.params.name).then((returned) => {
     res.status(200).json(returned);
   });
 });
@@ -82,15 +82,17 @@ router.get("/getSongsByRankRanges/:startNo/:endNo", (req, res) => {
       " to " +
       req.params.endNo
   );
-  getSongsByRankRanges(req.params.startNo, req.params.endNo).then(returned => {
-    console.log("Returned!");
-    console.log(returned);
-    if (returned.length === 0) {
-      res.status(404).json(returned);
-    } else {
-      res.status(200).json(returned);
+  getSongsByRankRanges(req.params.startNo, req.params.endNo).then(
+    (returned) => {
+      console.log("Returned!");
+      console.log(returned);
+      if (returned.length === 0) {
+        res.status(404).json(returned);
+      } else {
+        res.status(200).json(returned);
+      }
     }
-  });
+  );
 });
 
 router.get("/getSongByNameAndArtist/:songname/:artistname", (req, res) => {
@@ -101,7 +103,7 @@ router.get("/getSongByNameAndArtist/:songname/:artistname", (req, res) => {
       req.params.artistname
   );
   getSongByNameAndArtist(req.params.songname, req.params.artistname).then(
-    returned => {
+    (returned) => {
       console.log("Returned!");
       console.log(returned);
       if (returned === null) {
@@ -115,7 +117,7 @@ router.get("/getSongByNameAndArtist/:songname/:artistname", (req, res) => {
 
 router.get("/getSongsByAnArtist/:artistname", (req, res) => {
   console.log("GET to /getSongsByAnArtist for " + req.params.artistname);
-  getSongsByAnArtist(req.params.artistname).then(returned => {
+  getSongsByAnArtist(req.params.artistname).then((returned) => {
     console.log("Returned!");
     console.log(returned);
     if (returned.length === 0) {
@@ -168,12 +170,12 @@ async function querySongs(
     if (maxPlayCount === "none") {
       query["playcount"] = {
         $gte: parseInt(minPlayCount),
-        $lte: 1000000000
+        $lte: 1000000000,
       };
     } else {
       query["playcount"] = {
         $gte: parseInt(minPlayCount),
-        $lte: parseInt(maxPlayCount)
+        $lte: parseInt(maxPlayCount),
       };
     }
   }
@@ -186,12 +188,12 @@ async function querySongs(
     if (maxListeners === "none") {
       query["listeners"] = {
         $gte: parseInt(minListeners),
-        $lte: 1000000000
+        $lte: 1000000000,
       };
     } else {
       query["listeners"] = {
         $gte: parseInt(minListeners),
-        $lte: parseInt(maxListeners)
+        $lte: parseInt(maxListeners),
       };
     }
   }
@@ -204,12 +206,12 @@ async function querySongs(
     if (maxRank === "none") {
       query["rank"] = {
         $gte: parseInt(minRank),
-        $lte: 300
+        $lte: 300,
       };
     } else {
       query["rank"] = {
         $gte: parseInt(minRank),
-        $lte: parseInt(maxRank)
+        $lte: parseInt(maxRank),
       };
     }
   }
@@ -233,10 +235,7 @@ async function querySongs(
   // .then(function(db) {
   console.log("Connected..." + start + " : " + end);
   const collection = client.db(dbName).collection(collectionName);
-  returnedCursorArtist = collection
-    .find(query)
-    .skip(skip)
-    .limit(PAGE_SIZE);
+  returnedCursorArtist = collection.find(query).skip(skip).limit(PAGE_SIZE);
   const returnedArtist = returnedCursorArtist.sort(sortQuery).toArray();
   // for (var i = 0; i < returnedArtist["artist"].length; i++) {
   //   console.log(artist[i]["name"]);
@@ -311,7 +310,7 @@ async function getSongsByRankRanges(start, end) {
   console.log("Connected..." + start + " : " + end);
   const collection = client.db(dbName).collection(collectionName);
   returnedCursorSong = collection.find({
-    rank: { $gt: parseInt(start) - 1, $lt: parseInt(end) + 1 }
+    rank: { $gt: parseInt(start) - 1, $lt: parseInt(end) + 1 },
   });
   const returnedSong = returnedCursorSong.sort({ rank: 1 }).toArray();
   console.log(returnedSong);
@@ -321,8 +320,8 @@ async function getSongsByRankRanges(start, end) {
 }
 
 function getSongTweets(name) {
-  return new Promise(function(resolve, reject) {
-    getTweets(name).then(function(tweets) {
+  return new Promise(function (resolve, reject) {
+    getTweets(name).then(function (tweets) {
       const urls = new Array(5);
 
       for (i = 0; i < 5; i++) {
@@ -334,8 +333,8 @@ function getSongTweets(name) {
 
       //console.log(urls);
 
-      const promises = urls.map(url => convertToHtml(url));
-      Promise.all(promises).then(data => {
+      const promises = urls.map((url) => convertToHtml(url));
+      Promise.all(promises).then((data) => {
         // data = [promise1,promise2]
         resolve(data);
       });
@@ -343,8 +342,8 @@ function getSongTweets(name) {
   });
 }
 function getTweets(name) {
-  return new Promise(function(resolve, reject) {
-    client.get("search/tweets", { q: name, count: 5 }, function(
+  return new Promise(function (resolve, reject) {
+    client.get("search/tweets", { q: name, count: 5 }, function (
       error,
       tweets,
       response
@@ -355,8 +354,8 @@ function getTweets(name) {
 }
 
 function convertToHtml(url) {
-  return new Promise(function(resolve, reject) {
-    client.get("statuses/oembed", { url: url }, function(error, response) {
+  return new Promise(function (resolve, reject) {
+    client.get("statuses/oembed", { url: url }, function (error, response) {
       resolve(response.html);
     });
   });
