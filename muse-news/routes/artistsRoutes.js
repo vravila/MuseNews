@@ -7,7 +7,7 @@ var client = new Twitter({
   consumer_key: "r0cNjq1UbABQJUwGumA10eSOV",
   consumer_secret: "VkWntyt2QYkphjnQrlebjTb3dic6sr7Rt8GjU76qWB5n6412EU",
   access_token_key: "1230301995833098240-g69SboEJvrkVfOgoS9Nx58WviZUhCu",
-  access_token_secret: "xXyX0hIiP3CXKdiHW5MAREfnUskmi4Q2bXLAhjdAPr1Al"
+  access_token_secret: "xXyX0hIiP3CXKdiHW5MAREfnUskmi4Q2bXLAhjdAPr1Al",
 });
 
 const assert = require("assert");
@@ -64,13 +64,13 @@ router.get(
       req.params.minListeners,
       req.params.maxListeners,
       req.params.page
-    ).then(returned => {
+    ).then((returned) => {
       console.log("Returned!");
       // console.log(returned);
       for (var i = 0; i < returned.length; i++) {
         console.log(returned[i]["name"]);
       }
-      if (returned === null) {
+      if (returned === null || returned.length == 0) {
         res.status(404).json(returned);
       } else {
         res.status(200).json(returned);
@@ -81,7 +81,7 @@ router.get(
 
 router.get("/getArtistByRank/:rank", (req, res) => {
   console.log("GET to /getArtistByRank for " + req.params.rank);
-  getArtistByRank(req.params.rank).then(returned => {
+  getArtistByRank(req.params.rank).then((returned) => {
     console.log("Returned!");
     console.log(returned);
     if (returned === null) {
@@ -99,20 +99,22 @@ router.get("/getArtistByRankRanges/:startNo/:endNo", (req, res) => {
       " to " +
       req.params.endNo
   );
-  getArtistByRankRanges(req.params.startNo, req.params.endNo).then(returned => {
-    console.log("Returned!");
-    console.log(returned + typeof returned + returned.length);
-    if (returned.length === 0) {
-      res.status(404).json(returned);
-    } else {
-      res.status(200).json(returned);
+  getArtistByRankRanges(req.params.startNo, req.params.endNo).then(
+    (returned) => {
+      console.log("Returned!");
+      console.log(returned + typeof returned + returned.length);
+      if (returned.length === 0) {
+        res.status(404).json(returned);
+      } else {
+        res.status(200).json(returned);
+      }
     }
-  });
+  );
 });
 
 router.get("/getArtistByName/:name", (req, res) => {
   console.log("GET to /getArtist for " + req.params.name);
-  getArtistByName(req.params.name).then(returned => {
+  getArtistByName(req.params.name).then((returned) => {
     console.log("Returned!");
     console.log(returned);
     if (returned === null) {
@@ -126,7 +128,7 @@ router.get("/getArtistByName/:name", (req, res) => {
 router.get("/getArtistTweets/:name", (req, res) => {
   //res.status(200).json("testing")
   //console.log("HERE")
-  getArtistTweets(req.params.name).then(returned => {
+  getArtistTweets(req.params.name).then((returned) => {
     res.status(200).json(returned);
   });
 });
@@ -176,12 +178,12 @@ async function queryArtists(
     if (maxPlayCount === "none") {
       query["stats.playcount"] = {
         $gte: parseInt(minPlayCount),
-        $lte: 1000000000
+        $lte: 1000000000,
       };
     } else {
       query["stats.playcount"] = {
         $gte: parseInt(minPlayCount),
-        $lte: parseInt(maxPlayCount)
+        $lte: parseInt(maxPlayCount),
       };
     }
   }
@@ -194,12 +196,12 @@ async function queryArtists(
     if (maxListeners === "none") {
       query["stats.listeners"] = {
         $gte: parseInt(minListeners),
-        $lte: 1000000000
+        $lte: 1000000000,
       };
     } else {
       query["stats.listeners"] = {
         $gte: parseInt(minListeners),
-        $lte: parseInt(maxListeners)
+        $lte: parseInt(maxListeners),
       };
     }
   }
@@ -212,7 +214,7 @@ async function queryArtists(
   // };
 
   const testQuery = {
-    "stats.listeners": { $gt: 10 }
+    "stats.listeners": { $gt: 10 },
   };
 
   console.log("ontour: " + typeof ontour);
@@ -228,10 +230,7 @@ async function queryArtists(
   // .then(function(db) {
   console.log("Connected..." + start + " : " + end);
   const collection = client.db(dbName).collection(collectionName);
-  returnedCursorArtist = collection
-    .find(query)
-    .skip(skip)
-    .limit(PAGE_SIZE);
+  returnedCursorArtist = collection.find(query).skip(skip).limit(PAGE_SIZE);
   const returnedArtist = returnedCursorArtist.sort(sortQuery).toArray();
   // for (var i = 0; i < returnedArtist["artist"].length; i++) {
   //   console.log(artist[i]["name"]);
@@ -257,7 +256,7 @@ async function getTopArtists(startRank, count) {
   // console.log("Get top " + count + " artists starting at " + startRank);
   var i = parseInt(startRank);
   for (; i < parseInt(startRank) + parseInt(count); i++) {
-    getArtistByRank(i).then(function(artist) {
+    getArtistByRank(i).then(function (artist) {
       // console.log(
       //   "======>i=" + i + " Start: " + startRank + " Count: " + count
       // );
@@ -301,7 +300,7 @@ async function getArtistByRankRanges(start, end) {
   console.log("Connected..." + start + " : " + end);
   const collection = client.db(dbName).collection(collectionName);
   returnedCursorArtist = collection.find({
-    rank: { $gt: parseInt(start) - 1, $lt: parseInt(end) + 1 }
+    rank: { $gt: parseInt(start) - 1, $lt: parseInt(end) + 1 },
   });
   const returnedArtist = returnedCursorArtist.sort({ rank: 1 }).toArray();
   console.log(returnedArtist);
@@ -334,14 +333,14 @@ function putArtist(artist) {
   const MongoClient = require("mongodb").MongoClient;
   const uri =
     "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
-  MongoClient.connect(uri, function(err, client) {
+  MongoClient.connect(uri, function (err, client) {
     if (err) {
       console.log("Error occurred while connecting to MongoDB Atlas...\n", err);
     }
     console.log("Connected...");
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     const collection = client.db(dbName).collection(collectionName);
-    collection.insertOne(artist, function(err, r) {
+    collection.insertOne(artist, function (err, r) {
       assert.equal(null, err);
       assert.equal(1, r.insertedCount);
     });
@@ -354,8 +353,8 @@ function putArtist(artist) {
 }
 
 function getArtistTweets(name) {
-  return new Promise(function(resolve, reject) {
-    getTweets(name).then(function(tweets) {
+  return new Promise(function (resolve, reject) {
+    getTweets(name).then(function (tweets) {
       const urls = new Array(5);
 
       for (i = 0; i < 5; i++) {
@@ -367,8 +366,8 @@ function getArtistTweets(name) {
 
       //console.log(urls);
 
-      const promises = urls.map(url => convertToHtml(url));
-      Promise.all(promises).then(data => {
+      const promises = urls.map((url) => convertToHtml(url));
+      Promise.all(promises).then((data) => {
         // data = [promise1,promise2]
         resolve(data);
       });
@@ -376,8 +375,8 @@ function getArtistTweets(name) {
   });
 }
 function getTweets(name) {
-  return new Promise(function(resolve, reject) {
-    client.get("search/tweets", { q: name, count: 5 }, function(
+  return new Promise(function (resolve, reject) {
+    client.get("search/tweets", { q: name, count: 5 }, function (
       error,
       tweets,
       response
@@ -388,8 +387,8 @@ function getTweets(name) {
 }
 
 function convertToHtml(url) {
-  return new Promise(function(resolve, reject) {
-    client.get("statuses/oembed", { url: url }, function(error, response) {
+  return new Promise(function (resolve, reject) {
+    client.get("statuses/oembed", { url: url }, function (error, response) {
       resolve(response.html);
     });
   });
