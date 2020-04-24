@@ -38,10 +38,13 @@ class HomeSearch extends Component {
     console.log(values.source);
     var urlString = "";
     if (values.searchtype == "Search Artist") {
-      urlString = "/artists/search/"+values.search+"/rank/false/none/none/none/none/1"
+      urlString = "/artists/search/"+encodeURIComponent(encodeURIComponent(values.search))+"/rank/false/none/none/none/none/1"
     } else if (values.searchtype == "Search Song")
     {
-      urlString = "/songs/search/"+values.search+"/rank/none/none/none/none/none/none/none/1"
+      urlString = "/songs/search/"+encodeURIComponent(encodeURIComponent(values.search))+"/rank/none/none/none/none/none/none/none/1"
+    }
+    else {
+      urlString = "/news"
     }
     /*
 
