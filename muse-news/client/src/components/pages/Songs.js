@@ -151,6 +151,7 @@ function Songs({ match }) {
               id="search"
               name="search"
               defaultValue={passedInParams.searchterms}
+              class="form-control form-control-sm"
             ></input>
           </label>
           <label>
@@ -185,8 +186,11 @@ function Songs({ match }) {
               id="artistSearch"
               name="artistSearch"
               defaultValue={passedInParams.artistSearch}
+              class="form-control form-control-sm"
             ></input>
           </label>
+          <br></br>
+          
           <label>
             Play Count:
             <input
@@ -196,6 +200,7 @@ function Songs({ match }) {
               min="0"
               max="25598881"
               defaultValue={passedInParams.minPlayCount}
+              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -205,8 +210,10 @@ function Songs({ match }) {
               min="0"
               max="25598881"
               defaultValue={passedInParams.maxPlayCount}
+              //class="form-control form-control-sm"
             ></input>
           </label>
+          <br></br>
           <label>
             Listeners:
             <input
@@ -216,6 +223,7 @@ function Songs({ match }) {
               min="0"
               max="2144166"
               defaultValue={passedInParams.minListeners}
+              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -225,8 +233,10 @@ function Songs({ match }) {
               min="0"
               max="2144166"
               defaultValue={passedInParams.maxListeners}
+              //class="form-control form-control-sm"
             ></input>
           </label>
+          <br></br>
           <label>
             Rank:
             <input
@@ -236,6 +246,7 @@ function Songs({ match }) {
               min="1"
               max="300"
               defaultValue={passedInParams.minRank}
+              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -245,17 +256,20 @@ function Songs({ match }) {
               min="1"
               max="300"
               defaultValue={passedInParams.maxRank}
+              //class="form-control form-control-sm"
             ></input>
           </label>
+          
           <label>
             <input
               type="hidden"
               id="source"
               name="source"
               value="songs"
+              class="form-control form-control-sm"
             ></input>
           </label>
-          <input type="submit" value="Submit"></input>
+          <input type="submit" class="btn btn-primary" value="Submit"></input>
         </form>
       </div>
       {/* <div class="container-fluid">
