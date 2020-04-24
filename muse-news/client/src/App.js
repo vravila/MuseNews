@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import About from "./components/pages/About";
 import Artists from "./components/pages/Artists";
 import Home from "./components/pages/Home";
+import HomeSearch from "./components/pages/HomeSearch";
 import News from "./components/pages/News";
 import Songs from "./components/pages/Songs";
 import SongsPage from "./components/pages/SongsPage";
@@ -45,6 +46,7 @@ class App extends Component {
             component={RedirectPages}
           /> */}
           <Route path="/redirectPages" component={RedirectPages} />
+          <Route path="/homeSearch" component={HomeSearch} />
           <Route path="/redirectSongsPages" component={RedirectSongsPages} />
           <Route path="/artistdne" component={ArtistDNE} />
           <Route path="/newsp/:terms/:index" component={NewsPage} />
