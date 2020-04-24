@@ -3,25 +3,25 @@ EE 461L Project
 Website Link: http://musenews.appspot.com/
 
 Members:
-Venkata Ravila UTEID: vkr339 vravila
-  Estimated completion time (14 hours)
-  Actual completion time (13 hours)
+Venkata Ravila UTEID: vkr339 GitHub ID: vravila
+  Estimated completion time (54 hours)
+  Actual completion time (53 hours)
   
-Daniel Walsh  UTEID: dsw956
-  Estimated completion time (14 hours)
-  Actual completion time (17 hours)
+Daniel Walsh  UTEID: dsw956 GitHub ID: donuthole55
+  Estimated completion time (54 hours)
+  Actual completion time (57 hours)
   
-Alexander Tekle UTEID: at36953
-  Estimated completion time (30 hours)
-  Actual completion time (45 hours)
+Alexander Tekle UTEID: at36953 GitHub ID: AlexanderTekle
+  Estimated completion time (55 hours)
+  Actual completion time (70 hours)
   
 Kedar Raman UTEID: kvr336 GitHub ID: kedaraman
-  Estimated completion time (45 hours)
-  Actual completion time (55 hours)
+  Estimated completion time (65 hours)
+  Actual completion time (75 hours)
   
-Sam Dauenbaugh  UTEID: sad2929
-  Estimated completion time (14 hours)
-  Actual completion time (16 hours)
+Sam Dauenbaugh  UTEID: sad2929 GitHub ID: sDauenbaugh
+  Estimated completion time (64 hours)
+  Actual completion time (66 hours)
 
 
 

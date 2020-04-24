@@ -50,8 +50,9 @@ function About() {
         favorite artists? Or even have access to the hottest news about songs
         and artists? Muse-News does all of this. Whether you are a music nerd
         looking for the latest updates on your favorite artists or a casual
-        listener exploring songs and artists, come to Muse-News and have an
-        amazing time.
+        listener exploring songs and artists, everyone can come to Muse-News and
+        learn more about the latest artists, songs, and news in the music
+        industry.
       </p>
       <br></br>
       <b>What can our website provide?</b>
@@ -61,7 +62,9 @@ function About() {
         <li>
           The user is able to see the latest news regarding artists and songs.
         </li>
-        <li>The user is able to see information about artists and songs.</li>
+        <li>
+          The user is able to see the top artists on the charts right now.
+        </li>
       </ul>
       <p>
         Muse-News brings all of this information together in an interconnected
@@ -92,8 +95,8 @@ function About() {
                 In his free time, he likes to play video games and sports.
               </p>
               <p>
-                <strong>Primary Responsibilities:</strong> Create Home and About
-                page, front-end development in React
+                <strong>Primary Responsibilities:</strong> Full-stack
+                development of Home and About pages
               </p>
             </div>
           </div>
@@ -113,8 +116,8 @@ function About() {
                 go hiking, and explore the unique food that Austin has to offer.
               </p>
               <p>
-                <strong>Primary Responsibilities:</strong> Front-End React.JS
-                for Artists pages, Back-End Node.JS/Express.JS API development,
+                <strong>Primary Responsibilities:</strong> Full-Stack
+                development of Artists pages, Back-End Node.JS API development,
                 Selenium & Mocha tests
               </p>
             </div>
@@ -135,8 +138,8 @@ function About() {
                 he likes to play basketball and watch soccer.
               </p>
               <p>
-                <strong>Primary Responsibilities:</strong> API calls from
-                Node.JS
+                <strong>Primary Responsibilities:</strong> Back-End development,
+                integration with APIs, Navigation bar search functionality
               </p>
             </div>
           </div>
@@ -159,7 +162,8 @@ function About() {
                 video games and bike.
               </p>
               <p>
-                <strong>Primary Responsibilities:</strong> Create Songs pages
+                <strong>Primary Responsibilities:</strong> Full-Stack
+                development of Songs pages
               </p>
             </div>
           </div>
@@ -179,7 +183,8 @@ function About() {
                 time, he likes to play video games and go hiking.
               </p>
               <p>
-                <strong>Primary Responsibilities:</strong> Create News pages
+                <strong>Primary Responsibilities:</strong> Full-Stack
+                development of News pages, integration with APIs
               </p>
             </div>
           </div>
@@ -268,21 +273,21 @@ function About() {
 
       <h3>Total Number of Commits: {items.length + secondItems.length}</h3>
       <h4>Commits Per Person:</h4>
-      {parseItems(items, secondItems).map(item => (
+      {parseItems(items, secondItems).map((item) => (
         <p>{item}</p>
       ))}
       <h3>Total Number of Issues: {issuesItems.length}</h3>
       <h4>Issues Per Person:</h4>
-      {parseIssues(issuesItems).map(item => (
+      {parseIssues(issuesItems).map((item) => (
         <p>{item}</p>
       ))}
-      <h3>Total Number of Unit Tests: 10 </h3>
+      <h3>Total Number of Unit Tests: 80 </h3>
       <h4>Unit Tests Per Person:</h4>
-      <p>Kedar Raman: 2</p>
-      <p>Venkata Ravila: 2</p>
-      <p>Alexander Tekle: 2</p>
-      <p>Sam Dauenbaugh: 2</p>
-      <p>Daniel Walsh: 2</p>
+      <p>Kedar Raman: 30</p>
+      <p>Venkata Ravila: 10</p>
+      <p>Alexander Tekle: 10</p>
+      <p>Sam Dauenbaugh: 10</p>
+      <p>Daniel Walsh: 10</p>
     </div>
     // <div>
     //   <h1>Artists Page!!!</h1>
