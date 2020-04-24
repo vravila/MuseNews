@@ -119,8 +119,8 @@ function Songs({ match }) {
         // "Access-Control-Allow-Origin": "*",
         // "Access-Control-Allow-Credentials": "true",
         // "Access-Control-Allow-Origin": "http://localhost:5001",
-        Accept: "application/json"
-      }
+        Accept: "application/json",
+      },
     });
     const items = await data.json();
     console.log(items);
@@ -151,6 +151,7 @@ function Songs({ match }) {
               id="search"
               name="search"
               defaultValue={passedInParams.searchterms}
+              class="form-control form-control-sm"
             ></input>
           </label>
           <label>
@@ -185,8 +186,10 @@ function Songs({ match }) {
               id="artistSearch"
               name="artistSearch"
               defaultValue={passedInParams.artistSearch}
+              class="form-control form-control-sm"
             ></input>
           </label>
+          <br></br>
           <label>
             Play Count:
             <input
@@ -196,6 +199,7 @@ function Songs({ match }) {
               min="0"
               max="25598881"
               defaultValue={passedInParams.minPlayCount}
+              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -205,8 +209,10 @@ function Songs({ match }) {
               min="0"
               max="25598881"
               defaultValue={passedInParams.maxPlayCount}
+              //class="form-control form-control-sm"
             ></input>
           </label>
+          <br></br>
           <label>
             Listeners:
             <input
@@ -216,6 +222,7 @@ function Songs({ match }) {
               min="0"
               max="2144166"
               defaultValue={passedInParams.minListeners}
+              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -225,8 +232,10 @@ function Songs({ match }) {
               min="0"
               max="2144166"
               defaultValue={passedInParams.maxListeners}
+              //class="form-control form-control-sm"
             ></input>
           </label>
+          <br></br>
           <label>
             Rank:
             <input
@@ -236,6 +245,7 @@ function Songs({ match }) {
               min="1"
               max="300"
               defaultValue={passedInParams.minRank}
+              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -245,6 +255,7 @@ function Songs({ match }) {
               min="1"
               max="300"
               defaultValue={passedInParams.maxRank}
+              //class="form-control form-control-sm"
             ></input>
           </label>
           <label>
@@ -253,9 +264,15 @@ function Songs({ match }) {
               id="source"
               name="source"
               value="songs"
+              class="form-control form-control-sm"
             ></input>
           </label>
-          <input type="submit" value="Submit"></input>
+          <input
+            id="songSubmit"
+            type="submit"
+            class="btn btn-primary"
+            value="Submit"
+          ></input>
         </form>
       </div>
       {/* <div class="container-fluid">
@@ -325,7 +342,7 @@ function Songs({ match }) {
         {/* </table> */}
         <hr className="lead"></hr>
       </div>
-      {items.map(item => (
+      {items.map((item) => (
         <Link
           id="linkToSongsPage"
           to={`/songspage/${item.name}/${item.artist.name}`}
@@ -346,7 +363,9 @@ function Songs({ match }) {
 
                 <div className="card-body">
                   {/* <Link to={`/artists/${item.name}`}> */}
-                  <h3 className="card-title text-uppecase">{item.name}</h3>
+                  <h3 id="songName" className="card-title text-uppecase">
+                    {item.name}
+                  </h3>
                   <h5 className="card-title text-uppecase">
                     Rank: {item.rank}
                   </h5>

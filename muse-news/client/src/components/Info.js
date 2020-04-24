@@ -28,12 +28,14 @@ class Info extends Component {
                 <h3 className="card-title text-uppecase">{headerTitle}</h3>
                 <h5 className="card-title">{headerSubTitle}</h5>
                 <p className="card-text">{headerText}</p>
-                <Link
-                  to={`/${headerTitle}/1`}
+                
+                  <Link
+                  to={`/${headerTitle}/splash/none/rank/none/none/none/none/none/none/none/1`}
                   className="btn btn-outline-primary text-uppercase"
                 >
                   More Info
                 </Link>
+                
               </div>
             </div>
           </div>
