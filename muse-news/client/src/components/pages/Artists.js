@@ -114,8 +114,8 @@ function Artists({ match }) {
       // mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
-      }
+        Accept: "application/json",
+      },
     });
     const items = await data.json();
     console.log(items);
@@ -175,6 +175,7 @@ function Artists({ match }) {
           <label>
             Currently on Tour:
             <input
+              id="ontour"
               name="ontour"
               type="checkbox"
               defaultChecked={passedInParams.ontour === "true" ? "true" : ""}
@@ -231,7 +232,12 @@ function Artists({ match }) {
             ></input>
           </label>
           <br></br>
-          <input type="submit" class="btn btn-primary" value="Submit"></input>
+          <input
+            id="artistSubmit"
+            type="submit"
+            class="btn btn-primary"
+            value="Submit"
+          ></input>
         </form>
       </div>
       <div style={{ "padding-bottom": "70px" }}>
@@ -278,7 +284,7 @@ function Artists({ match }) {
         {/* </table> */}
         <hr className="lead"></hr>
       </div>
-      {items.map(item => (
+      {items.map((item) => (
         <Link id="linkToArtistsPage" to={`/artistspage/${item.name}`}>
           <div className="row-mt-1">
             <div className="col-3 col-sm-3 mx-auto mb-2">
@@ -296,7 +302,9 @@ function Artists({ match }) {
 
                 <div className="card-body">
                   {/* <Link to={`/artists/${item.name}`}> */}
-                  <h3 className="card-title text-uppecase">{item.name}</h3>
+                  <h3 id="artistName" className="card-title text-uppecase">
+                    {item.name}
+                  </h3>
                   <h5 className="card-title text-uppecase">
                     Rank: {item.rank}
                   </h5>
