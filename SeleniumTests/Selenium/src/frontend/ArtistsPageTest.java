@@ -1,6 +1,7 @@
 package frontend;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.openqa.selenium.NoSuchElementException;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -39,10 +40,16 @@ public class ArtistsPageTest
 		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
-		wd.get(prefix + "/songs/1");
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/2");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WebElement we = wd.findElement(By.id("nextButton"));
 		we.click();
-		assertEquals(wd.getCurrentUrl(), prefix + "/songs/2");
+		assertEquals(wd.getCurrentUrl(), prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/3");
 		wd.quit();
 	}
 	
@@ -55,10 +62,10 @@ public class ArtistsPageTest
 		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
-		wd.get(prefix + "/songs/2");
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/2");
 		WebElement we = wd.findElement(By.id("prevButton"));
 		we.click();
-		assertEquals(wd.getCurrentUrl(), prefix + "/songs/1");
+		assertEquals(wd.getCurrentUrl(), prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
 		wd.quit();
 	}
 	
@@ -71,10 +78,16 @@ public class ArtistsPageTest
 		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
-		wd.get(prefix + "/artists/1");
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WebElement we = wd.findElement(By.id("nextButton"));
 		we.click();
-		assertEquals(wd.getCurrentUrl(), prefix + "/artists/2");
+		assertEquals(wd.getCurrentUrl(), prefix + "/artists/splash/none/rank/false/none/none/none/none/2");
 		wd.quit();
 	}
 	
@@ -87,10 +100,10 @@ public class ArtistsPageTest
 		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
-		wd.get(prefix + "/artists/2");
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/2");
 		WebElement we = wd.findElement(By.id("prevButton"));
 		we.click();
-		assertEquals(wd.getCurrentUrl(), prefix + "/artists/1");
+		assertEquals(wd.getCurrentUrl(), prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
 		wd.quit();
 	}
 	
@@ -148,7 +161,7 @@ public class ArtistsPageTest
 		Thread.sleep(2000);
 		WebElement we = wd.findElement(By.id("moreButton"));
 		we.click();
-		assertEquals(wd.getCurrentUrl(), prefix + "/Newsp/The%20Weeknd/0");
+		assertEquals(wd.getCurrentUrl(), prefix + "/Newsp/Billie%20Eilish/0");
 		wd.quit();
 	}
 	
@@ -178,7 +191,7 @@ public class ArtistsPageTest
 		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
-		wd.get(prefix + "/artists/1");
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
 		WebElement we = wd.findElement(By.id("homeButton"));
 		we.click();
 		assertEquals(wd.getCurrentUrl(), prefix + "/");
@@ -213,7 +226,7 @@ public class ArtistsPageTest
 		wd.get(prefix + "/");
 		WebElement we = wd.findElement(By.id("songsButton"));
 		we.click();
-		assertEquals(wd.getCurrentUrl(), prefix + "/songs/1");
+		assertEquals(wd.getCurrentUrl(), prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
 		wd.quit();
 	}
 	
@@ -245,56 +258,500 @@ public class ArtistsPageTest
 		wd.get(prefix + "/");
 		WebElement we = wd.findElement(By.id("artistsButton"));
 		we.click();
-		assertEquals(wd.getCurrentUrl(), prefix + "/artists/1");
+		assertEquals(wd.getCurrentUrl(), prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
 		wd.quit();
 	}
 	
-//	/*
-//	 * Test 9: Tests that the link from a song listed under an artist to the song's page
-//	 */
-//	@Test
-//	public void testArtistLinkToArtistPage() throws InterruptedException
-//	{
-//		//scrolling
-////		WebElement element = driver.findElement(By.id("ID")));  
-////		js.executeScript("arguments[0].scrollIntoView(true);", element);
-//		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
-//		WebDriver wd = new FirefoxDriver(); // launch the browser
-//		// edit the next line to enter the location of "min.html" on your file system
-//		wd.get(prefix + "/artists/1");
-//		Thread.sleep(5000);
-////		WebDriverWait wait = new WebDriverWait(wd, 3);
-//		JavascriptExecutor js = ((JavascriptExecutor) wd);
-//		//presence in DOM
-////		WebElement we = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("linkToArtistsPage")));
-//		WebElement we = wd.findElement(By.id("linkToArtistsPage"));
-//		js.executeScript("arguments[0].scrollIntoView(true);", we);
-//		we.click();
-//		assertEquals(wd.getCurrentUrl(), prefix + "/artistspage/The%20Weeknd");
-//		wd.quit();
-//	}
-//	
-//	/*
-//	 * Test 9: Tests that the link from a song listed under an artist to the song's page
-//	 */
-//	@Test
-//	public void testSongLinkToSongPage() throws InterruptedException
-//	{
-//		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
-//		WebDriver wd = new FirefoxDriver(); // launch the browser
-//		// edit the next line to enter the location of "min.html" on your file system
-//		wd.get(prefix + "/songs/1");
-//		Thread.sleep(5000);
-//		WebElement we = wd.findElement(By.id("linkToSongsPage"));
-//		we.click();
-//		assertEquals(wd.getCurrentUrl(), prefix + "/songspage/Blinding%20Lights");
-//		wd.quit();
-//	}
+	//-----------------------------------------------------------------------
 	
+	/*
+	 * Test 15: Tests that the song search functionality works
+	 */
+	@Test
+	public void testSongSearch()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		we.sendKeys(new StringBuffer("Blinding Lights"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("Blinding Lights"));
+		wd.quit();
+	}
 	
+	/*
+	 * Test 16: Tests that the song filter by artist functionality works
+	 */
+	@Test
+	public void testSongSearchByArtist()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		we.sendKeys(new StringBuffer("The Weeknd"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(!output.contains("Until I Bleed Out"));
+		wd.quit();
+	}
 	
+	/*
+	 * Test 17: Tests that when an invalid playcount is supplied, the page doesnt change
+	 */
+	@Test
+	public void testSongSearchByArtistAndInvalidMinPlaycount()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("maxPlayCount"));
+		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
+		we.sendKeys(new StringBuffer("Billie Eilish"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("Blinding Lights"));
+		wd.quit();
+	}
 	
+	/*
+	 * Test 18: Tests that when an invalid listener is supplied, the page doesnt change
+	 */
+	@Test
+	public void testSongSearchByArtistAndInvalidMinListener()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("maxListeners"));
+		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
+		we.sendKeys(new StringBuffer("Billie Eilish"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("Blinding Lights"));
+		wd.quit();
+	}
 	
+	/*
+	 * Test 19: Tests that when an invalid rank is supplied, the songs are not updated
+	 */
+	@Test
+	public void testSongSearchByInvalidRank()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("minRank"));
+		wempc.sendKeys(new  StringBuffer("301"));
+		
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("Blinding Lights"));
+		wd.quit();
+	}
 	
+	/*
+	 * Test 20: Tests a valid song search with multiple filters
+	 */
+	@Test
+	public void testValidSongSearchMultipleFilters()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement wesearch = wd.findElement(By.id("search"));
+		wesearch.sendKeys(new StringBuffer("Call Out My Name"));
+		WebElement we = wd.findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("maxRank"));
+		wempc.sendKeys(new  StringBuffer("133"));
+		we.sendKeys(new StringBuffer("The Weeknd"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("Call Out My Name"));
+		assertTrue(!output.contains("Faith"));
+		wd.quit();
+	}
 	
+	/*
+	 * Test 21: Tests that the song search functionality gives no songs if the search doesnt exist
+	 */
+	@Test
+	public void testSongSearchInvalidInput()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		we.sendKeys(new StringBuffer("Kedar"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(!output.contains("Blinding Lights"));
+		}
+		catch(NoSuchElementException e) {
+			assertTrue(true);
+		}
+		wd.quit();
+	}
+	
+	/*
+	 * Test 22: Tests that the song search functionality works with URL Encoding
+	 */
+	@Test
+	public void testSongSearchInvalidInputWithSlashes()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		we.sendKeys(new StringBuffer("Blinding/Lights"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(!output.contains("Blinding Lights"));
+		}
+		catch(NoSuchElementException e) {
+			assertTrue(true);
+		}
+		wd.quit();
+	}
+	
+	//-----------------------------ARTISTS SEARCH TESTS---------------------------------------------
+	
+	/*
+	 * Test 23: Tests that the artist search functionality works
+	 */
+	@Test
+	public void testArtistSearch()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		we.sendKeys(new StringBuffer("The Weeknd"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("artistName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("The Weeknd"));
+		wd.quit();
+	}
+	
+	/*
+	 * Test 24: Tests that the artist filter by if on tour functionality works
+	 */
+	@Test
+	public void testArtistSearchOnTour()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("ontour"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		we.click();
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("artistName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(!output.contains("The Weeknd"));
+		wd.quit();
+	}
+	
+	/*
+	 * Test 25: Tests that when an invalid playcount is supplied, the page doesnt change
+	 */
+	@Test
+	public void testArtistSearchInvalidMinPlaycount()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement wempc = wd.findElement(By.id("maxPlayCount"));
+		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
+		we.sendKeys(new StringBuffer("Billie Eilish"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("artistName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("The Weeknd"));
+		wd.quit();
+	}
+	
+	/*
+	 * Test 26: Tests that when an invalid listener is supplied, the page doesnt change
+	 */
+	@Test
+	public void testArtistSearchInvalidMinListener()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement wempc = wd.findElement(By.id("minListeners"));
+		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
+		we.sendKeys(new StringBuffer("Billie Eilish"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("artistName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("Blinding Lights"));
+		wd.quit();
+	}
+	
+	/*
+	 * Test 27: Tests a valid artist search with multiple filters
+	 */
+	@Test
+	public void testValidArtistSearchMultipleFilters()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		WebElement wesearch = wd.findElement(By.id("search"));
+		wesearch.sendKeys(new StringBuffer("Camila"));
+		WebElement we = wd.findElement(By.id("minPlayCount"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement wempc = wd.findElement(By.id("ontour"));
+		wempc.click();
+		we.sendKeys(new StringBuffer("12345"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement result = wd.findElement(By.id("artistName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(output.contains("Camila Cabello"));
+		assertTrue(!output.contains("Billie Eilish"));
+		wd.quit();
+	}
+	
+	/*
+	 * Test 28: Tests that the artist search functionality gives no songs if the search doesnt exist
+	 */
+	@Test
+	public void testArtistSearchInvalidInput()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		we.sendKeys(new StringBuffer("Kedar"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+		WebElement result = wd.findElement(By.id("artistName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(!output.contains("The Weeknd"));
+		}
+		catch(NoSuchElementException e) {
+			assertTrue(true);
+		}
+		wd.quit();
+	}
+	
+	/*
+	 * Test 29: Tests that the artist search functionality works with URL Encoding
+	 */
+	@Test
+	public void testArtistSearchInvalidInputWithSlashes()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		we.sendKeys(new StringBuffer("The/Weeknd"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+		WebElement result = wd.findElement(By.id("artistName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(!output.contains("The Weeknd"));
+		}
+		catch(NoSuchElementException e) {
+			assertTrue(true);
+		}
+		wd.quit();
+	}
+	
+	/*
+	 * Test 30: Tests that the song filter by artist functionality works with slashes in the input
+	 */
+	@Test
+	public void testSongSearchByArtistInvalidInputWithSlashes()
+	{
+		System.setProperty("webdriver.gecko.driver","C:\\Program Files\\GeckoDriver\\geckodriver.exe");
+		WebDriver wd = new FirefoxDriver(); // launch the browser
+		// edit the next line to enter the location of "min.html" on your file system
+		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
+		WebElement we = wd.findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		we.sendKeys(new StringBuffer("The/Weeknd"));
+		wesubmit.click();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+		WebElement result = wd.findElement(By.id("songName"));
+		String output = result.getText(); // read the output text
+		System.out.println("OUTPUT:" + output);
+		assertTrue(!output.contains("Blinding Lights"));
+		}
+		catch(NoSuchElementException e) {
+			assertTrue(true);
+		}
+		wd.quit();
+	}
 }

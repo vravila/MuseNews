@@ -83,6 +83,18 @@ function Navbar() {
             </Link>
           </li>
         </ul>
+        <form action = "/homeSearch" class="form-inline">
+
+          <div class="col-auto my-1">
+            <select class="form-control form-control-lg" name = "searchtype">
+                <option>Search Artist</option>
+                <option>Search Song</option>
+                <option>Search News</option>
+            </select>
+          </div>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" id = "search" name="search" aria-label="Search"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
       </div>
     </nav>
   );
