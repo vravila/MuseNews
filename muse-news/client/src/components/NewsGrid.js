@@ -21,24 +21,24 @@ class NewsGrid extends Component {
         {
           title: "ERROR",
           preview: "Something went wrong",
-          img: "./../newsImage.jpg"
+          img: "./../newsImage.jpg",
         },
         {
           title: "ERROR",
           preview: "Something went wrong",
-          img: "./../newsImage.jpg"
+          img: "./../newsImage.jpg",
         },
         {
           title: "ERROR",
           preview: "Something went wrong",
-          img: "./../newsImage.jpg"
+          img: "./../newsImage.jpg",
         },
         {
           title: "ERROR",
           preview: "Something went wrong",
-          img: "./../newsImage.jpg"
-        }
-      ]
+          img: "./../newsImage.jpg",
+        },
+      ],
     };
     //this.getNews(this.state.terms);
     if (this.state.type === "Splash") {
@@ -53,23 +53,23 @@ class NewsGrid extends Component {
     var sortBy = "";
     var filterBy = "";
     //get sort parameter
-    if(this.state.sort === "date"){
+    if (this.state.sort === "date") {
       sortBy = "&sortBy=publishedAt";
-    }else if(this.state.sort === "popularity"){
+    } else if (this.state.sort === "popularity") {
       sortBy = "&sortBy=popularity";
-    }else if(this.state.sort === "relevance"){
+    } else if (this.state.sort === "relevance") {
       sortBy = "&sortBy=relevancy";
     }
     //get filter parameter
-    if(this.state.filter === "24h"){
+    if (this.state.filter === "24h") {
       var startTime = new Date();
       startTime.setDate(startTime.getDate() - 1); //one day back
       filterBy = "&from=" + startTime.toISOString();
-    }else if(this.state.filter === "48h"){
+    } else if (this.state.filter === "48h") {
       var startTime = new Date();
       startTime.setDate(startTime.getDate() - 2); //two days back
       filterBy = "&from=" + startTime.toISOString();
-    }else if(this.state.filter === "7d"){
+    } else if (this.state.filter === "7d") {
       var startTime = new Date();
       startTime.setDate(startTime.getDate() - 7); //one week back
       filterBy = "&from=" + startTime.toISOString();
@@ -85,10 +85,10 @@ class NewsGrid extends Component {
       "&apiKey=" +
       apikey;
     const resp = fetch(requestURL)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
         var newArticles = [];
         for (var i = 0; i < data.articles.length; i++) {
@@ -96,7 +96,7 @@ class NewsGrid extends Component {
             title: data.articles[i].title,
             preview: data.articles[i].description,
             img: data.articles[i].urlToImage,
-            term: q
+            term: q,
           });
         }
         this.setState({ articles: newArticles }, () => this.forceUpdate());
@@ -107,7 +107,7 @@ class NewsGrid extends Component {
   async getArticle(q, num) {
     let apikey = "bc2ebdb795c5488bb34601ca89a75e7f";
     let requestURL =
-      "http://newsapi.org/v2/everything?q=" +
+      "https://newsapi.org/v2/everything?q=" +
       q +
       "&page=" +
       "1" +
@@ -117,23 +117,23 @@ class NewsGrid extends Component {
     var article1;
     var article2;
     const resp = await fetch(requestURL)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
         article1 = {
           title: data.articles[index].title,
           preview: data.articles[index].description,
           img: data.articles[index].urlToImage,
-          term: q
+          term: q,
         };
         index++;
         article2 = {
           title: data.articles[index].title,
           preview: data.articles[index].description,
           img: data.articles[index].urlToImage,
-          term: q
+          term: q,
         };
       });
     return { article1, article2 };
@@ -143,17 +143,17 @@ class NewsGrid extends Component {
     let requestURL = "/api/news/getNewsPage/" + page;
     var toReturn = [];
     const resp = await fetch(requestURL)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         // toReturn = data;
         for (var index = 0; index < data.length; index++) {
           var newArticle = {
             title: data[index].title,
             preview: data[index].description,
             img: data[index].urlToImage,
-            term: data[index].term
+            term: data[index].term,
           };
           toReturn.push(newArticle);
         }
@@ -183,7 +183,7 @@ class NewsGrid extends Component {
         "Post Malone",
         "Lana Del Rey",
         "Ariana Grande",
-        "Doja Cat"
+        "Doja Cat",
       ];
       var newArticles = [];
       for (var i = 0; i < artists.length; i++) {
@@ -202,7 +202,7 @@ class NewsGrid extends Component {
         {
           terms: this.props.terms,
           page: this.props.page,
-          type: this.props.type
+          type: this.props.type,
         },
         () => this.getNews(this.state.terms, this.state.page)
       );
@@ -212,31 +212,33 @@ class NewsGrid extends Component {
     ) {
       this.setState(
         {
-          page: this.props.page
+          page: this.props.page,
         },
         () => this.generateSplashPage(this.state.page)
       );
-    } else if(this.state.page !== this.props.page){
+    } else if (this.state.page !== this.props.page) {
       this.setState(
         {
           page: this.props.page,
           sort: this.props.sort,
-          filter: this.props.filter
+          filter: this.props.filter,
         },
         () => this.getNews(this.state.terms, this.state.page)
       );
-    } else if(this.state.sort !== this.props.sort){
+    } else if (this.state.sort !== this.props.sort) {
       this.setState(
         {
-          sort: this.props.sort
-        }, () => this.getNews(this.state.terms, this.state.page)
+          sort: this.props.sort,
+        },
+        () => this.getNews(this.state.terms, this.state.page)
       );
-    } else if(this.state.filter !== this.props.filter){
+    } else if (this.state.filter !== this.props.filter) {
       this.setState(
         {
-          filter: this.props.filter
-        }, () => this.getNews(this.state.terms, this.state.page)
-      )
+          filter: this.props.filter,
+        },
+        () => this.getNews(this.state.terms, this.state.page)
+      );
     }
   }
 
