@@ -144,19 +144,23 @@ function Songs({ match }) {
           action="/redirectSongsPages"
           className="multi-range-field my-5 pb-5"
         >
-          <label>
-            Search Songs:
+          <label className="col-lg-6">
+            <h3>Search Songs:</h3>
             <input
               type="text"
               id="search"
               name="search"
               defaultValue={passedInParams.searchterms}
-              class="form-control form-control-sm"
+              className="form-control form-control-lg"
             ></input>
           </label>
-          <label>
-            Sort By:
-            <select id="sort" name="sort">
+          <label className="col-lg-6">
+            <h3>Sort By:</h3>
+            <select
+              className="form-control form-control-lg"
+              id="sort"
+              name="sort"
+            >
               <option
                 value="rank"
                 selected={passedInParams.sort === "rank" ? "selected" : ""}
@@ -178,19 +182,24 @@ function Songs({ match }) {
             </select>
           </label>
           <br></br>
-          Filters:<br></br>
-          <label>
+          <label className="col-sm-1">
+            {/* <br></br> */}
+            <h3>Filters:</h3>
+            {/* <br></br> */}
+          </label>
+          {/* <br></br> */}
+          <label className="col-md-2">
             Artists:
             <input
               type="text"
               id="artistSearch"
               name="artistSearch"
               defaultValue={passedInParams.artistSearch}
-              class="form-control form-control-sm"
+              // className="col-md-4"
             ></input>
           </label>
-          <br></br>
-          <label>
+          {/* <br></br> */}
+          <label className="col-md-2">
             Play Count:
             <input
               type="number"
@@ -212,8 +221,8 @@ function Songs({ match }) {
               //class="form-control form-control-sm"
             ></input>
           </label>
-          <br></br>
-          <label>
+          {/* <br></br> */}
+          <label className="col-md-2">
             Listeners:
             <input
               type="number"
@@ -236,7 +245,7 @@ function Songs({ match }) {
             ></input>
           </label>
           <br></br>
-          <label>
+          <label className="col-md-2">
             Rank:
             <input
               type="number"
@@ -267,12 +276,14 @@ function Songs({ match }) {
               class="form-control form-control-sm"
             ></input>
           </label>
-          <input
-            id="songSubmit"
-            type="submit"
-            class="btn btn-primary"
-            value="Submit"
-          ></input>
+          <label className="col-md-3">
+            <input
+              id="songSubmit"
+              type="submit"
+              class="btn btn-success form-control form-control-md"
+              value="Submit"
+            ></input>
+          </label>
         </form>
       </div>
       {/* <div class="container-fluid">

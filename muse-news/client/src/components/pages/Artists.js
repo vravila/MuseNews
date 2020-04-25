@@ -138,18 +138,23 @@ function Artists({ match }) {
         <h1 class="pageHeader">America's Top Artists</h1>
         <h2 class="sectionHeader">Top Artists: Page {match.params.page}</h2>
         <form action="/redirectPages" className="multi-range-field my-5 pb-5">
-          <label>
-            Search Artists:
+          <label className="col-lg-6">
+            <h3>Search Artists:</h3>
             <input
               type="text"
               id="search"
               name="search"
               defaultValue={passedInParams.searchterms}
+              className="form-control form-control-lg"
             ></input>
           </label>
-          <label>
-            Sort By:
-            <select id="sort" name="sort">
+          <label className="col-lg-6">
+            <h3>Sort By:</h3>
+            <select
+              className="form-control form-control-lg"
+              id="sort"
+              name="sort"
+            >
               <option
                 value="rank"
                 selected={passedInParams.sort === "rank" ? "selected" : ""}
@@ -171,9 +176,11 @@ function Artists({ match }) {
             </select>
           </label>
           <br></br>
-          Filters:<br></br>
-          <label>
-            Currently on Tour:
+          <label className="col-sm-1">
+            <h3>Filters:</h3>
+          </label>
+          <label className="col-md-2">
+            Currently on Tour: <t></t>
             <input
               id="ontour"
               name="ontour"
@@ -182,7 +189,7 @@ function Artists({ match }) {
             />
           </label>
           <br></br>
-          <label>
+          <label className="col-md-3">
             Play Count:
             <input
               type="number"
@@ -203,7 +210,7 @@ function Artists({ match }) {
             ></input>
           </label>
           <br></br>
-          <label>
+          <label className="col-md-3">
             Listeners:
             <input
               type="number"
@@ -229,15 +236,19 @@ function Artists({ match }) {
               id="source"
               name="source"
               value="artists"
+              class="form-control form-control-sm"
             ></input>
           </label>
           <br></br>
-          <input
-            id="artistSubmit"
-            type="submit"
-            class="btn btn-primary"
-            value="Submit"
-          ></input>
+          <label className="col-md-3">
+            <input
+              // className="col-md-3"
+              id="artistSubmit"
+              type="submit"
+              class="btn btn-success form-control form-control-md"
+              value="Submit"
+            ></input>
+          </label>
         </form>
       </div>
       <div style={{ "padding-bottom": "70px" }}>

@@ -18,40 +18,40 @@ class Article extends Component {
       img: "./../NewsImage.jpg",
       content: "empty",
       url: "https://news.google.com",
-      songNames: []
+      songNames: [],
     };
     this.getArticle = this.getArticle.bind(this);
 
     this.getArticle();
-
   }
 
   componentDidMount() {
     console.log("mounted");
-    fetch(
-      "/api/songs/getSongsByAnArtist/" + this.state.terms,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
+    fetch("/api/songs/getSongsByAnArtist/" + this.state.terms, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((results) => {
+        return results.json();
+      })
+      .then((data) => {
+        console.log(data);
+        var numSongs = 5;
+        var names = [];
+        if (numSongs > data.length) numSongs = data.length;
+        for (var i = 0; i < numSongs; i++) {
+          names.push(data[i].name);
         }
-      }
-    ).then(results => {
-      return results.json();
-    }).then(data => {
-      console.log(data);
-      var numSongs = 5;
-      var names = [];
-      if(numSongs > data.length)
-        numSongs = data.length;
-      for(var i = 0; i < numSongs; i++){
-        names.push(data[i].name);
-      }
-      this.setState({
-        songNames: names
-      }, () => this.forceUpdate());
-    });
+        this.setState(
+          {
+            songNames: names,
+          },
+          () => this.forceUpdate()
+        );
+      });
   }
 
   getArticle() {
@@ -59,17 +59,17 @@ class Article extends Component {
     var page = Math.floor(this.state.index / 20 + 1);
     let apikey = "bc2ebdb795c5488bb34601ca89a75e7f";
     let requestURL =
-      "http://newsapi.org/v2/everything?q=" +
+      "https://newsapi.org/v2/everything?q=" +
       q +
       "&page=" +
       page +
       "&apiKey=" +
       apikey;
     const resp = fetch(requestURL)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
         const k = this.state.index % 20;
         this.setState(
@@ -80,7 +80,7 @@ class Article extends Component {
             text: data.articles[k].description,
             img: data.articles[k].urlToImage,
             content: data.articles[k].content,
-            url: data.articles[k].url
+            url: data.articles[k].url,
           },
           () => this.forceUpdate()
         );
@@ -89,13 +89,17 @@ class Article extends Component {
   }
 
   render() {
-
     var songLinks = [];
-    for(var i = 0; i < this.state.songNames.length; i++){
+    for (var i = 0; i < this.state.songNames.length; i++) {
       songLinks.push(
-        <Row><Link to={`/songspage/${this.state.songNames[i]}/${this.state.terms}`} style={{marginLeft:15, fontSize:14}}>
-          {this.state.songNames[i]}
-        </Link></Row>
+        <Row>
+          <Link
+            to={`/songspage/${this.state.songNames[i]}/${this.state.terms}`}
+            style={{ marginLeft: 15, fontSize: 14 }}
+          >
+            {this.state.songNames[i]}
+          </Link>
+        </Row>
       );
     }
 

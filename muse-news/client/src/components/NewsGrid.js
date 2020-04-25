@@ -76,7 +76,7 @@ class NewsGrid extends Component {
     }
     let apikey = "bc2ebdb795c5488bb34601ca89a75e7f";
     let requestURL =
-      "http://newsapi.org/v2/everything?q=" +
+      "https://newsapi.org/v2/everything?q=" +
       q +
       filterBy +
       sortBy +
