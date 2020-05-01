@@ -35,16 +35,7 @@ router.get(
     console.log(req.params.minListeners);
     console.log(req.params.maxListeners);
     console.log(req.params.page);
-    queryArtists(
-      req.params.searchterms,
-      req.params.sort,
-      req.params.ontour,
-      req.params.minPlayCount,
-      req.params.maxPlayCount,
-      req.params.minListeners,
-      req.params.maxListeners,
-      req.params.page
-    ).then((returned) => {
+    queryArtists(req.params).then((returned) => {
       console.log("Returned!");
       // console.log(returned);
       for (var i = 0; i < returned.length; i++) {
@@ -113,82 +104,77 @@ router.get("/getArtistTweets/:name", (req, res) => {
   });
 });
 
-async function queryArtists(
-  searchterms,
-  sort,
-  ontour,
-  minPlayCount,
-  maxPlayCount,
-  minListeners,
-  maxListeners,
-  page
-) {
-  var start = 1;
-  var end = 10;
+async function queryArtists(params) {
   var query = {};
   var sortQuery = {};
-  if (searchterms != "none") {
-    query["name"] = { $regex: ".*" + searchterms + ".*" };
+  if (params.searchterms != "none") {
+    query["name"] = { $regex: ".*" + params.searchterms + ".*" };
   }
 
-  if (sort === "nameAsc") {
+  if (params.sort === "nameAsc") {
     sortQuery = { name: 1 };
-  } else if (sort === "nameDesc") {
+  } else if (params.sort === "nameDesc") {
     sortQuery = { name: -1 };
-  } else if (sort === "listeners") {
+  } else if (params.sort === "listeners") {
     sortQuery = { "stats.listeners": 1 };
   } else {
     sortQuery = { rank: 1 };
   }
 
-  if (ontour === "true") {
+  if (params.ontour === "true") {
     query["ontour"] = "1";
   }
 
-  if (minPlayCount === "none") {
-    if (maxPlayCount !== "none") {
-      query["stats.playcount"] = { $gte: 0, $lte: parseInt(maxPlayCount) };
+  if (params.minPlayCount === "none") {
+    if (params.maxPlayCount !== "none") {
+      query["stats.playcount"] = {
+        $gte: 0,
+        $lte: parseInt(params.maxPlayCount),
+      };
     }
   } else {
-    if (maxPlayCount === "none") {
+    if (params.maxPlayCount === "none") {
       query["stats.playcount"] = {
-        $gte: parseInt(minPlayCount),
+        $gte: parseInt(params.minPlayCount),
         $lte: 1000000000,
       };
     } else {
       query["stats.playcount"] = {
-        $gte: parseInt(minPlayCount),
-        $lte: parseInt(maxPlayCount),
+        $gte: parseInt(params.minPlayCount),
+        $lte: parseInt(params.maxPlayCount),
       };
     }
   }
 
-  if (minListeners === "none") {
-    if (maxListeners !== "none") {
-      query["stats.listeners"] = { $gte: 0, $lte: parseInt(maxListeners) };
+  if (params.minListeners === "none") {
+    if (params.maxListeners !== "none") {
+      query["stats.listeners"] = {
+        $gte: 0,
+        $lte: parseInt(params.maxListeners),
+      };
     }
   } else {
-    if (maxListeners === "none") {
+    if (params.maxListeners === "none") {
       query["stats.listeners"] = {
-        $gte: parseInt(minListeners),
+        $gte: parseInt(params.minListeners),
         $lte: 1000000000,
       };
     } else {
       query["stats.listeners"] = {
-        $gte: parseInt(minListeners),
-        $lte: parseInt(maxListeners),
+        $gte: parseInt(params.minListeners),
+        $lte: parseInt(params.maxListeners),
       };
     }
   }
 
   const PAGE_SIZE = 10;
-  const skip = (page - 1) * 10;
+  const skip = (params.page - 1) * 10;
 
   const testQuery = {
     "stats.listeners": { $gt: 10 },
   };
 
-  console.log("ontour: " + typeof ontour);
+  console.log("ontour: " + typeof params.ontour);
   console.log(query);
   console.log(sortQuery);
 
