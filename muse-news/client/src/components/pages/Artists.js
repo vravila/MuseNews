@@ -1,6 +1,8 @@
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import { Link, Redirect, matchPath } from "react-router-dom";
+import ArtistsCard from "./../ArtistsCard.js";
+import ArtistsForm from "./../ArtistsForm.js";
 
 function Artists({ match }) {
   useEffect(() => {
@@ -108,118 +110,7 @@ function Artists({ match }) {
       <div class="container-fluid">
         <h1 class="pageHeader">America's Top Artists</h1>
         <h2 class="sectionHeader">Top Artists: Page {match.params.page}</h2>
-        <form action="/redirectPages" className="multi-range-field my-5 pb-5">
-          <label id="searchLabel" className="col-lg-6">
-            <h3>Search Artists:</h3>
-            <input
-              type="text"
-              id="search"
-              name="search"
-              defaultValue={passedInParams.searchterms}
-              className="form-control form-control-lg"
-            ></input>
-          </label>
-          <label id="sortLabel" className="col-lg-6">
-            <h3>Sort By:</h3>
-            <select
-              className="form-control form-control-lg"
-              id="sort"
-              name="sort"
-            >
-              <option
-                value="rank"
-                selected={passedInParams.sort === "rank" ? "selected" : ""}
-              >
-                Rank
-              </option>
-              <option
-                value="nameAsc"
-                selected={passedInParams.sort === "nameAsc" ? "selected" : ""}
-              >
-                Name Ascending
-              </option>
-              <option
-                value="nameDesc"
-                selected={passedInParams.sort === "nameDesc" ? "selected" : ""}
-              >
-                Name Descending
-              </option>
-            </select>
-          </label>
-          <br></br>
-          <label className="col-sm-1">
-            <h3>Filters:</h3>
-          </label>
-          <label id="ontourLabel" className="col-md-2">
-            Currently on Tour: <t></t>
-            <input
-              id="ontour"
-              name="ontour"
-              type="checkbox"
-              defaultChecked={passedInParams.ontour === "true" ? "true" : ""}
-            />
-          </label>
-          <br></br>
-          <label id="playCountLabel" className="col-md-3">
-            Play Count:
-            <input
-              type="number"
-              id="minPlayCount"
-              name="minPlayCount"
-              min="0"
-              max="100882739"
-              defaultValue={passedInParams.minPlayCount}
-            ></input>
-            to
-            <input
-              type="number"
-              id="maxPlayCount"
-              name="maxPlayCount"
-              min="0"
-              max="100882739"
-              defaultValue={passedInParams.maxPlayCount}
-            ></input>
-          </label>
-          <br></br>
-          <label id="listenersLabel" className="col-md-3">
-            Listeners:
-            <input
-              type="number"
-              id="minListeners"
-              name="minListeners"
-              min="0"
-              max="1473588"
-              defaultValue={passedInParams.minListeners}
-            ></input>
-            to
-            <input
-              type="number"
-              id="maxListeners"
-              name="maxListeners"
-              min="0"
-              max="1473588"
-              defaultValue={passedInParams.maxListeners}
-            ></input>
-          </label>
-          <label>
-            <input
-              type="hidden"
-              id="source"
-              name="source"
-              value="artists"
-              class="form-control form-control-sm"
-            ></input>
-          </label>
-          <br></br>
-          <label id="artistSubmitLabel" className="col-md-3">
-            <input
-              id="artistSubmit"
-              type="submit"
-              class="btn btn-success form-control form-control-md"
-              value="Submit"
-            ></input>
-          </label>
-        </form>
+        <ArtistsForm passedInParams={passedInParams}></ArtistsForm>
       </div>
       <div style={{ "padding-bottom": "70px" }}>
         <Link
@@ -263,32 +154,7 @@ function Artists({ match }) {
         <hr className="lead"></hr>
       </div>
       {items.map((item) => (
-        <Link id="linkToArtistsPage" to={`/artistspage/${item.name}`}>
-          <div className="row-mt-1">
-            <div className="col-3 col-sm-3 mx-auto mb-2">
-              <div
-                className="card center-block bg-dark text-white"
-                style={{ width: "20rem", height: "35rem" }}
-              >
-                <img
-                  src={item.bingImageURL}
-                  alt="Image not Found"
-                  className="card-img-top"
-                  style={{ width: "20rem", height: "25rem" }}
-                />
-
-                <div className="card-body">
-                  <h3 id="artistName" className="card-title text-uppecase">
-                    {item.name}
-                  </h3>
-                  <h5 className="card-title text-uppecase">
-                    Rank: {item.rank}
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Link>
+        <ArtistsCard item={item}></ArtistsCard>
       ))}
     </div>
   );
