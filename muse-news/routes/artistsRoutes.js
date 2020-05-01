@@ -18,11 +18,6 @@ router.get("/", (req, res) => {
   res.status(201).send("HAHAHAHAHA");
 });
 
-router.get("/testExport", (req, res) => {
-  testExport();
-  res.status(200).send("Successfully Reached Endpoint");
-});
-
 router.get(
   "/queryArtists/:searchterms/:sort/:ontour/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:page",
   (req, res) => {

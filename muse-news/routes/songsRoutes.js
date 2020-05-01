@@ -10,11 +10,6 @@ router.get("/", (req, res) => {
   res.status(201).send("HAHAHAHAHA");
 });
 
-router.get("/testExport", (req, res) => {
-  testExport();
-  res.status(200).send("Successfully Reached Endpoint");
-});
-
 router.get(
   "/querySongs/:searchterms/:sort/:artistSearch/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:minRank/:maxRank/:page",
   (req, res) => {
