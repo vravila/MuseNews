@@ -29,18 +29,7 @@ router.get(
     console.log(req.params.minRank);
     console.log(req.params.maxRank);
     console.log(req.params.page);
-    querySongs(
-      req.params.searchterms,
-      req.params.sort,
-      req.params.artistSearch,
-      req.params.minPlayCount,
-      req.params.maxPlayCount,
-      req.params.minListeners,
-      req.params.maxListeners,
-      req.params.minRank,
-      req.params.maxRank,
-      req.params.page
-    ).then((returned) => {
+    querySongs(req.params).then((returned) => {
       console.log("Returned!");
       // console.log(returned);
       for (var i = 0; i < returned.length; i++) {
@@ -129,96 +118,85 @@ router.get("/getSongsByAnArtist/:artistname", (req, res) => {
   });
 });
 
-async function querySongs(
-  searchterms,
-  sort,
-  artistSearch,
-  minPlayCount,
-  maxPlayCount,
-  minListeners,
-  maxListeners,
-  minRank,
-  maxRank,
-  page
-) {
+async function querySongs(params) {
   var start = 1;
   var end = 10;
   var query = {};
   var sortQuery = {};
-  if (searchterms != "none") {
-    query["name"] = { $regex: ".*" + searchterms + ".*" };
+  if (params.searchterms != "none") {
+    query["name"] = { $regex: ".*" + params.searchterms + ".*" };
   }
 
-  if (sort === "nameAsc") {
+  if (params.sort === "nameAsc") {
     sortQuery = { name: 1 };
-  } else if (sort === "nameDesc") {
+  } else if (params.sort === "nameDesc") {
     sortQuery = { name: -1 };
-  } else if (sort === "listeners") {
+  } else if (params.sort === "listeners") {
     sortQuery = { "stats.listeners": 1 };
   } else {
     sortQuery = { rank: 1 };
   }
 
-  if (artistSearch != "none") {
-    query["artist.name"] = { $regex: ".*" + artistSearch + ".*" };
+  if (params.artistSearch != "none") {
+    query["artist.name"] = { $regex: ".*" + params.artistSearch + ".*" };
   }
 
-  if (minPlayCount === "none") {
-    if (maxPlayCount !== "none") {
-      query["playcount"] = { $gte: 0, $lte: parseInt(maxPlayCount) };
+  if (params.minPlayCount === "none") {
+    if (params.maxPlayCount !== "none") {
+      query["playcount"] = { $gte: 0, $lte: parseInt(params.maxPlayCount) };
     }
   } else {
-    if (maxPlayCount === "none") {
+    if (params.maxPlayCount === "none") {
       query["playcount"] = {
-        $gte: parseInt(minPlayCount),
+        $gte: parseInt(params.minPlayCount),
         $lte: 1000000000,
       };
     } else {
       query["playcount"] = {
-        $gte: parseInt(minPlayCount),
-        $lte: parseInt(maxPlayCount),
+        $gte: parseInt(params.minPlayCount),
+        $lte: parseInt(params.maxPlayCount),
       };
     }
   }
 
-  if (minListeners === "none") {
-    if (maxListeners !== "none") {
-      query["listeners"] = { $gte: 0, $lte: parseInt(maxListeners) };
+  if (params.minListeners === "none") {
+    if (params.maxListeners !== "none") {
+      query["listeners"] = { $gte: 0, $lte: parseInt(params.maxListeners) };
     }
   } else {
-    if (maxListeners === "none") {
+    if (params.maxListeners === "none") {
       query["listeners"] = {
-        $gte: parseInt(minListeners),
+        $gte: parseInt(params.minListeners),
         $lte: 1000000000,
       };
     } else {
       query["listeners"] = {
-        $gte: parseInt(minListeners),
-        $lte: parseInt(maxListeners),
+        $gte: parseInt(params.minListeners),
+        $lte: parseInt(params.maxListeners),
       };
     }
   }
 
-  if (minRank === "none") {
-    if (maxRank !== "none") {
-      query["rank"] = { $gte: 1, $lte: parseInt(maxRank) };
+  if (params.minRank === "none") {
+    if (params.maxRank !== "none") {
+      query["rank"] = { $gte: 1, $lte: parseInt(params.maxRank) };
     }
   } else {
-    if (maxRank === "none") {
+    if (params.maxRank === "none") {
       query["rank"] = {
-        $gte: parseInt(minRank),
+        $gte: parseInt(params.minRank),
         $lte: 300,
       };
     } else {
       query["rank"] = {
-        $gte: parseInt(minRank),
-        $lte: parseInt(maxRank),
+        $gte: parseInt(params.minRank),
+        $lte: parseInt(params.maxRank),
       };
     }
   }
 
   const PAGE_SIZE = 10;
-  const skip = (page - 1) * 10;
+  const skip = (params.page - 1) * 10;
 
   // const testQuery = {
   //   "stats.playcount": { $gte: 1, $lte: 1000000000 }
