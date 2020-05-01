@@ -1,12 +1,9 @@
-import ReactDOM from "react-dom";
-import React, { useState, useEffect, Component } from "react";
-import { Link, Redirect, matchPath } from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class ArtistsCard extends Component {
   constructor(props) {
     super(props);
-    console.log("constructor");
-    console.log(props);
   }
 
   render() {

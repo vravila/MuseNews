@@ -5,17 +5,10 @@ import queryString from "query-string";
 class HomeSearch extends Component {
   constructor(props) {
     super(props);
-    console.log("constructor");
-    console.log(props);
   }
 
   render() {
-    console.log(this.props.match.params.sort);
     const values = queryString.parse(this.props.location.search);
-    console.log(this.props.location);
-    console.log(values.search);
-    console.log(values.search === "");
-    console.log(values.source);
     var urlString = "";
     if (values.searchtype == "Search Artist") {
       urlString =

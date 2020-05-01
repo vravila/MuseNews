@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect, matchPath } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SongsCard from "./../SongsCard.js";
 import SongsForm from "./../SongsForm.js";
 
@@ -39,8 +39,6 @@ function Songs({ match }) {
   passedInParams.page = match.params.page;
 
   printPassedInParams(passedInParams);
-
-  console.log("******************************");
 
   if (passedInParams.searchterms === "none") {
     passedInParams.searchterms = "";
@@ -96,7 +94,6 @@ function Songs({ match }) {
       match.params.maxRank +
       "/" +
       match.params.page;
-    console.log("URL: " + apiURL);
 
     const data = await fetch(apiURL, {
       method: "GET",
@@ -106,16 +103,12 @@ function Songs({ match }) {
       },
     });
     const items = await data.json();
-    console.log(items);
     setItems(items);
   };
 
   if (items.length < ENTRIES_PER_PAGE) {
-    console.log("LAST PAGE");
     showNextButton = false;
     LAST_PAGE = match.params.page;
-  } else {
-    console.log("NOT LAST PAGE");
   }
 
   return (
@@ -189,19 +182,6 @@ function nextPage(currPage, lastPage) {
     return lastPage;
   }
   return parseInt(currPage) + 1;
-}
-
-function printPassedInParams(match) {
-  console.log("Version 2");
-  console.log("Mode: " + match.mode);
-  console.log("Search Terms: " + match.searchterms);
-  console.log("Sort by : " + match.sort);
-  console.log("On tour:" + match.ontour);
-  console.log("Min Play Count : " + match.minPlayCount);
-  console.log("Max Play Count : " + match.maxPlayCount);
-  console.log("Min Listeners : " + match.minListeners);
-  console.log("Max Listeners : " + match.maxListeners);
-  console.log("Page: " + match.page);
 }
 
 export default Songs;

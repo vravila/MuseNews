@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import { Link, Redirect, matchPath } from "react-router-dom";
 import ArtistsCard from "./../ArtistsCard.js";
@@ -16,7 +15,6 @@ function Artists({ match }) {
   var LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
   const [items, setItems] = useState([]);
   const passedInParams = useState({});
-  const sourceName = "artists";
 
   var showNextButton = useState({});
   var showPrevButton = useState({});
@@ -61,9 +59,6 @@ function Artists({ match }) {
   }
 
   const fetchItems = async () => {
-    const startIdx = match.params.page * 10 - 10 + 1;
-    const endIdx = match.params.page * 10;
-
     const apiURL =
       "/api/artists/queryArtists/" +
       match.params.searchterms +
@@ -81,7 +76,6 @@ function Artists({ match }) {
       match.params.maxListeners +
       "/" +
       match.params.page;
-    console.log("URL: " + apiURL);
 
     const data = await fetch(apiURL, {
       method: "GET",
@@ -92,17 +86,12 @@ function Artists({ match }) {
       },
     });
     const items = await data.json();
-    console.log(items);
-
     setItems(items);
   };
 
   if (items.length < ENTRIES_PER_PAGE) {
-    console.log("LAST PAGE");
     showNextButton = false;
     LAST_PAGE = match.params.page;
-  } else {
-    console.log("NOT LAST PAGE");
   }
 
   return (
@@ -172,19 +161,6 @@ function nextPage(currPage, lastPage) {
     return lastPage;
   }
   return parseInt(currPage) + 1;
-}
-
-function printPassedInParams(match) {
-  console.log("Version 2");
-  console.log("Mode: " + match.mode);
-  console.log("Search Terms: " + match.searchterms);
-  console.log("Sort by : " + match.sort);
-  console.log("On tour:" + match.ontour);
-  console.log("Min Play Count : " + match.minPlayCount);
-  console.log("Max Play Count : " + match.maxPlayCount);
-  console.log("Min Listeners : " + match.minListeners);
-  console.log("Max Listeners : " + match.maxListeners);
-  console.log("Page: " + match.page);
 }
 
 export default Artists;

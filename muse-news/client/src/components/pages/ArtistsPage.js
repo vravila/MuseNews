@@ -26,8 +26,7 @@ function ArtistsPage({ match }) {
     const tweets = await fetchTweets.json();
     setTweets(tweets);
   };
-  console.log(tweets);
-  //--------------------------------------------
+
   const fetchItem = async () => {
     const fetchItem = await fetch(
       "/api/artists/getArtistByName/" + match.params.id,
@@ -39,7 +38,7 @@ function ArtistsPage({ match }) {
         },
       }
     );
-    //--------------------------------------
+
     const fetchItemSongs = await fetch(
       "/api/songs/getSongsByAnArtist/" + match.params.id,
       {
@@ -53,12 +52,9 @@ function ArtistsPage({ match }) {
 
     const item = await fetchItem.json();
     setItem(item);
-    console.log(item);
 
     const songItem = await fetchItemSongs.json();
     setSongItem(songItem);
-    console.log("Song Item");
-    console.log(songItem);
   };
 
   return (

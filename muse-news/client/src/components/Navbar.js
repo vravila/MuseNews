@@ -55,7 +55,6 @@ function Navbar() {
             <Link
               id="songsButton"
               className="nav-link text-white text-uppercase ml-5"
-              //to="/songs/1"
               to="/songs/splash/none/rank/none/none/none/none/none/none/none/1"
             >
               <h3>Songs</h3>{" "}
@@ -76,24 +75,31 @@ function Navbar() {
             <Link
               id="artistsButton"
               className="nav-link text-white text-uppercase ml-5"
-              // to="/artists/1"
               to="/artists/splash/none/rank/false/none/none/none/none/1"
             >
               <h3>Artists</h3>{" "}
             </Link>
           </li>
         </ul>
-        <form action = "/homeSearch" class="form-inline">
-
+        <form action="/homeSearch" class="form-inline">
           <div class="col-auto my-1">
-            <select class="form-control form-control-lg" name = "searchtype">
-                <option>Search Artist</option>
-                <option>Search Song</option>
-                <option>Search News</option>
+            <select class="form-control form-control-lg" name="searchtype">
+              <option>Search Artist</option>
+              <option>Search Song</option>
+              <option>Search News</option>
             </select>
           </div>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" id = "search" name="search" aria-label="Search"/>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            id="search"
+            name="search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
         </form>
       </div>
     </nav>

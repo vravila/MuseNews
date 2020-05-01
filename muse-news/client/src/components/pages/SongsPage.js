@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../../App.js";
-import Billie from "../../imgs/Billie.jpg";
-import Tame from "../../imgs/Tame.jpg";
-import weeknd from "../../imgs/weeknd.jpg";
 import { Link } from "react-router-dom";
 
 function SongsPage() {
@@ -27,18 +24,13 @@ function SongsPage() {
   });
 
   const [linkItem, setLinkItem] = useState({});
-  //--------------------------------------------------------------
   const fetchTweets = async (name) => {
     const fetchTweets = await fetch("/api/artists/getArtistTweets/" + name);
     const tweets = await fetchTweets.json();
     setTweets(tweets);
   };
-  // console.log(tweets);
-  //--------------------------------------------------------------
-  const fetchItem = async () => {
-    // console.log(song);
-    // console.log(artist);
 
+  const fetchItem = async () => {
     const fetchItem = await fetch(
       "/api/songs/getSongByNameAndArtist/" + song + "/" + artist,
       {
@@ -49,12 +41,9 @@ function SongsPage() {
         },
       }
     );
-    //-----------------------------------------------------------
     const item = await fetchItem.json();
     setItem(item);
-    // console.log("Done with fetch");
-    // console.log(item);
-    //---------------------------------------------------------
+
     artistLink = await getArtistLink(artist);
 
     const artistLinkItem = await fetch(
@@ -69,13 +58,10 @@ function SongsPage() {
     );
     const linkItem = await artistLinkItem.json();
     setLinkItem(linkItem);
-    console.log("LinkItem");
-    console.log(linkItem);
+
     if (linkItem == null) {
-      console.log("Artists DOES NOT Exist");
       artistLink = "/artistDNE";
     } else {
-      console.log("Artists Exists");
       artistLink = "/artistspage/" + artist;
     }
   };
