@@ -1,9 +1,6 @@
 const SongsMongoSingleton = require("./SongsMongoSingleton.js");
 const express = require("express");
 const router = express.Router(); //ret a funx
-const app = express();
-
-const assert = require("assert");
 
 router.get("/", (req, res) => {
   console.log("Root!!!");
@@ -13,23 +10,7 @@ router.get("/", (req, res) => {
 router.get(
   "/querySongs/:searchterms/:sort/:artistSearch/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:minRank/:maxRank/:page",
   (req, res) => {
-    console.log("GET to /querySongs for ==> ");
-    console.log(req.params.searchterms);
-    console.log(req.params.sort);
-    console.log(req.params.artistSearch);
-    console.log(req.params.minPlayCount);
-    console.log(req.params.maxPlayCount);
-    console.log(req.params.minListeners);
-    console.log(req.params.maxListeners);
-    console.log(req.params.minRank);
-    console.log(req.params.maxRank);
-    console.log(req.params.page);
     querySongs(req.params).then((returned) => {
-      console.log("Returned!");
-      // console.log(returned);
-      for (var i = 0; i < returned.length; i++) {
-        console.log(returned[i]["name"]);
-      }
       if (returned === null || returned.length == 0) {
         res.status(404).json(returned);
       } else {
@@ -40,10 +21,7 @@ router.get(
 );
 
 router.get("/getSongsByRank/:rank", (req, res) => {
-  console.log("GET to /getSongsByRank for " + req.params.rank);
   getSongByRank(req.params.rank).then((returned) => {
-    console.log("Returned!");
-    console.log(returned);
     if (returned === null) {
       res.status(404).json(returned);
     } else {
@@ -53,24 +31,14 @@ router.get("/getSongsByRank/:rank", (req, res) => {
 });
 
 router.get("/getSongTweets/:name", (req, res) => {
-  //res.status(200).json("testing")
-  console.log("HERE");
   getSongTweets(req.params.name).then((returned) => {
     res.status(200).json(returned);
   });
 });
 
 router.get("/getSongsByRankRanges/:startNo/:endNo", (req, res) => {
-  console.log(
-    "GET to /getSongByRankRanges for " +
-      req.params.startNo +
-      " to " +
-      req.params.endNo
-  );
   getSongsByRankRanges(req.params.startNo, req.params.endNo).then(
     (returned) => {
-      console.log("Returned!");
-      console.log(returned);
       if (returned.length === 0) {
         res.status(404).json(returned);
       } else {
@@ -81,16 +49,8 @@ router.get("/getSongsByRankRanges/:startNo/:endNo", (req, res) => {
 });
 
 router.get("/getSongByNameAndArtist/:songname/:artistname", (req, res) => {
-  console.log(
-    "GET to /getSongByNameAndArtist for " +
-      req.params.songname +
-      " by " +
-      req.params.artistname
-  );
   getSongByNameAndArtist(req.params.songname, req.params.artistname).then(
     (returned) => {
-      console.log("Returned!");
-      console.log(returned);
       if (returned === null) {
         res.status(404).json(returned);
       } else {
@@ -101,10 +61,7 @@ router.get("/getSongByNameAndArtist/:songname/:artistname", (req, res) => {
 });
 
 router.get("/getSongsByAnArtist/:artistname", (req, res) => {
-  console.log("GET to /getSongsByAnArtist for " + req.params.artistname);
   getSongsByAnArtist(req.params.artistname).then((returned) => {
-    console.log("Returned!");
-    console.log(returned);
     if (returned.length === 0) {
       res.status(404).json(returned);
     } else {
@@ -114,8 +71,6 @@ router.get("/getSongsByAnArtist/:artistname", (req, res) => {
 });
 
 async function querySongs(params) {
-  var start = 1;
-  var end = 10;
   var query = {};
   var sortQuery = {};
   if (params.searchterms != "none") {
@@ -193,54 +148,30 @@ async function querySongs(params) {
   const PAGE_SIZE = 10;
   const skip = (params.page - 1) * 10;
 
-  // const testQuery = {
-  //   "stats.playcount": { $gte: 1, $lte: 1000000000 }
-  // };
-
-  console.log(query);
-  console.log(sortQuery);
-
   const collection = await SongsMongoSingleton.getInstance();
 
   returnedCursorArtist = collection.find(query).skip(skip).limit(PAGE_SIZE);
   const returnedArtist = returnedCursorArtist.sort(sortQuery).toArray();
-  // for (var i = 0; i < returnedArtist["artist"].length; i++) {
-  //   console.log(artist[i]["name"]);
-  // }
-  // console.log(returnedArtist);
-  console.log("Done looking");
-  // client.close();
   return returnedArtist;
 }
 
 async function getSongByNameAndArtist(song, artist) {
   var returnedSong;
   const collection = await SongsMongoSingleton.getInstance();
-
   returnedSong = collection.findOne({ name: song, "artist.name": artist });
-  console.log(returnedSong);
-  console.log("Done looking");
-  // client.close();
   return returnedSong;
 }
 
 async function getSongsByAnArtist(artist) {
   const collection = await SongsMongoSingleton.getInstance();
-
   returnedCursorSong = collection.find({ "artist.name": artist });
   const returnedSong = returnedCursorSong.sort({ rank: 1 }).toArray();
-  console.log(returnedSong);
-  console.log("Done looking");
-  // client.close();
   return returnedSong;
 }
 
 async function getSongByRank(inputrank) {
   const collection = await SongsMongoSingleton.getInstance();
   returnedSong = collection.findOne({ rank: parseInt(inputrank) });
-  console.log(returnedSong);
-  console.log("Done looking");
-  // client.close();
   return returnedSong;
 }
 
@@ -250,9 +181,6 @@ async function getSongsByRankRanges(start, end) {
     rank: { $gt: parseInt(start) - 1, $lt: parseInt(end) + 1 },
   });
   const returnedSong = returnedCursorSong.sort({ rank: 1 }).toArray();
-  console.log(returnedSong);
-  console.log("Done looking");
-  // client.close();
   return returnedSong;
 }
 
@@ -267,12 +195,8 @@ function getSongTweets(name) {
         url = "http://twitter.com/" + user + "/status/" + id;
         urls[i] = url;
       }
-
-      //console.log(urls);
-
       const promises = urls.map((url) => convertToHtml(url));
       Promise.all(promises).then((data) => {
-        // data = [promise1,promise2]
         resolve(data);
       });
     });
@@ -296,10 +220,6 @@ function convertToHtml(url) {
       resolve(response.html);
     });
   });
-}
-
-function testExport() {
-  console.log("TEST the EXPORT");
 }
 
 module.exports = router;

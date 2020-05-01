@@ -8,8 +8,6 @@ var ArtistsMongoSingleton = (function () {
     const uri =
       "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
     const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-    // .then(function(db) {
-    console.log("Connected...");
     const collection = client.db(dbName).collection(collectionName);
     return collection;
   }
