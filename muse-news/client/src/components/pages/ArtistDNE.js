@@ -11,9 +11,6 @@ function ArtistDNE() {
           We're sorry, Muse-News does not have any information on this artist at
           the moment! :(
         </h1>
-        {/* <h1>
-          <Link to="/songs/1">Link Back to Songs Page</Link>
-        </h1> */}
       </div>
     </div>
   );

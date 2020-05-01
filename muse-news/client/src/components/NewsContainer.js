@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Dropdown from "react-bootstrap/Dropdown"
+import Dropdown from "react-bootstrap/Dropdown";
 import { Redirect } from "react-router-dom";
 
 import NewsGrid from "./NewsGrid";
@@ -20,7 +20,7 @@ class NewsContainer extends Component {
       filter: "None",
       sort: "None",
       filter: "None",
-      dne: false
+      dne: false,
     };
     this.search = this.search.bind(this);
     this.pageUp = this.pageUp.bind(this);
@@ -38,63 +38,81 @@ class NewsContainer extends Component {
     this.state.terms = event.target.searchBox.value;
     this.state.page = 1;
     this.state.type = "artist";
-    fetch(
-      "/api/artists/getArtistByName/" + this.state.terms,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        }
-      }
-    ).then(results => {
-      if(!results.ok){
-        this.setState({
-          dne: true
-        }, () => this.forceUpdate());
+    fetch("/api/artists/getArtistByName/" + this.state.terms, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }).then((results) => {
+      if (!results.ok) {
+        this.setState(
+          {
+            dne: true,
+          },
+          () => this.forceUpdate()
+        );
       }
       return results.json();
     });
     this.forceUpdate();
   }
 
-  dateSort(){
-    this.setState({
-      sort: "date"
-    }, () => this.forceUpdate());
+  dateSort() {
+    this.setState(
+      {
+        sort: "date",
+      },
+      () => this.forceUpdate()
+    );
   }
 
-  popularitySort(){
-    this.setState({
-      sort: "popularity"
-    }, () => this.forceUpdate());
+  popularitySort() {
+    this.setState(
+      {
+        sort: "popularity",
+      },
+      () => this.forceUpdate()
+    );
   }
 
-  relevanceSort(){
-    this.setState({
-      sort: "relevance"
-    }, () => this.forceUpdate());
+  relevanceSort() {
+    this.setState(
+      {
+        sort: "relevance",
+      },
+      () => this.forceUpdate()
+    );
   }
 
-  lastDayFilter(){
-    this.setState({
-      filter: "24h"
-    }, () => this.forceUpdate());
+  lastDayFilter() {
+    this.setState(
+      {
+        filter: "24h",
+      },
+      () => this.forceUpdate()
+    );
   }
 
-  last2DaysFilter(){
-    this.setState({
-      filter: "48h"
-    }, () => this.forceUpdate());
+  last2DaysFilter() {
+    this.setState(
+      {
+        filter: "48h",
+      },
+      () => this.forceUpdate()
+    );
   }
 
-  lastWeekFilter(){
-    this.setState({
-      filter: "7d"
-    }, () => this.forceUpdate());
+  lastWeekFilter() {
+    this.setState(
+      {
+        filter: "7d",
+      },
+      () => this.forceUpdate()
+    );
   }
 
-  sourceFilter(){
+  sourceFilter() {
     return null;
   }
 
@@ -116,15 +134,15 @@ class NewsContainer extends Component {
 
   render() {
     var redirect = <p></p>;
-    if(this.state.dne){
-      redirect = <Redirect to='/artistdne' />;
+    if (this.state.dne) {
+      redirect = <Redirect to="/artistdne" />;
     }
     return (
       <div>
         {redirect}
         <h1 style={{ marginLeft: 20 }}>News</h1>
 
-        <Form style={{ marginLeft: 20 }} onSubmit={this.search}>
+        <Form id="form" style={{ marginLeft: 20 }} onSubmit={this.search}>
           <Form.Row>
             <Col>
               <Form.Group>
@@ -157,19 +175,29 @@ class NewsContainer extends Component {
 
             <Dropdown.Menu>
               <Dropdown.Item onSelect={this.dateSort}>Date</Dropdown.Item>
-              <Dropdown.Item onSelect={this.relevanceSort}>Relevance</Dropdown.Item>
-              <Dropdown.Item onSelect={this.popularitySort}>Popularity</Dropdown.Item>
+              <Dropdown.Item onSelect={this.relevanceSort}>
+                Relevance
+              </Dropdown.Item>
+              <Dropdown.Item onSelect={this.popularitySort}>
+                Popularity
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Dropdown style={{ display: "inline-block", marginLeft: 5}}>
+          <Dropdown style={{ display: "inline-block", marginLeft: 5 }}>
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
               Filter By:
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onSelect={this.lastDayFilter}>Last 24 Hours</Dropdown.Item>
-              <Dropdown.Item onSelect={this.last2DaysFilter}>Last 48 Hours</Dropdown.Item>
-              <Dropdown.Item onSelect={this.lastWeekFilter}>Last Week</Dropdown.Item>
+              <Dropdown.Item onSelect={this.lastDayFilter}>
+                Last 24 Hours
+              </Dropdown.Item>
+              <Dropdown.Item onSelect={this.last2DaysFilter}>
+                Last 48 Hours
+              </Dropdown.Item>
+              <Dropdown.Item onSelect={this.lastWeekFilter}>
+                Last Week
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>

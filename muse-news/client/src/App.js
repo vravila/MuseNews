@@ -26,25 +26,18 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
-          {/* <Route path="/artists/:page" component={Artists} /> */}
           <Route
             path="/artists/:mode/:searchterms/:sort/:ontour/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:page"
             component={Artists}
           />
-
           <Route path="/artistspage/:id" component={ArtistsPage} />
           <Route path="/news" component={News} />
           <Route path="/newsa/:artist" component={News} />
-          {/* <Route path="/songs/:page" component={Songs} /> */}
           <Route
             path="/songs/:mode/:searchterms/:sort/:artistSearch/:minPlayCount/:maxPlayCount/:minListeners/:maxListeners/:minRank/:maxRank/:page"
             component={Songs}
           />
           <Route path="/songspage/:song/:artist" component={SongsPage} />
-          {/* <Route
-            path="/redirectPages/:source/:page"
-            component={RedirectPages}
-          /> */}
           <Route path="/redirectPages" component={RedirectPages} />
           <Route path="/homeSearch" component={HomeSearch} />
           <Route path="/redirectSongsPages" component={RedirectSongsPages} />

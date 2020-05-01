@@ -1,12 +1,6 @@
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import { Link, Redirect, matchPath } from "react-router-dom";
-import Billie from "./../../imgs/Billie.jpg";
-import Abel from "./../../imgs/the_weeknd.jpg";
-import Tame from "./../../imgs/tame_impala.jpg";
-import AltSinging from "./../../imgs/alt_singing.jpg";
-import Button from "react-bootstrap/Button";
-import { push } from "react-router-redux";
 
 function Artists({ match }) {
   useEffect(() => {
@@ -27,15 +21,9 @@ function Artists({ match }) {
   showPrevButton = true;
   showNextButton = true;
 
-  // var showPrevButton = true;
-  // var showNextButton = true;
-
   if (match.params.page == 1) {
     showPrevButton = false;
   }
-  // if (match.params.page == LAST_PAGE) {
-  //   showNextButton = false;
-  // }
 
   passedInParams.mode = passedInParams.mode = match.params.mode;
   passedInParams.searchterms = match.params.searchterms;
@@ -49,8 +37,6 @@ function Artists({ match }) {
 
   // printParams(match);
   printPassedInParams(passedInParams);
-
-  console.log("******************************");
 
   if (passedInParams.searchterms === "none") {
     passedInParams.searchterms = "";
@@ -72,9 +58,6 @@ function Artists({ match }) {
     passedInParams.maxListeners = "";
   }
 
-  // console.log("PAGE!");
-  // console.log(match.params.page);
-  // console.log("END PAGE!");
   const fetchItems = async () => {
     const startIdx = match.params.page * 10 - 10 + 1;
     const endIdx = match.params.page * 10;
@@ -98,17 +81,6 @@ function Artists({ match }) {
       match.params.page;
     console.log("URL: " + apiURL);
 
-    // const data = await fetch(
-    //   "/api/artists/getArtistByRankRanges/" + startIdx + "/" + endIdx,
-    //   {
-    //     method: "GET",
-    //     // mode: "no-cors",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Accept: "application/json"
-    //     }
-    //   }
-    // );
     const data = await fetch(apiURL, {
       method: "GET",
       // mode: "no-cors",
@@ -120,7 +92,6 @@ function Artists({ match }) {
     const items = await data.json();
     console.log(items);
 
-    // console.log(items.artists.artist);
     setItems(items);
   };
 
@@ -138,7 +109,7 @@ function Artists({ match }) {
         <h1 class="pageHeader">America's Top Artists</h1>
         <h2 class="sectionHeader">Top Artists: Page {match.params.page}</h2>
         <form action="/redirectPages" className="multi-range-field my-5 pb-5">
-          <label className="col-lg-6">
+          <label id="searchLabel" className="col-lg-6">
             <h3>Search Artists:</h3>
             <input
               type="text"
@@ -148,7 +119,7 @@ function Artists({ match }) {
               className="form-control form-control-lg"
             ></input>
           </label>
-          <label className="col-lg-6">
+          <label id="sortLabel" className="col-lg-6">
             <h3>Sort By:</h3>
             <select
               className="form-control form-control-lg"
@@ -179,7 +150,7 @@ function Artists({ match }) {
           <label className="col-sm-1">
             <h3>Filters:</h3>
           </label>
-          <label className="col-md-2">
+          <label id="ontourLabel" className="col-md-2">
             Currently on Tour: <t></t>
             <input
               id="ontour"
@@ -189,7 +160,7 @@ function Artists({ match }) {
             />
           </label>
           <br></br>
-          <label className="col-md-3">
+          <label id="playCountLabel" className="col-md-3">
             Play Count:
             <input
               type="number"
@@ -210,7 +181,7 @@ function Artists({ match }) {
             ></input>
           </label>
           <br></br>
-          <label className="col-md-3">
+          <label id="listenersLabel" className="col-md-3">
             Listeners:
             <input
               type="number"
@@ -240,9 +211,8 @@ function Artists({ match }) {
             ></input>
           </label>
           <br></br>
-          <label className="col-md-3">
+          <label id="artistSubmitLabel" className="col-md-3">
             <input
-              // className="col-md-3"
               id="artistSubmit"
               type="submit"
               class="btn btn-success form-control form-control-md"
@@ -290,9 +260,6 @@ function Artists({ match }) {
         >
           Next Page ({parseInt(match.params.page) + 1})
         </Link>
-        {/* </tc> */}
-        {/* </tr> */}
-        {/* </table> */}
         <hr className="lead"></hr>
       </div>
       {items.map((item) => (
@@ -306,20 +273,17 @@ function Artists({ match }) {
                 <img
                   src={item.bingImageURL}
                   alt="Image not Found"
-                  // onError="this.src='../../imgs/alt_singing.jpg'"
                   className="card-img-top"
                   style={{ width: "20rem", height: "25rem" }}
                 />
 
                 <div className="card-body">
-                  {/* <Link to={`/artists/${item.name}`}> */}
                   <h3 id="artistName" className="card-title text-uppecase">
                     {item.name}
                   </h3>
                   <h5 className="card-title text-uppecase">
                     Rank: {item.rank}
                   </h5>
-                  {/* </Link> */}
                 </div>
               </div>
             </div>
@@ -328,22 +292,7 @@ function Artists({ match }) {
       ))}
     </div>
   );
-  ReactDOM.render(fetchItems, document.getElementById("root"));
 }
-
-// function formSubmit() {
-//   console.log("submit form");
-//   push("/home"); // navigate to some route
-// }
-
-// function callAPI() {
-//   console.log("Hi");
-//   return (
-//     <div>
-//       <h1>Test</h1>
-//     </div>
-//   );
-// }
 
 function prevPage(currPage) {
   if (currPage == 1) {
@@ -357,33 +306,6 @@ function nextPage(currPage, lastPage) {
     return lastPage;
   }
   return parseInt(currPage) + 1;
-}
-
-function temporaryImages(name) {
-  if (name) {
-    console.log(name);
-    if (name === "Billie Eilish") {
-      return Billie;
-    } else if (name === "The Weeknd") {
-      return Abel;
-    } else if (name === "Tame Impala") {
-      return Tame;
-    } else {
-      return "";
-    }
-  }
-}
-
-function printParams(match) {
-  console.log("Mode: " + match.params.mode);
-  console.log("Search Terms: " + match.params.searchterms);
-  console.log("Sort by : " + match.params.sort);
-  console.log("On tour:" + match.params.ontour);
-  console.log("Min Play Count : " + match.params.minPlayCount);
-  console.log("Max Play Count : " + match.params.maxPlayCount);
-  console.log("Min Listeners : " + match.params.minListeners);
-  console.log("Max Listeners : " + match.params.maxListeners);
-  console.log("Page: " + match.params.page);
 }
 
 function printPassedInParams(match) {

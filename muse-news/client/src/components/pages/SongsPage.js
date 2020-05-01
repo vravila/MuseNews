@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 function SongsPage() {
   let { song, artist } = useParams();
 
-  const img = getImage(artist);
   var artistLink = "/wtf";
 
   let track = song + " " + artist;
@@ -18,25 +17,18 @@ function SongsPage() {
   useEffect(() => {
     fetchTweets(track);
     fetchItem();
-    // console.log(match);
   }, []);
 
   const [tweets, setTweets] = useState({});
 
   const [item, setItem] = useState({
     wiki: {},
-    toptags: {}
+    toptags: {},
   });
 
   const [linkItem, setLinkItem] = useState({});
 
-  const fetchTweets = async name => {
-    /*const fetchTweets = await fetch("/api/artists/getArtistTweets").then(ret => {
-      ret.json().then(ret2 => {
-        console.log(ret2);
-      })
-    })*/
-
+  const fetchTweets = async (name) => {
     const fetchTweets = await fetch("/api/artists/getArtistTweets/" + name);
     const tweets = await fetchTweets.json();
     setTweets(tweets);
@@ -45,12 +37,6 @@ function SongsPage() {
   const fetchItem = async () => {
     console.log(song);
     console.log(artist);
-    // const fetchItem = await fetch(
-    //   `https://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=${name}&track=${song}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
-    // );
-    // const item = await fetchItem.json();
-    // setItem(item.track);
-    // console.log(item);
 
     const fetchItem = await fetch(
       "/api/songs/getSongByNameAndArtist/" + song + "/" + artist,
@@ -58,13 +44,10 @@ function SongsPage() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       }
     );
-    // const fetchItem = await fetch(
-    //   `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${match.params.id}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
-    // );
 
     const item = await fetchItem.json();
     setItem(item);
@@ -79,8 +62,8 @@ function SongsPage() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       }
     );
     const linkItem = await artistLinkItem.json();
@@ -94,15 +77,6 @@ function SongsPage() {
       console.log("Artists Exists");
       artistLink = "/artistspage/" + artist;
     }
-
-    // if (artistLinkItem == null) {
-    //   console.log("Artists DOES NOT Exist");
-    //   artistLink = "/artistDNE";
-    // } else {
-    //   console.log("Artists Exists");
-    //   artistLink = "/artistspage/" + artist;
-    // }
-    // console.log(artistLink);
   };
 
   return (
@@ -113,12 +87,9 @@ function SongsPage() {
         </h1>
         <h2 id="borderArtistLink">
           <strong>By</strong>{" "}
-          {/* <Link to={`../../../artistspage/${artist}`}>{artist}</Link> */}
-          {/* <a href=>V2 {artist} ]]]</a> */}
           <Link id="artistLink" to={link(linkItem, artist)}>
             {artist}
           </Link>
-          {/* {getArtistLink(artist)} */}
         </h2>
         <h2>Rank on Charts: {item.rank}</h2>
         <img
@@ -128,7 +99,6 @@ function SongsPage() {
           style={{ width: 500, height: 500 }}
         ></img>
         <p className="lead" style={{ fontSize: "18px" }}>
-          {/* {item.wiki.content} */}
           {escapeHREF(item.wiki.content)}
         </p>
         <br></br>
@@ -145,11 +115,6 @@ function SongsPage() {
           See the latest headlines about {item.name} and {artist}{" "}
           <Link to={`/Newsa/${artist}`}>here</Link>
         </h4>
-        {/* <p className="lead" style={{ fontSize: "15px" }}>
-          <Link to={`/Newsp/${temporaryNewsLink(artist)}`}>
-            <strong>{temporaryNewsLink(artist)}</strong>
-          </Link>
-        </p> */}
         <div class="Tweets">
           <h2>Recent Tweets</h2>
 
@@ -180,8 +145,8 @@ async function getArtistLink(name) {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
-    }
+      Accept: "application/json",
+    },
   });
   if (fetchItem == null) {
     console.log("Artists DOES NOT Exist");
@@ -193,34 +158,6 @@ async function getArtistLink(name) {
   return retstr;
 }
 
-function getImage(name) {
-  var img = document.createElement("img");
-
-  if (name === "Billie Eilish") {
-    return Billie;
-  } else if (name === "Tame Impala") {
-    return Tame;
-  } else if (name === "The Weeknd") {
-    return weeknd;
-  }
-  return "fail";
-}
-
-function temporaryNewsLink(name) {
-  if (name) {
-    console.log(name);
-    if (name === "The Weeknd") {
-      return "Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)";
-    } else if (name === "Billie Eilish") {
-      return "Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner";
-    } else if (name === "Tame Impala") {
-      return "Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson";
-    } else {
-      return "";
-    }
-  }
-}
-
 function escapeHREF(content) {
   console.log(typeof content);
   console.log(content);
@@ -230,8 +167,6 @@ function escapeHREF(content) {
   if (content) {
     return content.substring(0, content.indexOf("<a href"));
   }
-  //   content.indexOf("k");
-  //   return content.substring(0, content.indexOf("<a href"));
   return content;
 }
 

@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect, matchPath } from "react-router-dom";
-import Billie from "./../../imgs/Billie.jpg";
-import Abel from "./../../imgs/the_weeknd.jpg";
-import Tame from "./../../imgs/tame_impala.jpg";
-import AltSinging from "./../../imgs/alt_singing.jpg";
-import Button from "react-bootstrap/Button";
 
 function Songs({ match }) {
   useEffect(() => {
@@ -18,7 +13,6 @@ function Songs({ match }) {
   var LAST_PAGE = Math.ceil(DATABASE_LIMIT / ENTRIES_PER_PAGE);
   const [items, setItems] = useState([]);
   const passedInParams = useState({});
-  const sourceName = "songs";
 
   var showNextButton = useState({});
   var showPrevButton = useState({});
@@ -29,9 +23,6 @@ function Songs({ match }) {
   if (match.params.page == 1) {
     showPrevButton = false;
   }
-  // if (match.params.page == LAST_PAGE) {
-  //   showNextButton = false;
-  // }
 
   passedInParams.mode = match.params.mode;
   passedInParams.searchterms = match.params.searchterms;
@@ -45,7 +36,6 @@ function Songs({ match }) {
   passedInParams.maxRank = match.params.maxRank;
   passedInParams.page = match.params.page;
 
-  // printParams(match);
   printPassedInParams(passedInParams);
 
   console.log("******************************");
@@ -81,13 +71,8 @@ function Songs({ match }) {
   if (passedInParams.artistSearch === "none") {
     passedInParams.artistSearch = "";
   }
-  // console.log("PAGE!");
-  // console.log(match.params.page);
-  // console.log("END PAGE!");
-  const fetchItems = async () => {
-    const startIdx = match.params.page * 10 - 10 + 1;
-    const endIdx = match.params.page * 10;
 
+  const fetchItems = async () => {
     const apiURL =
       "/api/songs/querySongs/" +
       match.params.searchterms +
@@ -113,12 +98,8 @@ function Songs({ match }) {
 
     const data = await fetch(apiURL, {
       method: "GET",
-      // mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
-        // "Access-Control-Allow-Origin": "*",
-        // "Access-Control-Allow-Credentials": "true",
-        // "Access-Control-Allow-Origin": "http://localhost:5001",
         Accept: "application/json",
       },
     });
@@ -144,7 +125,7 @@ function Songs({ match }) {
           action="/redirectSongsPages"
           className="multi-range-field my-5 pb-5"
         >
-          <label className="col-lg-6">
+          <label id="searchLabel" className="col-lg-6">
             <h3>Search Songs:</h3>
             <input
               type="text"
@@ -154,7 +135,7 @@ function Songs({ match }) {
               className="form-control form-control-lg"
             ></input>
           </label>
-          <label className="col-lg-6">
+          <label id="sortLabel" className="col-lg-6">
             <h3>Sort By:</h3>
             <select
               className="form-control form-control-lg"
@@ -183,23 +164,18 @@ function Songs({ match }) {
           </label>
           <br></br>
           <label className="col-sm-1">
-            {/* <br></br> */}
             <h3>Filters:</h3>
-            {/* <br></br> */}
           </label>
-          {/* <br></br> */}
-          <label className="col-md-2">
+          <label id="artistSearchLabel" className="col-md-2">
             Artists:
             <input
               type="text"
               id="artistSearch"
               name="artistSearch"
               defaultValue={passedInParams.artistSearch}
-              // className="col-md-4"
             ></input>
           </label>
-          {/* <br></br> */}
-          <label className="col-md-2">
+          <label id="playCountLabel" className="col-md-2">
             Play Count:
             <input
               type="number"
@@ -208,7 +184,6 @@ function Songs({ match }) {
               min="0"
               max="25598881"
               defaultValue={passedInParams.minPlayCount}
-              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -218,11 +193,9 @@ function Songs({ match }) {
               min="0"
               max="25598881"
               defaultValue={passedInParams.maxPlayCount}
-              //class="form-control form-control-sm"
             ></input>
           </label>
-          {/* <br></br> */}
-          <label className="col-md-2">
+          <label id="listenersLabel" className="col-md-2">
             Listeners:
             <input
               type="number"
@@ -231,7 +204,6 @@ function Songs({ match }) {
               min="0"
               max="2144166"
               defaultValue={passedInParams.minListeners}
-              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -241,11 +213,10 @@ function Songs({ match }) {
               min="0"
               max="2144166"
               defaultValue={passedInParams.maxListeners}
-              //class="form-control form-control-sm"
             ></input>
           </label>
           <br></br>
-          <label className="col-md-2">
+          <label id="rankLabel" className="col-md-2">
             Rank:
             <input
               type="number"
@@ -254,7 +225,6 @@ function Songs({ match }) {
               min="1"
               max="300"
               defaultValue={passedInParams.minRank}
-              //class="form-control form-control-sm"
             ></input>
             to
             <input
@@ -264,7 +234,6 @@ function Songs({ match }) {
               min="1"
               max="300"
               defaultValue={passedInParams.maxRank}
-              //class="form-control form-control-sm"
             ></input>
           </label>
           <label>
@@ -276,7 +245,7 @@ function Songs({ match }) {
               class="form-control form-control-sm"
             ></input>
           </label>
-          <label className="col-md-3">
+          <label id="songSubmitLabel" className="col-md-3">
             <input
               id="songSubmit"
               type="submit"
@@ -286,26 +255,7 @@ function Songs({ match }) {
           </label>
         </form>
       </div>
-      {/* <div class="container-fluid">
-        <h2 class="sectionHeader">
-          <form>
-            <label>
-              Song Name:
-              <input type="text" name="name" />
-            </label>
-            <Button onClick="searchSong(name)">Submit</Button>
-          </form>
-        </h2>
-      </div> */}
-      `{/* <Button onClick={updateDB}>Update MongoDB</Button> */}
-      {/* <Button onClick={push(`/songs/` + prevPage(match.params.page))}>
-        {" "}
-        PREV{" "}
-      </Button> */}
       <div style={{ "padding-bottom": "70px" }}>
-        {/* <table> */}
-        {/* <tr> */}
-        {/* <tc> */}
         <Link
           id="prevButton"
           className={
@@ -348,9 +298,6 @@ function Songs({ match }) {
         >
           Next Page ({parseInt(match.params.page) + 1})
         </Link>
-        {/* </tc> */}
-        {/* </tr> */}
-        {/* </table> */}
         <hr className="lead"></hr>
       </div>
       {items.map((item) => (
@@ -367,20 +314,16 @@ function Songs({ match }) {
                 <img
                   src={item.bingImageURL}
                   alt="Image not Found"
-                  // onError="this.src='../../imgs/alt_singing.jpg'"
                   className="card-img-top"
                   style={{ width: "20rem", height: "25rem" }}
                 />
-
                 <div className="card-body">
-                  {/* <Link to={`/artists/${item.name}`}> */}
                   <h3 id="songName" className="card-title text-uppecase">
                     {item.name}
                   </h3>
                   <h5 className="card-title text-uppecase">
                     Rank: {item.rank}
                   </h5>
-                  {/* </Link> */}
                 </div>
               </div>
             </div>
@@ -405,21 +348,6 @@ function nextPage(currPage, lastPage) {
   return parseInt(currPage) + 1;
 }
 
-function temporaryImages(name) {
-  if (name) {
-    console.log(name);
-    if (name === "Billie Eilish") {
-      return Billie;
-    } else if (name === "The Weeknd") {
-      return Abel;
-    } else if (name === "Tame Impala") {
-      return Tame;
-    } else {
-      return "";
-    }
-  }
-}
-
 function printPassedInParams(match) {
   console.log("Version 2");
   console.log("Mode: " + match.mode);
@@ -432,13 +360,5 @@ function printPassedInParams(match) {
   console.log("Max Listeners : " + match.maxListeners);
   console.log("Page: " + match.page);
 }
-
-// function searchSong(name) {
-//   var item = items.get(name);
-//   <Link
-//     id="linkToSongsPage"
-//     to={`/songspage/${item.name}/${item.artist.name}`}
-//   ></Link>;
-// }
 
 export default Songs;

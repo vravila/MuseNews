@@ -1,3 +1,5 @@
+#This script fixes the playcount and listeners fields in a mongodb collection. It was used for both the songs and artists model.
+
 import requests 
 import pymongo
 from pymongo import MongoClient

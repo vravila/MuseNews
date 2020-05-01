@@ -1,9 +1,5 @@
 import React, { useState, useEffect, Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import Billie from "./../../imgs/Billie.jpg";
-import Abel from "./../../imgs/the_weeknd.jpg";
-import Tame from "./../../imgs/tame_impala.jpg";
-import Button from "react-bootstrap/Button";
 import queryString from "query-string";
 
 class RedirectPages extends Component {
@@ -28,8 +24,6 @@ class RedirectPages extends Component {
       var encodedSearch = encodeURIComponent(encodeURIComponent(values.search));
       console.log("encoded url is" + encodedSearch);
       urlString += "/search/" + encodedSearch;
-      // console.log("search is " + values.search);
-      // urlString += "/search/" + values.search;
     }
 
     if (values.sort === "rank") {
@@ -43,15 +37,6 @@ class RedirectPages extends Component {
       urlString += "/rank";
     }
 
-    // console.log(values.ontour);
-    // if (values.ontour) {
-    //   console.log("on tour");
-    //   urlString += "/true";
-    // } else {
-    //   console.log("not on tour");
-    //   urlString += "/false";
-    // }
-
     if (values.artistSearch === "") {
       console.log("artist search null");
       urlString += "/none";
@@ -61,8 +46,6 @@ class RedirectPages extends Component {
       );
       console.log("encoded url is" + encodedSearch);
       urlString += "/" + encodedSearch;
-      // console.log("search is " + values.search);
-      // urlString += "/search/" + values.search;
     }
 
     console.log(values.minPlayCount);
@@ -84,8 +67,6 @@ class RedirectPages extends Component {
       urlString += "/" + values.maxPlayCount;
     }
 
-    /////
-
     if (values.minListeners === "") {
       console.log("no min Listeners");
       urlString += "/none";
@@ -101,8 +82,6 @@ class RedirectPages extends Component {
       console.log("max Listeners " + values.maxListeners);
       urlString += "/" + values.maxListeners;
     }
-
-    /////
 
     if (values.minRank === "") {
       console.log("no min Listeners");
@@ -137,13 +116,9 @@ class RedirectPages extends Component {
 
     console.log(urlString);
 
-    // if(values.minPlayCount)
-
     return (
       <div>
-        <h1>Redirection</h1>{" "}
-        {/* <Redirect to={"/" + match.params.source + "/" + match.params.page} />{" "} */}
-        <Redirect to={urlString} />{" "}
+        <h1>Redirection</h1> <Redirect to={urlString} />{" "}
       </div>
     );
   }

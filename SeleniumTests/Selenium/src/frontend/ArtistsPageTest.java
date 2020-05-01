@@ -134,11 +134,22 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/news");
-		WebElement we = wd.findElement(By.id("search"));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement we = wd.findElement(By.id("form")).findElement(By.id("search"));
 		WebElement wesubmit = wd.findElement(By.id("searchSubmit"));
 		we.sendKeys(new StringBuffer("Lady Gaga"));
 		wesubmit.click();
-		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		WebElement grid = wd.findElement(By.id("newsArticle"));
 		
 		WebElement result = wd.findElement(By.id("newsArticlePreview"));
@@ -274,8 +285,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
 		we.sendKeys(new StringBuffer("Blinding Lights"));
 		wesubmit.click();
 		try {
@@ -301,8 +312,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("artistSearch"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement we = wd.findElement(By.id("artistSearchLabel")).findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
 		we.sendKeys(new StringBuffer("The Weeknd"));
 		wesubmit.click();
 		try {
@@ -328,9 +339,9 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("artistSearch"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
-		WebElement wempc = wd.findElement(By.id("maxPlayCount"));
+		WebElement we = wd.findElement(By.id("artistSearchLabel")).findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("playCountLabel")).findElement(By.id("maxPlayCount"));
 		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
 		we.sendKeys(new StringBuffer("Billie Eilish"));
 		wesubmit.click();
@@ -357,9 +368,9 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("artistSearch"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
-		WebElement wempc = wd.findElement(By.id("maxListeners"));
+		WebElement we = wd.findElement(By.id("artistSearchLabel")).findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("listenersLabel")).findElement(By.id("maxListeners"));
 		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
 		we.sendKeys(new StringBuffer("Billie Eilish"));
 		wesubmit.click();
@@ -386,9 +397,9 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("artistSearch"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
-		WebElement wempc = wd.findElement(By.id("minRank"));
+		WebElement we = wd.findElement(By.id("artistSearchLabel")).findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("rankLabel")).findElement(By.id("minRank"));
 		wempc.sendKeys(new  StringBuffer("301"));
 		
 		wesubmit.click();
@@ -415,11 +426,11 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement wesearch = wd.findElement(By.id("search"));
+		WebElement wesearch = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
 		wesearch.sendKeys(new StringBuffer("Call Out My Name"));
-		WebElement we = wd.findElement(By.id("artistSearch"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
-		WebElement wempc = wd.findElement(By.id("maxRank"));
+		WebElement we = wd.findElement(By.id("artistSearchLabel")).findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
+		WebElement wempc = wd.findElement(By.id("rankLabel")).findElement(By.id("maxRank"));
 		wempc.sendKeys(new  StringBuffer("133"));
 		we.sendKeys(new StringBuffer("The Weeknd"));
 		wesubmit.click();
@@ -447,8 +458,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
 		we.sendKeys(new StringBuffer("Kedar"));
 		wesubmit.click();
 		try {
@@ -479,8 +490,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
 		we.sendKeys(new StringBuffer("Blinding/Lights"));
 		wesubmit.click();
 		try {
@@ -519,8 +530,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmitLabel")).findElement(By.id("artistSubmit"));
 		we.sendKeys(new StringBuffer("The Weeknd"));
 		wesubmit.click();
 		try {
@@ -546,8 +557,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("ontour"));
-		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement we = wd.findElement(By.id("ontourLabel")).findElement(By.id("ontour"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmitLabel")).findElement(By.id("artistSubmit"));
 		we.click();
 		wesubmit.click();
 		try {
@@ -573,8 +584,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmitLabel")).findElement(By.id("artistSubmit"));
 		WebElement wempc = wd.findElement(By.id("maxPlayCount"));
 		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
 		we.sendKeys(new StringBuffer("Billie Eilish"));
@@ -602,9 +613,9 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
-		WebElement wempc = wd.findElement(By.id("minListeners"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmitLabel")).findElement(By.id("artistSubmit"));
+		WebElement wempc = wd.findElement(By.id("listenersLabel")).findElement(By.id("minListeners"));
 		wempc.sendKeys(new  StringBuffer("11111111111111111111"));
 		we.sendKeys(new StringBuffer("Billie Eilish"));
 		wesubmit.click();
@@ -617,7 +628,7 @@ public class ArtistsPageTest
 		WebElement result = wd.findElement(By.id("artistName"));
 		String output = result.getText(); // read the output text
 		System.out.println("OUTPUT:" + output);
-		assertTrue(output.contains("Blinding Lights"));
+		assertTrue(output.contains("The Weeknd"));
 		wd.quit();
 	}
 	
@@ -631,11 +642,11 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
-		WebElement wesearch = wd.findElement(By.id("search"));
+		WebElement wesearch = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
 		wesearch.sendKeys(new StringBuffer("Camila"));
-		WebElement we = wd.findElement(By.id("minPlayCount"));
-		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
-		WebElement wempc = wd.findElement(By.id("ontour"));
+		WebElement we = wd.findElement(By.id("playCountLabel")).findElement(By.id("minPlayCount"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmitLabel")).findElement(By.id("artistSubmit"));
+		WebElement wempc = wd.findElement(By.id("ontourLabel")).findElement(By.id("ontour"));
 		wempc.click();
 		we.sendKeys(new StringBuffer("12345"));
 		wesubmit.click();
@@ -663,8 +674,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmitLabel")).findElement(By.id("artistSubmit"));
 		we.sendKeys(new StringBuffer("Kedar"));
 		wesubmit.click();
 		try {
@@ -695,8 +706,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/artists/splash/none/rank/false/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("search"));
-		WebElement wesubmit = wd.findElement(By.id("artistSubmit"));
+		WebElement we = wd.findElement(By.id("searchLabel")).findElement(By.id("search"));
+		WebElement wesubmit = wd.findElement(By.id("artistSubmitLabel")).findElement(By.id("artistSubmit"));
 		we.sendKeys(new StringBuffer("The/Weeknd"));
 		wesubmit.click();
 		try {
@@ -733,8 +744,8 @@ public class ArtistsPageTest
 		WebDriver wd = new FirefoxDriver(); // launch the browser
 		// edit the next line to enter the location of "min.html" on your file system
 		wd.get(prefix + "/songs/splash/none/rank/none/none/none/none/none/none/none/1");
-		WebElement we = wd.findElement(By.id("artistSearch"));
-		WebElement wesubmit = wd.findElement(By.id("songSubmit"));
+		WebElement we = wd.findElement(By.id("artistSearchLabel")).findElement(By.id("artistSearch"));
+		WebElement wesubmit = wd.findElement(By.id("songSubmitLabel")).findElement(By.id("songSubmit"));
 		we.sendKeys(new StringBuffer("The/Weeknd"));
 		wesubmit.click();
 		try {

@@ -1,26 +1,6 @@
 import React, { useState, useEffect, Component } from "react";
 import { Link, Redirect } from "react-router-dom";
-import Billie from "./../../imgs/Billie.jpg";
-import Abel from "./../../imgs/the_weeknd.jpg";
-import Tame from "./../../imgs/tame_impala.jpg";
-import Button from "react-bootstrap/Button";
 import queryString from "query-string";
-
-// function RedirectPages({ match }) {
-//   {
-//     // console.log(match.params.source);
-//     // console.log(match.params.page);
-//     console.log("hi");
-//     console.log(match.params);
-
-//   }
-//   return (
-//     <div>
-//       <h1>Redirection</h1>
-//       {/* <Redirect to={"/" + match.params.source + "/" + match.params.page} /> */}
-//     </div>
-//   );
-// }
 
 class RedirectPages extends Component {
   constructor(props) {
@@ -43,8 +23,6 @@ class RedirectPages extends Component {
       var encodedSearch = encodeURIComponent(encodeURIComponent(values.search));
       console.log("encoded url is" + encodedSearch);
       urlString += "/search/" + encodedSearch;
-      // console.log("search is " + values.search);
-      // urlString += "/search/" + values.search;
     }
 
     if (values.sort === "rank") {
@@ -86,8 +64,6 @@ class RedirectPages extends Component {
       urlString += "/" + values.maxPlayCount;
     }
 
-    /////
-
     if (values.minListeners === "") {
       console.log("no min Listeners");
       urlString += "/none";
@@ -121,13 +97,9 @@ class RedirectPages extends Component {
 
     console.log(urlString);
 
-    // if(values.minPlayCount)
-
     return (
       <div>
-        <h1>Redirection</h1>{" "}
-        {/* <Redirect to={"/" + match.params.source + "/" + match.params.page} />{" "} */}
-        <Redirect to={urlString} />{" "}
+        <h1>Redirection</h1> <Redirect to={urlString} />{" "}
       </div>
     );
   }

@@ -1,26 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import Billie from "./../../imgs/Billie.jpg";
-import Abel from "./../../imgs/the_weeknd.jpg";
-import Tame from "./../../imgs/tame_impala.jpg";
-import Tweets from "./../../components/Tweets.js";
-import ArtistsListOfSongs from "./../ArtistsListOfSongs";
 function ArtistsPage({ match }) {
-  /*const data = fetch("/api/artists/getArtistTweets").then(weeknd => {
-    weeknd.json().then(
-      weeknd2 => {
-        console.log(weeknd2)
-      }
-    )
-  })*/
-
-  let x = "<h1>Hello</h1>";
-
   useEffect(() => {
     fetchTweets(match.params.id);
     fetchItem();
-    //console.log(match);
   }, []);
 
   const [tweets, setTweets] = useState({});
@@ -32,17 +16,11 @@ function ArtistsPage({ match }) {
     similar: {},
     image: {
       size: {},
-      text: {}
-    }
+      text: {},
+    },
   });
 
-  const fetchTweets = async name => {
-    /*const fetchTweets = await fetch("/api/artists/getArtistTweets").then(ret => {
-      ret.json().then(ret2 => {
-        console.log(ret2);
-      })
-    })*/
-
+  const fetchTweets = async (name) => {
     const fetchTweets = await fetch("/api/artists/getArtistTweets/" + name);
     const tweets = await fetchTweets.json();
     setTweets(tweets);
@@ -52,15 +30,14 @@ function ArtistsPage({ match }) {
   const [songItem, setSongItem] = useState([]);
 
   const fetchItem = async () => {
-    //console.log(match.params);
     const fetchItem = await fetch(
       "/api/artists/getArtistByName/" + match.params.id,
       {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       }
     );
 
@@ -70,13 +47,11 @@ function ArtistsPage({ match }) {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Accept: "application/json"
-        }
+          Accept: "application/json",
+        },
       }
     );
-    // const fetchItem = await fetch(
-    //   `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${match.params.id}&api_key=10b860590d5168c53783ae9728a9b395&format=json`
-    // );
+
     const item = await fetchItem.json();
     setItem(item);
     console.log(item);
@@ -86,8 +61,6 @@ function ArtistsPage({ match }) {
     console.log("Song Item");
     console.log(songItem);
   };
-  // console.log(item.name);
-  //console.log(item);
 
   return (
     <div>
@@ -119,7 +92,7 @@ function ArtistsPage({ match }) {
         <strong>Similar Artists:</strong> {getTags(item.similar.artist)}
       </p>
       <h4>Top Songs:</h4>
-      {songItem.map(songItem => (
+      {songItem.map((songItem) => (
         <div name={`song`}>
           <p className="lead" style={{ fontSize: "15px" }}>
             <Link
@@ -135,11 +108,6 @@ function ArtistsPage({ match }) {
         See the latest headlines about {item.name}{" "}
         <Link to={`/Newsa/${item.name}`}>here</Link>
       </h4>
-      {/* <p className="lead" style={{ fontSize: "15px" }}>
-        <Link to={`/Newsp/${temporaryNewsLink(item.name)}`}>
-          <strong>{temporaryNewsLink(item.name)}</strong>
-        </Link>
-      </p> */}
       <div class="Tweets">
         <h2>Recent Tweets</h2>
 
@@ -150,12 +118,6 @@ function ArtistsPage({ match }) {
         <div dangerouslySetInnerHTML={{ __html: tweets[4] }} />
       </div>
     </div>
-    // <div>
-    //   <h1>Artists Page!!!</h1>
-    //   <h4>Drake</h4>
-    //   <h4>The Weeknd</h4>
-    //   <h4>Coldplay</h4>
-    // </div>
   );
 }
 
@@ -180,59 +142,10 @@ function getOnTour(ontour) {
   return "Currently On Tour";
 }
 
-function getTopSongs(name) {
-  if (name) {
-    //console.log(name);
-    if (name === "Billie Eilish") {
-      return "bad guy";
-    } else if (name === "The Weeknd") {
-      return "Blinding Lights";
-    } else if (name === "Tame Impala") {
-      return "The Less I Know The Better";
-    } else {
-      return "";
-    }
-  }
-}
-
-function temporaryImages(name) {
-  if (name) {
-    //console.log(name);
-    if (name === "Billie Eilish") {
-      return Billie;
-    } else if (name === "The Weeknd") {
-      return Abel;
-    } else if (name === "Tame Impala") {
-      return Tame;
-    } else {
-      return "";
-    }
-  }
-}
-
-function temporaryNewsLink(name) {
-  if (name) {
-    //console.log(name);
-    if (name === "The Weeknd") {
-      return "Watch Behind-the-Scenes Video From The Weeknd’s ‘Blinding Lights’ (EXCLUSIVE)";
-    } else if (name === "Billie Eilish") {
-      return "Here’s Billie Eilish’s ‘Bad Guy’ in the style of Arctic Monkeys’ Alex Turner";
-    } else if (name === "Tame Impala") {
-      return "Tame Impala’s Kevin Parker says he tried to give ‘The Less I Know The Better’ to Mark Ronson";
-    } else {
-      return "";
-    }
-  }
-}
-
 function escapeHREF(content) {
-  //console.log(typeof content);
-  //console.log(content);
   if (content) {
     return content.substring(0, content.indexOf("<a href"));
   }
-  //   content.indexOf("k");
-  //   return content.substring(0, content.indexOf("<a href"));
   return content;
 }
 
