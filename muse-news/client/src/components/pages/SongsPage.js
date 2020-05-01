@@ -27,16 +27,17 @@ function SongsPage() {
   });
 
   const [linkItem, setLinkItem] = useState({});
-
+  //--------------------------------------------------------------
   const fetchTweets = async (name) => {
     const fetchTweets = await fetch("/api/artists/getArtistTweets/" + name);
     const tweets = await fetchTweets.json();
     setTweets(tweets);
   };
-  console.log(tweets);
+  // console.log(tweets);
+  //--------------------------------------------------------------
   const fetchItem = async () => {
-    console.log(song);
-    console.log(artist);
+    // console.log(song);
+    // console.log(artist);
 
     const fetchItem = await fetch(
       "/api/songs/getSongByNameAndArtist/" + song + "/" + artist,
@@ -48,12 +49,12 @@ function SongsPage() {
         },
       }
     );
-
+    //-----------------------------------------------------------
     const item = await fetchItem.json();
     setItem(item);
-    console.log("Done with fetch");
-    console.log(item);
-
+    // console.log("Done with fetch");
+    // console.log(item);
+    //---------------------------------------------------------
     artistLink = await getArtistLink(artist);
 
     const artistLinkItem = await fetch(

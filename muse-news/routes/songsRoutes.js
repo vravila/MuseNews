@@ -226,15 +226,8 @@ async function querySongs(
   console.log(query);
   console.log(sortQuery);
 
-  const dbName = "MuseNewsDatabase";
-  const collectionName = "songs";
-  const MongoClient = require("mongodb").MongoClient;
-  const uri =
-    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
-  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-  // .then(function(db) {
-  console.log("Connected..." + start + " : " + end);
-  const collection = client.db(dbName).collection(collectionName);
+  const collection = await SongsMongoSingleton.getInstance();
+
   returnedCursorArtist = collection.find(query).skip(skip).limit(PAGE_SIZE);
   const returnedArtist = returnedCursorArtist.sort(sortQuery).toArray();
   // for (var i = 0; i < returnedArtist["artist"].length; i++) {
@@ -242,80 +235,50 @@ async function querySongs(
   // }
   // console.log(returnedArtist);
   console.log("Done looking");
-  client.close();
+  // client.close();
   return returnedArtist;
 }
 
 async function getSongByNameAndArtist(song, artist) {
   var returnedSong;
-  const dbName = "MuseNewsDatabase";
-  const collectionName = "songs";
-  const MongoClient = require("mongodb").MongoClient;
-  const uri =
-    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
-  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-  // .then(function(db) {
-  console.log("Connected...");
-  const collection = client.db(dbName).collection(collectionName);
+  const collection = await SongsMongoSingleton.getInstance();
+
   returnedSong = collection.findOne({ name: song, "artist.name": artist });
   console.log(returnedSong);
   console.log("Done looking");
-  client.close();
+  // client.close();
   return returnedSong;
 }
 
 async function getSongsByAnArtist(artist) {
-  const dbName = "MuseNewsDatabase";
-  const collectionName = "songs";
-  const MongoClient = require("mongodb").MongoClient;
-  const uri =
-    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
-  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-  // .then(function(db) {
-  console.log("Connected...");
-  const collection = client.db(dbName).collection(collectionName);
+  const collection = await SongsMongoSingleton.getInstance();
+
   returnedCursorSong = collection.find({ "artist.name": artist });
   const returnedSong = returnedCursorSong.sort({ rank: 1 }).toArray();
   console.log(returnedSong);
   console.log("Done looking");
-  client.close();
+  // client.close();
   return returnedSong;
 }
 
 async function getSongByRank(inputrank) {
-  const dbName = "MuseNewsDatabase";
-  const collectionName = "songs";
-  const MongoClient = require("mongodb").MongoClient;
-  const uri =
-    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
-  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-  // .then(function(db) {
-  console.log("Connected..." + inputrank);
-  const collection = client.db(dbName).collection(collectionName);
+  const collection = await SongsMongoSingleton.getInstance();
   returnedSong = collection.findOne({ rank: parseInt(inputrank) });
   console.log(returnedSong);
   console.log("Done looking");
-  client.close();
+  // client.close();
   return returnedSong;
 }
 
 async function getSongsByRankRanges(start, end) {
-  const dbName = "MuseNewsDatabase";
-  const collectionName = "songs";
-  const MongoClient = require("mongodb").MongoClient;
-  const uri =
-    "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
-  const client = await MongoClient.connect(uri, { useNewUrlParser: true });
-  // .then(function(db) {
-  console.log("Connected..." + start + " : " + end);
-  const collection = client.db(dbName).collection(collectionName);
+  const collection = await SongsMongoSingleton.getInstance();
   returnedCursorSong = collection.find({
     rank: { $gt: parseInt(start) - 1, $lt: parseInt(end) + 1 },
   });
   const returnedSong = returnedCursorSong.sort({ rank: 1 }).toArray();
   console.log(returnedSong);
   console.log("Done looking");
-  client.close();
+  // client.close();
   return returnedSong;
 }
 
@@ -364,5 +327,31 @@ function convertToHtml(url) {
 function testExport() {
   console.log("TEST the EXPORT");
 }
+
+var SongsMongoSingleton = (function () {
+  var instance;
+
+  async function createInstance() {
+    const dbName = "MuseNewsDatabase";
+    const collectionName = "songs";
+    const MongoClient = require("mongodb").MongoClient;
+    const uri =
+      "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
+    const client = await MongoClient.connect(uri, { useNewUrlParser: true });
+    // .then(function(db) {
+    console.log("Connected...");
+    const collection = client.db(dbName).collection(collectionName);
+    return collection;
+  }
+
+  return {
+    getInstance: function () {
+      if (!instance) {
+        instance = createInstance();
+      }
+      return instance;
+    },
+  };
+})();
 
 module.exports = router;

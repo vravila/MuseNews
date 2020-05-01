@@ -8,6 +8,7 @@ function ArtistsPage({ match }) {
   }, []);
 
   const [tweets, setTweets] = useState({});
+  const [songItem, setSongItem] = useState([]);
 
   const [item, setItem] = useState({
     bio: {},
@@ -19,16 +20,14 @@ function ArtistsPage({ match }) {
       text: {},
     },
   });
-
+  //--------------------------------------------
   const fetchTweets = async (name) => {
     const fetchTweets = await fetch("/api/artists/getArtistTweets/" + name);
     const tweets = await fetchTweets.json();
     setTweets(tweets);
   };
   console.log(tweets);
-
-  const [songItem, setSongItem] = useState([]);
-
+  //--------------------------------------------
   const fetchItem = async () => {
     const fetchItem = await fetch(
       "/api/artists/getArtistByName/" + match.params.id,
@@ -40,7 +39,7 @@ function ArtistsPage({ match }) {
         },
       }
     );
-
+    //--------------------------------------
     const fetchItemSongs = await fetch(
       "/api/songs/getSongsByAnArtist/" + match.params.id,
       {
