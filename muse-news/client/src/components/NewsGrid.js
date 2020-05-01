@@ -14,7 +14,6 @@ class NewsGrid extends Component {
     this.state = {
       terms: this.props.terms,
       page: this.props.page,
-      type: this.props.type,
       sort: this.props.sort,
       filter: this.props.filter,
       articles: [
@@ -41,15 +40,11 @@ class NewsGrid extends Component {
       ],
     };
     //this.getNews(this.state.terms);
-    if (this.state.type === "Splash") {
-      this.generateSplashPage(this.state.page);
-    } else {
-      this.getNews(this.state.terms, this.state.page);
-    }
+    this.getNews();
     this.forceUpdate();
   }
 
-  getNews(q, page) {
+  getNews() {
     var sortBy = "";
     var filterBy = "";
     //get sort parameter
@@ -74,6 +69,10 @@ class NewsGrid extends Component {
       startTime.setDate(startTime.getDate() - 7); //one week back
       filterBy = "&from=" + startTime.toISOString();
     }
+    //get terms
+    var q = this.state.terms;
+    //get page
+    var page = this.state.page;
     let apikey = "bc2ebdb795c5488bb34601ca89a75e7f";
     let requestURL =
       "https://newsapi.org/v2/everything?q=" +
@@ -104,107 +103,14 @@ class NewsGrid extends Component {
     console.log(this.state);
   }
 
-  async getArticle(q, num) {
-    let apikey = "bc2ebdb795c5488bb34601ca89a75e7f";
-    let requestURL =
-      "https://newsapi.org/v2/everything?q=" +
-      q +
-      "&page=" +
-      "1" +
-      "&apiKey=" +
-      apikey;
-    var index = 2 * (num - 1);
-    var article1;
-    var article2;
-    const resp = await fetch(requestURL)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        article1 = {
-          title: data.articles[index].title,
-          preview: data.articles[index].description,
-          img: data.articles[index].urlToImage,
-          term: q,
-        };
-        index++;
-        article2 = {
-          title: data.articles[index].title,
-          preview: data.articles[index].description,
-          img: data.articles[index].urlToImage,
-          term: q,
-        };
-      });
-    return { article1, article2 };
-  }
-
-  async getArticlesFromMongo(page) {
-    let requestURL = "/api/news/getNewsPage/" + page;
-    var toReturn = [];
-    const resp = await fetch(requestURL)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        // toReturn = data;
-        for (var index = 0; index < data.length; index++) {
-          var newArticle = {
-            title: data[index].title,
-            preview: data[index].description,
-            img: data[index].urlToImage,
-            term: data[index].term,
-          };
-          toReturn.push(newArticle);
-        }
-        // console.log(data);
-        // article1 = {title: data.articles[index].title, preview: data.articles[index].description, img: data.articles[index].urlToImage, term: q};
-        // index++;
-        // article2 = {title: data.articles[index].title, preview: data.articles[index].description, img: data.articles[index].urlToImage, term: q};
-      });
-    return toReturn;
-  }
-
-  async generateSplashPage(page) {
-    if (page <= 5) {
-      console.log("GETTING FROM MONGO");
-      var returned = await this.getArticlesFromMongo(page);
-      console.log(returned);
-      this.setState({ articles: returned }, () => this.forceUpdate());
-    } else {
-      console.log("GETTING FROM API");
-      var artists = [
-        "The Weeknd",
-        "Billie Eilish",
-        "Lady Gaga",
-        "Kanye West",
-        "Tame Impala",
-        "Dua Lipa",
-        "Post Malone",
-        "Lana Del Rey",
-        "Ariana Grande",
-        "Doja Cat",
-      ];
-      var newArticles = [];
-      for (var i = 0; i < artists.length; i++) {
-        var news = await this.getArticle(artists[i], page);
-        newArticles.push(news.article1);
-        newArticles.push(news.article2);
-      }
-      console.log(newArticles);
-      this.setState({ articles: newArticles }, () => this.forceUpdate());
-    }
-  }
-
   componentDidUpdate() {
     if (this.state.terms !== this.props.terms) {
       this.setState(
         {
           terms: this.props.terms,
           page: this.props.page,
-          type: this.props.type,
         },
-        () => this.getNews(this.state.terms, this.state.page)
+        () => this.getNews()
       );
     } else if (
       this.state.terms === "Splash" &&
@@ -212,9 +118,10 @@ class NewsGrid extends Component {
     ) {
       this.setState(
         {
-          page: this.props.page,
+          terms: "Billie Eilish",
+          page: this.props.page
         },
-        () => this.generateSplashPage(this.state.page)
+        () => this.getNews()
       );
     } else if (this.state.page !== this.props.page) {
       this.setState(
@@ -223,21 +130,21 @@ class NewsGrid extends Component {
           sort: this.props.sort,
           filter: this.props.filter,
         },
-        () => this.getNews(this.state.terms, this.state.page)
+        () => this.getNews()
       );
     } else if (this.state.sort !== this.props.sort) {
       this.setState(
         {
           sort: this.props.sort,
         },
-        () => this.getNews(this.state.terms, this.state.page)
+        () => this.getNews()
       );
     } else if (this.state.filter !== this.props.filter) {
       this.setState(
         {
           filter: this.props.filter,
         },
-        () => this.getNews(this.state.terms, this.state.page)
+        () => this.getNews()
       );
     }
   }
@@ -246,11 +153,7 @@ class NewsGrid extends Component {
     var cards = [];
     for (var i = 0; i < this.state.articles.length; i++) {
       var linker = this.state.articles[i].term + "/";
-      if (this.state.type === "Splash") {
-        linker += "" + ((this.state.page - 1) * 2 + (i % 2));
-      } else {
-        linker += "" + (20 * (this.state.page - 1) + i);
-      }
+      linker += "" + (20 * (this.state.page - 1) + i);
       cards.push(
         <NewsArticle
           id="newsArticle"
