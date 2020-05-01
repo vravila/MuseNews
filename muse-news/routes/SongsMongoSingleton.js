@@ -1,9 +1,9 @@
-var MongoConnectSingleton = (function () {
+var SongsMongoSingleton = (function () {
   var instance;
 
   async function createInstance() {
     const dbName = "MuseNewsDatabase";
-    const collectionName = "artists";
+    const collectionName = "songs";
     const MongoClient = require("mongodb").MongoClient;
     const uri =
       "mongodb+srv://musenews:musenew5@musenewsdatabase-cbkjn.gcp.mongodb.net/test?retryWrites=true&w=majority";
@@ -24,4 +24,4 @@ var MongoConnectSingleton = (function () {
   };
 })();
 
-module.exports = MongoConnectSingleton;
+module.exports = SongsMongoSingleton;
