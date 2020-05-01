@@ -11,7 +11,10 @@ class ArtistsForm extends Component {
 
   render() {
     return (
-      <form action="/redirectPages" className="multi-range-field my-5 pb-5">
+      <form
+        action="/redirectArtistsPages"
+        className="multi-range-field my-5 pb-5"
+      >
         <label id="searchLabel" className="col-lg-6">
           <h3>Search Artists:</h3>
           <input

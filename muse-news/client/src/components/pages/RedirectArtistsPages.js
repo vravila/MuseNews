@@ -2,7 +2,7 @@ import React, { useState, useEffect, Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import queryString from "query-string";
 
-class RedirectSongsPages extends Component {
+class RedirectPages extends Component {
   constructor(props) {
     super(props);
     console.log("constructor");
@@ -48,15 +48,13 @@ function createURLFromProps(values) {
     urlString += "/rank";
   }
 
-  if (values.artistSearch === "") {
-    console.log("artist search null");
-    urlString += "/none";
+  console.log(values.ontour);
+  if (values.ontour) {
+    console.log("on tour");
+    urlString += "/true";
   } else {
-    var encodedSearch = encodeURIComponent(
-      encodeURIComponent(values.artistSearch)
-    );
-    console.log("encoded url is" + encodedSearch);
-    urlString += "/" + encodedSearch;
+    console.log("not on tour");
+    urlString += "/false";
   }
 
   console.log(values.minPlayCount);
@@ -94,22 +92,6 @@ function createURLFromProps(values) {
     urlString += "/" + values.maxListeners;
   }
 
-  if (values.minRank === "") {
-    console.log("no min Listeners");
-    urlString += "/none";
-  } else {
-    console.log("Min Listeners " + values.minRank);
-    urlString += "/" + values.minRank;
-  }
-
-  if (values.maxRank === "") {
-    console.log("no max Listeners");
-    urlString += "/none";
-  } else {
-    console.log("max Listeners " + values.maxRank);
-    urlString += "/" + values.maxRank;
-  }
-
   console.log(values.page);
   console.log(values.page === undefined);
 
@@ -122,8 +104,7 @@ function createURLFromProps(values) {
   }
 
   console.log(urlString);
-
   return urlString;
 }
 
-export default RedirectSongsPages;
+export default RedirectPages;

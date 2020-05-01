@@ -8,7 +8,7 @@ import News from "./components/pages/News";
 import Songs from "./components/pages/Songs";
 import SongsPage from "./components/pages/SongsPage";
 import NewsPage from "./components/pages/NewsPage";
-import RedirectPages from "./components/pages/RedirectPages";
+import RedirectArtistsPages from "./components/pages/RedirectArtistsPages";
 import RedirectSongsPages from "./components/pages/RedirectSongsPages";
 import ArtistDNE from "./components/pages/ArtistDNE";
 
@@ -38,7 +38,10 @@ class App extends Component {
             component={Songs}
           />
           <Route path="/songspage/:song/:artist" component={SongsPage} />
-          <Route path="/redirectPages" component={RedirectPages} />
+          <Route
+            path="/redirectArtistsPages"
+            component={RedirectArtistsPages}
+          />
           <Route path="/homeSearch" component={HomeSearch} />
           <Route path="/redirectSongsPages" component={RedirectSongsPages} />
           <Route path="/artistdne" component={ArtistDNE} />

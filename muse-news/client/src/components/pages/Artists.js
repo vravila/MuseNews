@@ -120,7 +120,7 @@ function Artists({ match }) {
               ? "fa float-left h3 font-weight-light text-primary"
               : "fa hidden float-left h3 font-weight-light text-primary"
           }
-          to={`/redirectPages?source=artists&search=${
+          to={`/redirectArtistsPages?source=artists&search=${
             passedInParams.searchterms
           }&sort=${passedInParams.sort}&ontour=${
             passedInParams.ontour === "true" ? "on" : ""
@@ -139,7 +139,7 @@ function Artists({ match }) {
               ? "fa float-right h3 font-weight-light text-primary"
               : "fa hidden float-right h3 font-weight-light text-primary"
           }
-          to={`/redirectPages?source=artists&search=${
+          to={`/redirectArtistsPages?source=artists&search=${
             passedInParams.searchterms
           }&sort=${passedInParams.sort}&ontour=${
             passedInParams.ontour === "true" ? "on" : ""
