@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect, matchPath } from "react-router-dom";
+import SongsCard from "./../SongsCard.js";
+import SongsForm from "./../SongsForm.js";
 
 function Songs({ match }) {
   useEffect(() => {
@@ -121,139 +123,7 @@ function Songs({ match }) {
       <div class="container-fluid">
         <h1 class="pageHeader">America's Top Songs</h1>
         <h2 class="sectionHeader">Top Songs: Page {match.params.page}</h2>
-        <form
-          action="/redirectSongsPages"
-          className="multi-range-field my-5 pb-5"
-        >
-          <label id="searchLabel" className="col-lg-6">
-            <h3>Search Songs:</h3>
-            <input
-              type="text"
-              id="search"
-              name="search"
-              defaultValue={passedInParams.searchterms}
-              className="form-control form-control-lg"
-            ></input>
-          </label>
-          <label id="sortLabel" className="col-lg-6">
-            <h3>Sort By:</h3>
-            <select
-              className="form-control form-control-lg"
-              id="sort"
-              name="sort"
-            >
-              <option
-                value="rank"
-                selected={passedInParams.sort === "rank" ? "selected" : ""}
-              >
-                Rank
-              </option>
-              <option
-                value="nameAsc"
-                selected={passedInParams.sort === "nameAsc" ? "selected" : ""}
-              >
-                Song Title Ascending
-              </option>
-              <option
-                value="nameDesc"
-                selected={passedInParams.sort === "nameDesc" ? "selected" : ""}
-              >
-                Song Title Descending
-              </option>
-            </select>
-          </label>
-          <br></br>
-          <label className="col-sm-1">
-            <h3>Filters:</h3>
-          </label>
-          <label id="artistSearchLabel" className="col-md-2">
-            Artists:
-            <input
-              type="text"
-              id="artistSearch"
-              name="artistSearch"
-              defaultValue={passedInParams.artistSearch}
-            ></input>
-          </label>
-          <label id="playCountLabel" className="col-md-2">
-            Play Count:
-            <input
-              type="number"
-              id="minPlayCount"
-              name="minPlayCount"
-              min="0"
-              max="25598881"
-              defaultValue={passedInParams.minPlayCount}
-            ></input>
-            to
-            <input
-              type="number"
-              id="maxPlayCount"
-              name="maxPlayCount"
-              min="0"
-              max="25598881"
-              defaultValue={passedInParams.maxPlayCount}
-            ></input>
-          </label>
-          <label id="listenersLabel" className="col-md-2">
-            Listeners:
-            <input
-              type="number"
-              id="minListeners"
-              name="minListeners"
-              min="0"
-              max="2144166"
-              defaultValue={passedInParams.minListeners}
-            ></input>
-            to
-            <input
-              type="number"
-              id="maxListeners"
-              name="maxListeners"
-              min="0"
-              max="2144166"
-              defaultValue={passedInParams.maxListeners}
-            ></input>
-          </label>
-          <br></br>
-          <label id="rankLabel" className="col-md-2">
-            Rank:
-            <input
-              type="number"
-              id="minRank"
-              name="minRank"
-              min="1"
-              max="300"
-              defaultValue={passedInParams.minRank}
-            ></input>
-            to
-            <input
-              type="number"
-              id="maxRank"
-              name="maxRank"
-              min="1"
-              max="300"
-              defaultValue={passedInParams.maxRank}
-            ></input>
-          </label>
-          <label>
-            <input
-              type="hidden"
-              id="source"
-              name="source"
-              value="songs"
-              class="form-control form-control-sm"
-            ></input>
-          </label>
-          <label id="songSubmitLabel" className="col-md-3">
-            <input
-              id="songSubmit"
-              type="submit"
-              class="btn btn-success form-control form-control-md"
-              value="Submit"
-            ></input>
-          </label>
-        </form>
+        <SongsForm passedInParams={passedInParams}></SongsForm>
       </div>
       <div style={{ "padding-bottom": "70px" }}>
         <Link
@@ -301,34 +171,7 @@ function Songs({ match }) {
         <hr className="lead"></hr>
       </div>
       {items.map((item) => (
-        <Link
-          id="linkToSongsPage"
-          to={`/songspage/${item.name}/${item.artist.name}`}
-        >
-          <div className="row-mt-1">
-            <div className="col-3 col-sm-3 mx-auto mb-2">
-              <div
-                className="card center-block bg-dark text-white"
-                style={{ width: "20rem", height: "35rem" }}
-              >
-                <img
-                  src={item.bingImageURL}
-                  alt="Image not Found"
-                  className="card-img-top"
-                  style={{ width: "20rem", height: "25rem" }}
-                />
-                <div className="card-body">
-                  <h3 id="songName" className="card-title text-uppecase">
-                    {item.name}
-                  </h3>
-                  <h5 className="card-title text-uppecase">
-                    Rank: {item.rank}
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Link>
+        <SongsCard item={item}></SongsCard>
       ))}
     </div>
   );
