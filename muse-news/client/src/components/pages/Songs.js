@@ -38,8 +38,6 @@ function Songs({ match }) {
   passedInParams.maxRank = match.params.maxRank;
   passedInParams.page = match.params.page;
 
-  // printPassedInParams(passedInParams);
-
   if (passedInParams.searchterms === "none") {
     passedInParams.searchterms = "";
   }

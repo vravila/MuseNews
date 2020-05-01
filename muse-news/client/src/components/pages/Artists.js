@@ -35,9 +35,6 @@ function Artists({ match }) {
   passedInParams.maxListeners = match.params.maxListeners;
   passedInParams.page = match.params.page;
 
-  // printParams(match);
-  // printPassedInParams(passedInParams);
-
   if (passedInParams.searchterms === "none") {
     passedInParams.searchterms = "";
   }
