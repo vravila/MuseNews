@@ -37,7 +37,6 @@ class NewsContainer extends Component {
     event.preventDefault();
     this.state.terms = event.target.searchBox.value;
     this.state.page = 1;
-    this.state.type = "artist";
     fetch("/api/artists/getArtistByName/" + this.state.terms, {
       method: "GET",
       headers: {
