@@ -39,12 +39,19 @@ class NewsGrid extends Component {
         },
       ],
     };
-    //this.getNews(this.state.terms);
     this.getNews();
     this.forceUpdate();
   }
 
   getNews() {
+    if(this.state.terms === "Database"){
+      //use database call
+    } else {
+      return this.getNewsFromGoogle();
+    }
+  }
+    
+  getNewsFromGoogle(){
     var sortBy = "";
     var filterBy = "";
     //get sort parameter
