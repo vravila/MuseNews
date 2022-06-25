@@ -18,7 +18,7 @@
     "mocha": "^7.1.1",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.7",
     "nodemon": "^2.0.2",
     "spotify-web-api-node": "^4.0.0",
     "twitter": "^1.7.1"
